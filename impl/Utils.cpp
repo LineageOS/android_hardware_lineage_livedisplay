@@ -1,5 +1,6 @@
 /*
 ** Copyright 2016, The CyanogenMod Project
+**           2017, The LineageOS Project
 **
 ** Licensed under the Apache License, Version 2.0 (the "License");
 ** you may not use this file except in compliance with the License.
@@ -28,6 +29,7 @@
 
 #define LOCAL_STORAGE_PATH "/data/misc/display"
 #define LOCAL_MODE_ID "livedisplay_mode"
+#define LOCAL_INITIAL_MODE_ID "livedisplay_initial_mode"
 
 namespace android {
 
@@ -80,6 +82,18 @@ status_t Utils::readLocalModeId(int32_t* id) {
 status_t Utils::writeLocalModeId(int32_t id) {
     char buf[PATH_MAX];
     sprintf(buf, "%s/%s", LOCAL_STORAGE_PATH, LOCAL_MODE_ID);
+    return writeInt(buf, id);
+}
+
+status_t Utils::readInitialModeId(int32_t* id) {
+    char buf[PATH_MAX];
+    sprintf(buf, "%s/%s", LOCAL_STORAGE_PATH, LOCAL_INITIAL_MODE_ID);
+    return readInt(buf, id);
+}
+
+status_t Utils::writeInitialModeId(int32_t id) {
+    char buf[PATH_MAX];
+    sprintf(buf, "%s/%s", LOCAL_STORAGE_PATH, LOCAL_INITIAL_MODE_ID);
     return writeInt(buf, id);
 }
 

@@ -1,5 +1,6 @@
 /*
 ** Copyright 2016, The CyanogenMod Project
+**           2017, The LineageOS Project
 **
 ** Licensed under the Apache License, Version 2.0 (the "License");
 ** you may not use this file except in compliance with the License.
@@ -158,10 +159,15 @@ status_t SDM::initialize() {
     mActiveModeId = -1;
 
     if (hasFeature(Feature::DISPLAY_MODES)) {
-       sp<DisplayMode> defMode = getDefaultDisplayMode();
-       if (defMode != nullptr) {
-           setDisplayMode(defMode->id, false);
-       }
+        rc = saveInitialDisplayMode();
+        if (rc != OK) {
+            ALOGE("Failed to save initial display mode! err=%d", rc);
+            return rc;
+        }
+        sp<DisplayMode> defMode = getDefaultDisplayMode();
+        if (defMode != nullptr) {
+            setDisplayMode(defMode->id, false);
+        }
     }
     return OK;
 }
@@ -290,7 +296,7 @@ status_t SDM::setDisplayMode(int32_t modeID, bool makeDefault) {
     ALOGV("setDisplayMode: current mode=%d", mActiveModeId);
 
     if (mActiveModeId >= 0) {
-        sp<DisplayMode> oldMode = getDisplayModeById(mActiveModeId);
+        sp<DisplayMode> oldMode = getCurrentDisplayMode();
         ALOGV("setDisplayMode: oldMode=%d flags=%d", oldMode->id, oldMode->privFlags);
         if (oldMode->privFlags == PRIV_MODE_FLAG_SYSFS ||
                 mode->privFlags == PRIV_MODE_FLAG_SYSFS) {
@@ -311,6 +317,13 @@ status_t SDM::setDisplayMode(int32_t modeID, bool makeDefault) {
             if (rc != OK) {
                 ALOGE("failed to save mode! %d", rc);
                 return rc;
+            }
+            if (mode->privFlags == PRIV_MODE_FLAG_SDM) {
+                rc = disp_api_set_default_display_mode(mHandle, 0, mode->id, 0);
+                if (rc != OK) {
+                    ALOGE("failed to save mode! %d", rc);
+                    return rc;
+                }
             }
         }
         HSIC tmp;
@@ -355,11 +368,13 @@ sp<DisplayMode> SDM::getDefaultDisplayMode() {
     if (Utils::readLocalModeId(&id) == OK && id >= 0) {
         return getDisplayModeById(id);
     }
+    if (Utils::readInitialModeId(&id) == OK && id >= 0) {
+        return getDisplayModeById(id);
+    }
     return nullptr;
 }
 
 status_t SDM::setModeState(sp<DisplayMode> mode, bool state) {
-    uint32_t flags = 0;
     int32_t id = 0;
 
     if (mode->privFlags == PRIV_MODE_FLAG_SYSFS) {
@@ -369,7 +384,7 @@ status_t SDM::setModeState(sp<DisplayMode> mode, bool state) {
         if (state) {
             return disp_api_set_active_display_mode(mHandle, 0, mode->id, 0);
         } else {
-            if (disp_api_get_default_display_mode(mHandle, 0, &id, &flags) == 0) {
+            if (Utils::readInitialModeId(&id) == OK) {
                 ALOGV("set sdm mode to default: id=%d", id);
                 return disp_api_set_active_display_mode(mHandle, 0, id, 0);
             }
@@ -501,6 +516,19 @@ bool SDM::hasFeature(Feature feature) {
         }
     }
     return false;
+}
+
+status_t SDM::saveInitialDisplayMode() {
+    int32_t id = 0;
+    uint32_t flags = 0;
+    if (Utils::readInitialModeId(&id) != OK || id < 0) {
+        if (disp_api_get_default_display_mode(mHandle, 0, &id, &flags) == OK && id >= 0) {
+            return Utils::writeInitialModeId(id);
+        } else {
+            return Utils::writeInitialModeId(id = 0);
+        }
+    }
+    return OK;
 }
 
 };

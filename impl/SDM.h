@@ -92,6 +92,7 @@ class SDM : public LiveDisplayBackend {
     sp<DisplayMode> getLocalSRGBMode();
     sp<DisplayMode> getDisplayModeById(int32_t id);
     status_t setModeState(sp<DisplayMode> mode, bool state);
+    status_t saveInitialDisplayMode();
     uint32_t getNumDisplayModes();
 
     int64_t mHandle;

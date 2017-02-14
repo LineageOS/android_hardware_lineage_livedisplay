@@ -1,5 +1,6 @@
 /*
 ** Copyright 2016, The CyanogenMod Project
+**           2017, The LineageOS Project
 **
 ** Licensed under the Apache License, Version 2.0 (the "License");
 ** you may not use this file except in compliance with the License.
@@ -37,6 +38,10 @@ public:
     static status_t writeLocalModeId(int32_t id);
 
     static status_t readLocalModeId(int32_t* id);
+
+    static status_t writeInitialModeId(int32_t id);
+
+    static status_t readInitialModeId(int32_t* id);
 };
 
 };
