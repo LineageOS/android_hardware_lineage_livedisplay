@@ -32,11 +32,11 @@ LiveDisplay::LiveDisplay() : mConnected(false), mBackend(NULL) {
     char board[PROPERTY_VALUE_MAX];
     property_get("ro.board.platform", board, NULL);
 
-    if (!strcmp(board, "msm8916") || !strcmp(board, "msm8939") || !strcmp(board, "msm8992") ||
+    if (!strcmp(board, "msm8916") || !strcmp(board, "msm8992") ||
         !strcmp(board, "msm8974") || !strcmp(board, "msm8994")) {
         mBackend = new LegacyMM();
     } else if (!strcmp(board, "msm8996") || !strcmp(board, "msm8937") ||
-               !strcmp(board, "msm8953") || !strcmp(board, "msm8976")) {
+               !strcmp(board, "msm8953") || !strcmp(board, "msm8952")) {
         mBackend = new SDM();
     } else {
         mBackend = NULL;
