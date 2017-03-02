@@ -6,7 +6,7 @@ ifeq ($(call is-board-platform-in-list, $(LIVEDISPLAY_TARGETS)),true)
 LOCAL_PATH:= $(call my-dir)
 
 common_C_INCLUDES := \
-	$(LOCAL_PATH)/impl \
+    $(LOCAL_PATH)/impl \
     $(LOCAL_PATH)/inc
 
 include $(CLEAR_VARS)
@@ -30,9 +30,8 @@ LOCAL_CFLAGS := -std=c++11
 
 include $(BUILD_STATIC_LIBRARY)
 
-
 include $(CLEAR_VARS)
-LOCAL_SRC_FILES	:= \
+LOCAL_SRC_FILES := \
     jni/org_cyanogenmod_hardware_LiveDisplayVendorImpl.cpp
 
 LOCAL_C_INCLUDES := $(common_C_INCLUDES)
