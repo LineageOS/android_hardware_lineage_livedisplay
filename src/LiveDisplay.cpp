@@ -32,6 +32,9 @@ LiveDisplay::LiveDisplay() : mConnected(false), mBackend(NULL) {
     char board[PROPERTY_VALUE_MAX];
     property_get("ro.board.platform", board, NULL);
 
+#ifdef TARGET_USES_SDM
+    mBackend = new SDM();
+#else
     if (!strcmp(board, "msm8916") || !strcmp(board, "msm8992") ||
         !strcmp(board, "msm8974") || !strcmp(board, "msm8994")) {
         mBackend = new LegacyMM();
@@ -42,6 +45,7 @@ LiveDisplay::LiveDisplay() : mConnected(false), mBackend(NULL) {
         mBackend = NULL;
         return;
     }
+#endif
     ALOGD("Loaded LiveDisplay native interface");
 }
 

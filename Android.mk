@@ -28,6 +28,10 @@ LOCAL_MODULE_TAGS := optional
 LOCAL_MODULE := liblivedisplay
 LOCAL_CFLAGS := -std=c++11
 
+ifeq ($(TARGET_USES_SDM), true)
+LOCAL_CFLAGS += -DTARGET_USES_SDM
+endif
+
 include $(BUILD_STATIC_LIBRARY)
 
 include $(CLEAR_VARS)
