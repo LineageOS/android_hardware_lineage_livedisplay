@@ -235,6 +235,9 @@ uint32_t SDM::getNumDisplayModes() {
     if (getLocalSRGBMode() != nullptr) {
         count++;
     }
+    if (getLocalDCIP3Mode() != nullptr) {
+        count++;
+    }
     return count;
 }
 
@@ -246,7 +249,14 @@ status_t SDM::getDisplayModes(List<sp<DisplayMode>>& profiles) {
     if (!count) return rc;
 
     sp<DisplayMode> srgb = getLocalSRGBMode();
-    uint32_t sdm_count = srgb == nullptr ? count : (count - 1);
+    sp<DisplayMode> dci_p3 = getLocalDCIP3Mode();
+    uint32_t sdm_count = count;
+    if (srgb != nullptr) {
+        sdm_count--;
+    }
+    if (dci_p3 != nullptr) {
+        sdm_count--;
+    }
 
     struct sdm_mode {
         int32_t id;
@@ -276,6 +286,9 @@ status_t SDM::getDisplayModes(List<sp<DisplayMode>>& profiles) {
 
     if (srgb != nullptr) {
         profiles.push_back(srgb);
+    }
+    if (dci_p3 != nullptr) {
+        profiles.push_back(dci_p3);
     }
 
     return rc;
@@ -401,6 +414,19 @@ sp<DisplayMode> SDM::getLocalSRGBMode() {
         return nullptr;
     }
     sp<DisplayMode> m = new DisplayMode(SRGB_NODE_ID, "srgb", 4);
+    m->privFlags = PRIV_MODE_FLAG_SYSFS;
+    m->privData.setTo(path);
+    return m;
+}
+
+sp<DisplayMode> SDM::getLocalDCIP3Mode() {
+    char path[PATH_MAX];
+    sprintf(path, "%s", DCI_P3_NODE);
+
+    if (access(path, W_OK) != 0) {
+        return nullptr;
+    }
+    sp<DisplayMode> m = new DisplayMode(DCI_P3_NODE_ID, "dci_p3", 6);
     m->privFlags = PRIV_MODE_FLAG_SYSFS;
     m->privData.setTo(path);
     return m;
