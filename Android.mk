@@ -1,5 +1,6 @@
 LIVEDISPLAY_TARGETS := msm8916 msm8974 msm8992 msm8994
 LIVEDISPLAY_TARGETS += msm8996 msm8937 msm8953 msm8952
+LIVEDISPLAY_TARGETS += msm8998 sdm660
 
 ifeq ($(call is-board-platform-in-list, $(LIVEDISPLAY_TARGETS)),true)
 

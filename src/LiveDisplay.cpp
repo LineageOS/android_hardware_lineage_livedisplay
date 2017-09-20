@@ -39,7 +39,8 @@ LiveDisplay::LiveDisplay() : mConnected(false), mBackend(NULL) {
         !strcmp(board, "msm8974") || !strcmp(board, "msm8994")) {
         mBackend = new LegacyMM();
     } else if (!strcmp(board, "msm8996") || !strcmp(board, "msm8937") ||
-               !strcmp(board, "msm8953") || !strcmp(board, "msm8952")) {
+               !strcmp(board, "msm8953") || !strcmp(board, "msm8952") ||
+               !strcmp(board, "msm8998") || !strcmp(board, "sdm660")) {
         mBackend = new SDM();
     } else {
         mBackend = NULL;
