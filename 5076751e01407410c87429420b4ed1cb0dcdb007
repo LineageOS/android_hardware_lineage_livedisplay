@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6c7722d0_c42b7535",
+        "filename": "Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 16082
+      },
+      "writtenOn": "2017-10-01T00:49:26Z",
+      "side": 1,
+      "message": "not rebranded?",
+      "revId": "5076751e01407410c87429420b4ed1cb0dcdb007",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
