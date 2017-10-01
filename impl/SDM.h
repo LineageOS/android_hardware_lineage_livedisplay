@@ -3,7 +3,8 @@
 
 #include <LiveDisplayBackend.h>
 
-#define SDM_DISP_LIB "libsdm-disp-apis.so"
+#define SDM_DISP_LIB "libsdm-disp-vndapis.so"
+#define SDM_DISP_LEGACY_LIB "libsdm-disp-apis.so"
 
 #define DPPS_BUF_SIZE 64
 
