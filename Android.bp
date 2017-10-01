@@ -1,0 +1,37 @@
+common_includes = [
+    "impl",
+    "inc",
+]
+
+cc_library_static {
+    name: "liblivedisplay",
+    srcs: [
+        "src/LiveDisplay.cpp",
+        "impl/Utils.cpp",
+        "impl/LegacyMM.cpp",
+        "impl/SDM.cpp",
+    ],
+    shared_libs: [
+        "libcutils",
+        "liblog",
+        "libutils",
+    ],
+    local_include_dirs: common_includes,
+    cflags: ["-std=c++11"],
+}
+
+cc_library_shared {
+    name: "libjni_livedisplay",
+    srcs: ["jni/org_cyanogenmod_hardware_LiveDisplayVendorImpl.cpp"],
+    shared_libs: [
+        "libcutils",
+        "libnativehelper",
+        "liblog",
+        "libutils",
+    ],
+    static_libs: [
+        "liblivedisplay",
+    ],
+    local_include_dirs: common_includes,
+    cflags: ["-std=c++11"],
+}
