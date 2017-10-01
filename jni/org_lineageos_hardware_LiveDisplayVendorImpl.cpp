@@ -1,5 +1,6 @@
 /*
 ** Copyright 2016, The CyanogenMod Project
+** Copyright 2017, The LineageOS Project
 **
 ** Licensed under the Apache License, Version 2.0 (the "License");
 ** you may not use this file except in compliance with the License.
@@ -107,25 +108,25 @@ static jobject hsicToObject(JNIEnv* env, HSIC hsic)
             (jfloat) hsic.saturationThreshold);
 }
 
-static jint org_cyanogenmod_hardware_LiveDisplayVendorImpl_getSupportedFeatures(
+static jint org_lineageos_hardware_LiveDisplayVendorImpl_getSupportedFeatures(
         JNIEnv* env __unused, jclass thiz __unused)
 {
     return (jint) LiveDisplay::getInstance().getSupportedFeatures();
 }
 
-static jboolean org_cyanogenmod_hardware_LiveDisplayVendorImpl_isAdaptiveBacklightEnabled(
+static jboolean org_lineageos_hardware_LiveDisplayVendorImpl_isAdaptiveBacklightEnabled(
         JNIEnv* env __unused, jclass thiz __unused)
 {
     return LiveDisplay::getInstance().isAdaptiveBacklightEnabled();
 }
 
-static jboolean org_cyanogenmod_hardware_LiveDisplayVendorImpl_setAdaptiveBacklightEnabled(
+static jboolean org_lineageos_hardware_LiveDisplayVendorImpl_setAdaptiveBacklightEnabled(
         JNIEnv* env __unused, jclass thiz __unused, jboolean enabled)
 {
     return LiveDisplay::getInstance().setAdaptiveBacklightEnabled(enabled) == OK;
 }
 
-static jobjectArray org_cyanogenmod_hardware_LiveDisplayVendorImpl_getDisplayModes(
+static jobjectArray org_lineageos_hardware_LiveDisplayVendorImpl_getDisplayModes(
         JNIEnv* env, jclass thiz __unused)
 {
     List<sp<DisplayMode>> modes;
@@ -150,40 +151,40 @@ static jobjectArray org_cyanogenmod_hardware_LiveDisplayVendorImpl_getDisplayMod
     return modeList;
 }
 
-static jobject org_cyanogenmod_hardware_LiveDisplayVendorImpl_getCurrentDisplayMode(
+static jobject org_lineageos_hardware_LiveDisplayVendorImpl_getCurrentDisplayMode(
         JNIEnv* env, jclass thiz __unused)
 {
     return displayModeToObject(env,
             LiveDisplay::getInstance().getCurrentDisplayMode());
 }
 
-static jobject org_cyanogenmod_hardware_LiveDisplayVendorImpl_getDefaultDisplayMode(
+static jobject org_lineageos_hardware_LiveDisplayVendorImpl_getDefaultDisplayMode(
         JNIEnv* env, jclass thiz __unused)
 {
     return displayModeToObject(env,
             LiveDisplay::getInstance().getDefaultDisplayMode());
 }
 
-static jboolean org_cyanogenmod_hardware_LiveDisplayVendorImpl_setDisplayMode(
+static jboolean org_lineageos_hardware_LiveDisplayVendorImpl_setDisplayMode(
         JNIEnv* env, jclass thiz __unused, jobject mode, jboolean makeDefault)
 {
     return LiveDisplay::getInstance().setDisplayMode(
             objectToDisplayMode(env, mode)->id, makeDefault) == OK;
 }
 
-static jboolean org_cyanogenmod_hardware_LiveDisplayVendorImpl_isOutdoorModeEnabled(
+static jboolean org_lineageos_hardware_LiveDisplayVendorImpl_isOutdoorModeEnabled(
         JNIEnv* env __unused, jclass thiz __unused)
 {
     return LiveDisplay::getInstance().isOutdoorModeEnabled();
 }
 
-static jboolean org_cyanogenmod_hardware_LiveDisplayVendorImpl_setOutdoorModeEnabled(
+static jboolean org_lineageos_hardware_LiveDisplayVendorImpl_setOutdoorModeEnabled(
         JNIEnv* env __unused, jclass thiz __unused, jboolean enabled)
 {
     return LiveDisplay::getInstance().setOutdoorModeEnabled(enabled) == OK;
 }
 
-static jobject org_cyanogenmod_hardware_LiveDisplayVendorImpl_getColorBalanceRange(
+static jobject org_lineageos_hardware_LiveDisplayVendorImpl_getColorBalanceRange(
         JNIEnv* env __unused, jclass thiz __unused)
 {
     Range range;
@@ -193,19 +194,19 @@ static jobject org_cyanogenmod_hardware_LiveDisplayVendorImpl_getColorBalanceRan
     return NULL;
 }
 
-static jint org_cyanogenmod_hardware_LiveDisplayVendorImpl_getColorBalance(
+static jint org_lineageos_hardware_LiveDisplayVendorImpl_getColorBalance(
         JNIEnv* env __unused, jclass thiz __unused)
 {
     return LiveDisplay::getInstance().getColorBalance();
 }
 
-static jboolean org_cyanogenmod_hardware_LiveDisplayVendorImpl_setColorBalance(
+static jboolean org_lineageos_hardware_LiveDisplayVendorImpl_setColorBalance(
         JNIEnv* env __unused, jclass thiz __unused, jint value)
 {
     return LiveDisplay::getInstance().setColorBalance(value) == OK;
 }
 
-static jboolean org_cyanogenmod_hardware_LiveDisplayVendorImpl_setPictureAdjustment(
+static jboolean org_lineageos_hardware_LiveDisplayVendorImpl_setPictureAdjustment(
         JNIEnv* env __unused, jclass thiz __unused, jobject hsicObj)
 {
     HSIC hsic(static_cast<int32_t>(env->GetFloatField(hsicObj, gHSICClass.mHue)),
@@ -217,7 +218,7 @@ static jboolean org_cyanogenmod_hardware_LiveDisplayVendorImpl_setPictureAdjustm
     return LiveDisplay::getInstance().setPictureAdjustment(hsic) == OK;
 }
 
-static jobject org_cyanogenmod_hardware_LiveDisplayVendorImpl_getPictureAdjustment(
+static jobject org_lineageos_hardware_LiveDisplayVendorImpl_getPictureAdjustment(
         JNIEnv* env __unused, jclass thiz __unused)
 {
     HSIC hsic;
@@ -230,7 +231,7 @@ static jobject org_cyanogenmod_hardware_LiveDisplayVendorImpl_getPictureAdjustme
     return hsicToObject(env, hsic);
 }
 
-static jobject org_cyanogenmod_hardware_LiveDisplayVendorImpl_getDefaultPictureAdjustment(
+static jobject org_lineageos_hardware_LiveDisplayVendorImpl_getDefaultPictureAdjustment(
         JNIEnv* env __unused, jclass thiz __unused)
 {
     HSIC hsic;
@@ -243,7 +244,7 @@ static jobject org_cyanogenmod_hardware_LiveDisplayVendorImpl_getDefaultPictureA
     return hsicToObject(env, hsic);
 }
 
-static jobject org_cyanogenmod_hardware_LiveDisplayVendorImpl_getPictureAdjustmentRanges(
+static jobject org_lineageos_hardware_LiveDisplayVendorImpl_getPictureAdjustmentRanges(
         JNIEnv* env __unused, jclass thiz __unused)
 {
     HSICRanges ranges;
@@ -260,7 +261,7 @@ static jobject org_cyanogenmod_hardware_LiveDisplayVendorImpl_getPictureAdjustme
 
 }
 
-static jobject org_cyanogenmod_hardware_LiveDisplayVendorImpl_getHueRange(
+static jobject org_lineageos_hardware_LiveDisplayVendorImpl_getHueRange(
         JNIEnv* env __unused, jclass thiz __unused)
 {
     HSICRanges ranges;
@@ -270,7 +271,7 @@ static jobject org_cyanogenmod_hardware_LiveDisplayVendorImpl_getHueRange(
     return NULL;
 }
 
-static jobject org_cyanogenmod_hardware_LiveDisplayVendorImpl_getSaturationRange(
+static jobject org_lineageos_hardware_LiveDisplayVendorImpl_getSaturationRange(
         JNIEnv* env __unused, jclass thiz __unused)
 {
     HSICRanges ranges;
@@ -280,7 +281,7 @@ static jobject org_cyanogenmod_hardware_LiveDisplayVendorImpl_getSaturationRange
     return NULL;
 }
 
-static jobject org_cyanogenmod_hardware_LiveDisplayVendorImpl_getIntensityRange(
+static jobject org_lineageos_hardware_LiveDisplayVendorImpl_getIntensityRange(
         JNIEnv* env __unused, jclass thiz __unused)
 {
     HSICRanges ranges;
@@ -290,7 +291,7 @@ static jobject org_cyanogenmod_hardware_LiveDisplayVendorImpl_getIntensityRange(
     return NULL;
 }
 
-static jobject org_cyanogenmod_hardware_LiveDisplayVendorImpl_getContrastRange(
+static jobject org_lineageos_hardware_LiveDisplayVendorImpl_getContrastRange(
         JNIEnv* env __unused, jclass thiz __unused)
 {
     HSICRanges ranges;
@@ -300,7 +301,7 @@ static jobject org_cyanogenmod_hardware_LiveDisplayVendorImpl_getContrastRange(
     return NULL;
 }
 
-static jobject org_cyanogenmod_hardware_LiveDisplayVendorImpl_getSaturationThresholdRange (
+static jobject org_lineageos_hardware_LiveDisplayVendorImpl_getSaturationThresholdRange (
         JNIEnv* env __unused, jclass thiz __unused)
 {
     HSICRanges ranges;
@@ -314,71 +315,71 @@ static jobject org_cyanogenmod_hardware_LiveDisplayVendorImpl_getSaturationThres
 static JNINativeMethod gLiveDisplayVendorImplMethods[] = {
     { "native_getSupportedFeatures",
         "()I",
-        (void *)org_cyanogenmod_hardware_LiveDisplayVendorImpl_getSupportedFeatures },
+        (void *)org_lineageos_hardware_LiveDisplayVendorImpl_getSupportedFeatures },
     { "native_isAdaptiveBacklightEnabled",
         "()Z",
-        (void *)org_cyanogenmod_hardware_LiveDisplayVendorImpl_isAdaptiveBacklightEnabled },
+        (void *)org_lineageos_hardware_LiveDisplayVendorImpl_isAdaptiveBacklightEnabled },
     { "native_setAdaptiveBacklightEnabled",
         "(Z)Z",
-        (void *)org_cyanogenmod_hardware_LiveDisplayVendorImpl_setAdaptiveBacklightEnabled },
+        (void *)org_lineageos_hardware_LiveDisplayVendorImpl_setAdaptiveBacklightEnabled },
     { "native_getDisplayModes",
-        "()[Lcyanogenmod/hardware/DisplayMode;",
-        (void *)org_cyanogenmod_hardware_LiveDisplayVendorImpl_getDisplayModes },
+        "()[Llineageos/hardware/DisplayMode;",
+        (void *)org_lineageos_hardware_LiveDisplayVendorImpl_getDisplayModes },
     { "native_getCurrentDisplayMode",
-        "()Lcyanogenmod/hardware/DisplayMode;",
-        (void *)org_cyanogenmod_hardware_LiveDisplayVendorImpl_getCurrentDisplayMode },
+        "()Llineageos/hardware/DisplayMode;",
+        (void *)org_lineageos_hardware_LiveDisplayVendorImpl_getCurrentDisplayMode },
     { "native_getDefaultDisplayMode",
-        "()Lcyanogenmod/hardware/DisplayMode;",
-        (void *)org_cyanogenmod_hardware_LiveDisplayVendorImpl_getDefaultDisplayMode },
+        "()Llineageos/hardware/DisplayMode;",
+        (void *)org_lineageos_hardware_LiveDisplayVendorImpl_getDefaultDisplayMode },
     { "native_setDisplayMode",
-        "(Lcyanogenmod/hardware/DisplayMode;Z)Z",
-        (void *)org_cyanogenmod_hardware_LiveDisplayVendorImpl_setDisplayMode },
+        "(Llineageos/hardware/DisplayMode;Z)Z",
+        (void *)org_lineageos_hardware_LiveDisplayVendorImpl_setDisplayMode },
     { "native_isOutdoorModeEnabled",
         "()Z",
-        (void *)org_cyanogenmod_hardware_LiveDisplayVendorImpl_isOutdoorModeEnabled },
+        (void *)org_lineageos_hardware_LiveDisplayVendorImpl_isOutdoorModeEnabled },
     { "native_setOutdoorModeEnabled",
         "(Z)Z",
-        (void *)org_cyanogenmod_hardware_LiveDisplayVendorImpl_setOutdoorModeEnabled },
+        (void *)org_lineageos_hardware_LiveDisplayVendorImpl_setOutdoorModeEnabled },
     { "native_getColorBalanceRange",
         "()Landroid/util/Range;",
-        (void *)org_cyanogenmod_hardware_LiveDisplayVendorImpl_getColorBalanceRange },
+        (void *)org_lineageos_hardware_LiveDisplayVendorImpl_getColorBalanceRange },
     { "native_getColorBalance",
         "()I",
-        (void *)org_cyanogenmod_hardware_LiveDisplayVendorImpl_getColorBalance },
+        (void *)org_lineageos_hardware_LiveDisplayVendorImpl_getColorBalance },
     { "native_setColorBalance",
         "(I)Z",
-        (void *)org_cyanogenmod_hardware_LiveDisplayVendorImpl_setColorBalance },
+        (void *)org_lineageos_hardware_LiveDisplayVendorImpl_setColorBalance },
     { "native_setPictureAdjustment",
-        "(Lcyanogenmod/hardware/HSIC;)Z",
-        (void *)org_cyanogenmod_hardware_LiveDisplayVendorImpl_setPictureAdjustment },
+        "(Llineageos/hardware/HSIC;)Z",
+        (void *)org_lineageos_hardware_LiveDisplayVendorImpl_setPictureAdjustment },
     { "native_getPictureAdjustment",
-        "()Lcyanogenmod/hardware/HSIC;",
-        (void *)org_cyanogenmod_hardware_LiveDisplayVendorImpl_getPictureAdjustment },
+        "()Llineageos/hardware/HSIC;",
+        (void *)org_lineageos_hardware_LiveDisplayVendorImpl_getPictureAdjustment },
     { "native_getDefaultPictureAdjustment",
-        "()Lcyanogenmod/hardware/HSIC;",
-        (void *)org_cyanogenmod_hardware_LiveDisplayVendorImpl_getDefaultPictureAdjustment },
+        "()Llineageos/hardware/HSIC;",
+        (void *)org_lineageos_hardware_LiveDisplayVendorImpl_getDefaultPictureAdjustment },
     { "native_getHueRange",
         "()Landroid/util/Range;",
-        (void *)org_cyanogenmod_hardware_LiveDisplayVendorImpl_getHueRange },
+        (void *)org_lineageos_hardware_LiveDisplayVendorImpl_getHueRange },
     { "native_getSaturationRange",
         "()Landroid/util/Range;",
-        (void *)org_cyanogenmod_hardware_LiveDisplayVendorImpl_getSaturationRange },
+        (void *)org_lineageos_hardware_LiveDisplayVendorImpl_getSaturationRange },
     { "native_getIntensityRange",
         "()Landroid/util/Range;",
-        (void *)org_cyanogenmod_hardware_LiveDisplayVendorImpl_getIntensityRange },
+        (void *)org_lineageos_hardware_LiveDisplayVendorImpl_getIntensityRange },
     { "native_getContrastRange",
         "()Landroid/util/Range;",
-        (void *)org_cyanogenmod_hardware_LiveDisplayVendorImpl_getContrastRange },
+        (void *)org_lineageos_hardware_LiveDisplayVendorImpl_getContrastRange },
     { "native_getSaturationThresholdRange",
         "()Landroid/util/Range;",
-        (void *)org_cyanogenmod_hardware_LiveDisplayVendorImpl_getSaturationThresholdRange },
+        (void *)org_lineageos_hardware_LiveDisplayVendorImpl_getSaturationThresholdRange },
 };
 
 
-static int register_org_cyanogenmod_hardware_LiveDisplayVendorImpl(JNIEnv *env)
+static int register_org_lineageos_hardware_LiveDisplayVendorImpl(JNIEnv *env)
 {
     FIND_CLASS(gDisplayModeClass.clazz,
-            "cyanogenmod/hardware/DisplayMode");
+            "lineageos/hardware/DisplayMode");
     GET_METHOD_ID(gDisplayModeClass.constructor,
             gDisplayModeClass.clazz, "<init>", "(ILjava/lang/String;)V");
     GET_FIELD_ID(gDisplayModeClass.id,
@@ -387,7 +388,7 @@ static int register_org_cyanogenmod_hardware_LiveDisplayVendorImpl(JNIEnv *env)
             gDisplayModeClass.clazz, "name", "Ljava/lang/String;");
 
     FIND_CLASS(gHSICClass.clazz,
-            "cyanogenmod/hardware/HSIC");
+            "lineageos/hardware/HSIC");
     GET_METHOD_ID(gHSICClass.constructor,
             gHSICClass.clazz, "<init>", "(FFFFF)V");
     GET_FIELD_ID(gHSICClass.mHue,
@@ -416,7 +417,7 @@ static int register_org_cyanogenmod_hardware_LiveDisplayVendorImpl(JNIEnv *env)
 
 
     int rc = jniRegisterNativeMethods(env,
-            "org/cyanogenmod/hardware/LiveDisplayVendorImpl",
+            "org/lineageos/hardware/LiveDisplayVendorImpl",
             gLiveDisplayVendorImplMethods,
             NELEM(gLiveDisplayVendorImplMethods));
     ALOGD("LiveDisplay registerNatives = %d", rc);
@@ -436,7 +437,7 @@ extern "C" jint JNI_OnLoad(JavaVM* vm, void* reserved __unused)
     }
     ALOG_ASSERT(env, "Could not retrieve the env!");
 
-    register_org_cyanogenmod_hardware_LiveDisplayVendorImpl(env);
+    register_org_lineageos_hardware_LiveDisplayVendorImpl(env);
 
     return JNI_VERSION_1_4;
 }

@@ -22,7 +22,7 @@ cc_library_static {
 
 cc_library_shared {
     name: "libjni_livedisplay",
-    src: "jni/org_cyanogenmod_hardware_LiveDisplayVendorImpl.cpp",
+    src: "jni/org_lineageos_hardware_LiveDisplayVendorImpl.cpp",
     shared_libs: [
         "libcutils",
         "libnativehelper",
