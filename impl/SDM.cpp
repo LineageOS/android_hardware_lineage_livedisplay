@@ -41,7 +41,15 @@ status_t SDM::loadVendorLibrary() {
     mLibHandle = dlopen(SDM_DISP_LIB, RTLD_NOW);
     if (mLibHandle == NULL) {
         ALOGE("DLOPEN failed for %s (%s)", SDM_DISP_LIB, dlerror());
-        return NO_INIT;
+        ALOGE("Attempting to DLOPEN legacy lib %s", SDM_DISP_LEGACY_LIB);
+        mLibHandle = dlopen(SDM_DISP_LEGACY_LIB, RTLD_NOW);
+        if (mLibHandle == NULL) {
+            ALOGE("DLOPEN failed for legacy lib %s (%s)", SDM_DISP_LEGACY_LIB, dlerror());
+            return NO_INIT;
+        } else {
+            ALOGE("%s successfully DLOPENed. This is deprecated! Switch to new %s",
+                   SDM_DISP_LEGACY_LIB, SDM_DISP_LIB);
+        }
     }
 
     disp_api_init = (int32_t(*)(int64_t*, uint32_t))dlsym(mLibHandle, "disp_api_init");
