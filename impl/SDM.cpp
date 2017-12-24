@@ -23,7 +23,7 @@
 
 #include <cutils/properties.h>
 
-//#define LOG_NDEBUG 0
+#define LOG_NDEBUG 0
 
 #define LOG_TAG "LiveDisplay-SDM"
 #include <utils/Log.h>
@@ -33,125 +33,48 @@
 
 namespace android {
 
-status_t SDM::loadVendorLibrary() {
-    if (mLibHandle != NULL) {
+using hardware::hidl_vec;
+using ::vendor::lineage::livedisplay::V1_0::disp_range;
+using ::vendor::lineage::livedisplay::V1_0::disp_mode;
+using ::vendor::lineage::livedisplay::V1_0::disp_pa_config;
+using ::vendor::lineage::livedisplay::V1_0::disp_pa_range;
+using ::vendor::lineage::livedisplay::V1_0::version_info;
+
+template<typename T>
+using Return = hardware::Return<T>;
+
+status_t SDM::loadHALService() {
+    if (intf != nullptr) {
         return OK;
     }
 
-    mLibHandle = dlopen(SDM_DISP_LIB, RTLD_NOW);
-    if (mLibHandle == NULL) {
-        ALOGE("DLOPEN failed for %s (%s)", SDM_DISP_LIB, dlerror());
+    intf = ::vendor::lineage::livedisplay::V1_0::ILiveDisplay::getService();
+    if (intf == nullptr) {
+        ALOGE("Failed to load Lineage LiveDisplay HAL service");
         return NO_INIT;
     }
-
-    disp_api_init = (int32_t(*)(int64_t*, uint32_t))dlsym(mLibHandle, "disp_api_init");
-    if (disp_api_init == NULL) {
-        ALOGE("dlsym failed for disp_api_init");
-        goto fail;
-    }
-    disp_api_deinit = (int32_t(*)(int64_t, uint32_t))dlsym(mLibHandle, "disp_api_deinit");
-    if (disp_api_deinit == NULL) {
-        ALOGE("dlsym failed for disp_api_deinit");
-        goto fail;
-    }
-    disp_api_get_global_color_balance_range = (int32_t(*)(int64_t, uint32_t, void*))dlsym(
-        mLibHandle, "disp_api_get_global_color_balance_range");
-    if (disp_api_get_global_color_balance_range == NULL) {
-        ALOGE("dlsym failed for disp_api_get_global_color_balance_range");
-        goto fail;
-    }
-    disp_api_set_global_color_balance = (int32_t(*)(int64_t, uint32_t, int32_t, uint32_t))dlsym(
-        mLibHandle, "disp_api_set_global_color_balance");
-    if (disp_api_set_global_color_balance == NULL) {
-        ALOGE("dlsym failed for disp_api_set_global_color_balance");
-        goto fail;
-    }
-    disp_api_get_global_color_balance = (int32_t(*)(int64_t, uint32_t, int32_t*, uint32_t*))dlsym(
-        mLibHandle, "disp_api_get_global_color_balance");
-    if (disp_api_get_global_color_balance == NULL) {
-        ALOGE("dlsym failed for disp_api_get_global_color_balance");
-        goto fail;
-    }
-    disp_api_get_num_display_modes =
-        (int32_t(*)(int64_t, uint32_t, int32_t, int32_t*, uint32_t*))dlsym(
-            mLibHandle, "disp_api_get_num_display_modes");
-    if (disp_api_get_num_display_modes == NULL) {
-        ALOGE("dlsym failed for disp_api_get_num_display_modes");
-        goto fail;
-    }
-    disp_api_get_display_modes =
-        (int32_t(*)(int64_t, uint32_t, int32_t, void*, int32_t, uint32_t*))dlsym(
-            mLibHandle, "disp_api_get_display_modes");
-    if (disp_api_get_display_modes == NULL) {
-        ALOGE("dlsym failed for disp_api_get_display_modes");
-        goto fail;
-    }
-    disp_api_get_active_display_mode =
-        (int32_t(*)(int64_t, uint32_t, int32_t*, uint32_t*, uint32_t*))dlsym(
-            mLibHandle, "disp_api_get_active_display_mode");
-    if (disp_api_get_active_display_mode == NULL) {
-        ALOGE("dlsym failed for disp_api_get_active_display_mode");
-        goto fail;
-    }
-    disp_api_set_active_display_mode = (int32_t(*)(int64_t, uint32_t, int32_t, uint32_t))dlsym(
-        mLibHandle, "disp_api_set_active_display_mode");
-    if (disp_api_set_active_display_mode == NULL) {
-        ALOGE("dlsym failed for disp_api_set_active_display_mode");
-        goto fail;
-    }
-    disp_api_set_default_display_mode = (int32_t(*)(int64_t, uint32_t, int32_t, uint32_t))dlsym(
-        mLibHandle, "disp_api_set_default_display_mode");
-    if (disp_api_set_default_display_mode == NULL) {
-        ALOGE("dlsym failed for disp_api_set_default_display_mode");
-        goto fail;
-    }
-    disp_api_get_default_display_mode = (int32_t(*)(int64_t, uint32_t, int32_t*, uint32_t*))dlsym(
-        mLibHandle, "disp_api_get_default_display_mode");
-    if (disp_api_get_default_display_mode == NULL) {
-        ALOGE("dlsym failed for disp_api_get_default_display_mode");
-        goto fail;
-    }
-    disp_api_get_global_pa_range =
-        (int32_t(*)(int64_t, uint32_t, void*))dlsym(mLibHandle, "disp_api_get_global_pa_range");
-    if (disp_api_get_global_pa_range == NULL) {
-        ALOGE("dlsym failed for disp_api_get_global_pa_range");
-        goto fail;
-    }
-    disp_api_get_global_pa_config = (int32_t(*)(int64_t, uint32_t, uint32_t*, void*))dlsym(
-        mLibHandle, "disp_api_get_global_pa_config");
-    if (disp_api_get_global_pa_config == NULL) {
-        ALOGE("dlsym failed for disp_api_get_global_pa_config");
-        goto fail;
-    }
-    disp_api_set_global_pa_config = (int32_t(*)(int64_t, uint32_t, uint32_t, void*))dlsym(
-        mLibHandle, "disp_api_set_global_pa_config");
-    if (disp_api_set_global_pa_config == NULL) {
-        ALOGE("dlsym failed for disp_api_set_global_pa_config");
-        goto fail;
-    }
-    disp_api_get_feature_version = (int32_t(*)(int64_t, uint32_t, void*, uint32_t*))dlsym(
-        mLibHandle, "disp_api_get_feature_version");
-    if (disp_api_get_feature_version == NULL) {
-        ALOGE("dlsym failed for disp_api_get_feature_version");
-        goto fail;
-    }
+    ALOGI("Loaded Lineage LiveDisplay HAL service");
 
     return OK;
-
-fail:
-    ALOGE("Failed to link vendor library: %s", dlerror());
-    dlclose(mLibHandle);
-    mLibHandle = NULL;
-    return NO_INIT;
 }
 
 status_t SDM::initialize() {
-    status_t rc = loadVendorLibrary();
+    status_t rc = loadHALService();
     if (rc != OK) {
         return rc;
     }
 
-    rc = disp_api_init(&mHandle, 0);
+    Return<void> ret = intf->init(0,
+            [&](int32_t _rc, int64_t hctx) {
+                rc = _rc;
+                mHandle = hctx;
+            });
+
+    if (!ret.isOk()) {
+        ALOGE("init failed status: %s", ret.description().c_str());
+        return NO_INIT;
+    }
+
     if (rc != OK) {
         return rc;
     }
@@ -172,15 +95,9 @@ status_t SDM::initialize() {
     return OK;
 }
 
-SDM::~SDM() {
-    if (mLibHandle != NULL) {
-        dlclose(mLibHandle);
-    }
-}
-
 status_t SDM::deinitialize() {
-    if (mLibHandle != NULL) {
-        disp_api_deinit(mHandle, 0);
+    if (intf != nullptr) {
+        intf->deinit(mHandle, 0);
         mHandle = -1;
     }
     return OK;
@@ -208,49 +125,62 @@ bool SDM::isAdaptiveBacklightEnabled() {
 }
 
 status_t SDM::getColorBalanceRange(Range& range) {
-    status_t rc = disp_api_get_global_color_balance_range(mHandle, 0, &range);
+    status_t rc = OK;
+    intf->getGlobalColorBalanceRange(mHandle, 0,
+            [&](int32_t _rc, disp_range _range) {
+                rc = _rc;
+                range.min = _range.min_val;
+                range.max = _range.max_val;
+                range.step = _range.step_val;
+            });
     ALOGV("getColorBalanceRange: min=%d max=%d step=%d", range.min, range.max, range.step);
     return rc;
 }
 
 status_t SDM::setColorBalance(int32_t balance) {
-    return disp_api_set_global_color_balance(mHandle, 0, balance, 0);
+    return intf->setGlobalColorBalance(mHandle, 0, balance, 0);
 }
 
 int32_t SDM::getColorBalance() {
-    int32_t value = -1;
-    uint32_t flags = 0;
-    if (disp_api_get_global_color_balance(mHandle, 0, &value, &flags) != 0) {
-        value = 0;
-    }
-    return value;
+    int32_t warmness = 0;
+    intf->getGlobalColorBalance(mHandle, 0,
+            [&](int32_t rc, int32_t _warmness, uint32_t _flags) {
+                if (rc != OK) {
+                    warmness = 0;
+                } else {
+                    warmness = _warmness;
+                }
+            });
+    return warmness;
 }
 
 uint32_t SDM::getNumDisplayModes() {
     uint32_t flags = 0;
-    int32_t count = 0;
-    if (disp_api_get_num_display_modes(mHandle, 0, 0, &count, &flags)) {
-        count = 0;
-    }
+    int32_t mode_cnt = 0;
+    intf->getNumDisplayModes(mHandle, 0, 0,
+            [&](int32_t rc, int32_t _mode_cnt, uint32_t _flags) {
+                if (rc == OK) {
+                    mode_cnt = _mode_cnt;
+                    flags = _flags;
+                }
+            });
     if (getLocalSRGBMode() != nullptr) {
-        count++;
+        mode_cnt++;
     }
     if (getLocalDCIP3Mode() != nullptr) {
-        count++;
+        mode_cnt++;
     }
-    return count;
+    return mode_cnt;
 }
 
 status_t SDM::getDisplayModes(List<sp<DisplayMode>>& profiles) {
     status_t rc = OK;
-    uint32_t flags = 0, i = 0;
 
-    uint32_t count = getNumDisplayModes();
-    if (!count) return rc;
+    uint32_t sdm_count = getNumDisplayModes();
+    if (!sdm_count) return rc;
 
     sp<DisplayMode> srgb = getLocalSRGBMode();
     sp<DisplayMode> dci_p3 = getLocalDCIP3Mode();
-    uint32_t sdm_count = count;
     if (srgb != nullptr) {
         sdm_count--;
     }
@@ -258,31 +188,18 @@ status_t SDM::getDisplayModes(List<sp<DisplayMode>>& profiles) {
         sdm_count--;
     }
 
-    struct sdm_mode {
-        int32_t id;
-        int32_t type;
-        int32_t len;
-        char* name;
-    };
-
-    sdm_mode* tmp = new sdm_mode[sdm_count];
-    memset(tmp, 0, sizeof(sdm_mode) * sdm_count);
-    for (i = 0; i < sdm_count; i++) {
-        tmp[i].id = -1;
-        tmp[i].name = new char[128];
-        tmp[i].len = 128;
-    }
-
-    rc = disp_api_get_display_modes(mHandle, 0, 0, tmp, sdm_count, &flags);
-    if (rc == 0) {
-        for (i = 0; i < sdm_count; i++) {
-            const sp<DisplayMode> m = new DisplayMode(tmp[i].id, tmp[i].name, tmp[i].len);
-            m->privFlags = PRIV_MODE_FLAG_SDM;
-            profiles.push_back(m);
-            delete tmp[i].name;
-        }
-    }
-    delete[] tmp;
+    intf->getDisplayModes(mHandle, 0, 0, sdm_count,
+            [&](int32_t _rc, hidl_vec<disp_mode> modes, uint32_t flags) {
+                rc = _rc;
+                if (_rc == OK) {
+                    for (int i = 0; i < sdm_count; i++) {
+                        const sp<DisplayMode> m = new DisplayMode(modes[i].id,
+                                modes[i].name.c_str(), modes[i].name_len);
+                        m->privFlags = PRIV_MODE_FLAG_SDM;
+                        profiles.push_back(m);
+                    }
+                }
+            });
 
     if (srgb != nullptr) {
         profiles.push_back(srgb);
@@ -332,7 +249,7 @@ status_t SDM::setDisplayMode(int32_t modeID, bool makeDefault) {
                 return rc;
             }
             if (mode->privFlags == PRIV_MODE_FLAG_SDM) {
-                rc = disp_api_set_default_display_mode(mHandle, 0, mode->id, 0);
+                rc = intf->setDefaultDisplayMode(mHandle, 0, mode->id, 0);
                 if (rc != OK) {
                     ALOGE("failed to save mode! %d", rc);
                     return rc;
@@ -395,11 +312,11 @@ status_t SDM::setModeState(sp<DisplayMode> mode, bool state) {
         return Utils::writeInt(mode->privData.string(), state ? 1 : 0);
     } else if (mode->privFlags == PRIV_MODE_FLAG_SDM) {
         if (state) {
-            return disp_api_set_active_display_mode(mHandle, 0, mode->id, 0);
+            return intf->setActiveDisplayMode(mHandle, 0, mode->id, 0);
         } else {
             if (Utils::readInitialModeId(&id) == OK) {
                 ALOGV("set sdm mode to default: id=%d", id);
-                return disp_api_set_active_display_mode(mHandle, 0, id, 0);
+                return intf->setActiveDisplayMode(mHandle, 0, id, 0);
             }
         }
     }
@@ -433,43 +350,44 @@ sp<DisplayMode> SDM::getLocalDCIP3Mode() {
 }
 
 status_t SDM::getPictureAdjustmentRanges(HSICRanges& ranges) {
-    hsic_ranges r;
-    memset(&r, 0, sizeof(struct hsic_ranges));
-
-    status_t rc = disp_api_get_global_pa_range(mHandle, 0, &r);
-    if (rc == OK) {
-        ranges.hue.min = r.hue.min;
-        ranges.hue.max = r.hue.max;
-        ranges.hue.step - r.hue.step;
-        ranges.saturation.min = r.saturation.min;
-        ranges.saturation.max = r.saturation.max;
-        ranges.saturation.step = r.saturation.step;
-        ranges.intensity.min = r.intensity.min;
-        ranges.intensity.max = r.intensity.max;
-        ranges.intensity.step = r.intensity.step;
-        ranges.contrast.min = r.contrast.min;
-        ranges.contrast.max = r.contrast.max;
-        ranges.contrast.step = r.contrast.step;
-        ranges.saturationThreshold.min = r.saturationThreshold.min;
-        ranges.saturationThreshold.max = r.saturationThreshold.max;
-        ranges.saturationThreshold.step = r.saturationThreshold.step;
-    }
+    status_t rc;
+    intf->getGlobalPARange(mHandle, 0,
+            [&](int32_t _rc, disp_pa_range _range) {
+                rc = _rc;
+                if (rc == OK) {
+                    ranges.hue.max = _range.hue.max_val;
+                    ranges.hue.min = _range.hue.min_val;
+                    ranges.hue.step = _range.hue.step_val;
+                    ranges.saturation.max = _range.saturation.max_val;
+                    ranges.saturation.min = _range.saturation.min_val;
+                    ranges.saturation.step = _range.saturation.step_val;
+                    ranges.intensity.max = _range.value.max_val;
+                    ranges.intensity.min = _range.value.min_val;
+                    ranges.intensity.step = _range.value.step_val;
+                    ranges.contrast.max = _range.contrast.max_val;
+                    ranges.contrast.min = _range.contrast.min_val;
+                    ranges.contrast.step = _range.contrast.step_val;
+                    ranges.saturationThreshold.max = _range.sat_threshold.max_val;
+                    ranges.saturationThreshold.min = _range.sat_threshold.min_val;
+                    ranges.saturationThreshold.step = _range.sat_threshold.step_val;
+                }
+            });
     return rc;
 }
 
 status_t SDM::getPictureAdjustment(HSIC& hsic) {
-    uint32_t enable = 0;
-    hsic_config config;
-    memset(&config, 0, sizeof(struct hsic_config));
-
-    status_t rc = disp_api_get_global_pa_config(mHandle, 0, &enable, &config);
-    if (rc == OK) {
-        hsic.hue = config.data.hue;
-        hsic.saturation = config.data.saturation;
-        hsic.intensity = config.data.intensity;
-        hsic.contrast = config.data.contrast;
-        hsic.saturationThreshold = config.data.saturationThreshold;
-    }
+    status_t rc;
+    intf->getGlobalPAConfig(mHandle, 0,
+            [&](int32_t _rc, uint32_t enable, disp_pa_config cfg) {
+                rc = _rc;
+                if (rc == OK) {
+                    hsic.hue = cfg.data.hue;
+                    hsic.saturation = cfg.data.saturation;
+                    hsic.intensity = cfg.data.value;
+                    hsic.contrast = cfg.data.contrast;
+                    hsic.saturationThreshold = cfg.data.sat_thresh;
+                }
+            });
     return rc;
 }
 
@@ -479,34 +397,31 @@ status_t SDM::getDefaultPictureAdjustment(HSIC& hsic) {
 }
 
 status_t SDM::setPictureAdjustment(HSIC hsic) {
-    hsic_config config;
-    memset(&config, 0, sizeof(struct hsic_config));
-    config.data.hue = hsic.hue;
-    config.data.saturation = hsic.saturation;
-    config.data.intensity = hsic.intensity;
-    config.data.contrast = hsic.contrast;
-    config.data.saturationThreshold = hsic.saturationThreshold;
+    disp_pa_config cfg;
+    memset(&cfg, 0, sizeof(cfg));
+    cfg.data.hue = hsic.hue;
+    cfg.data.saturation = hsic.saturation;
+    cfg.data.value = hsic.intensity;
+    cfg.data.contrast = hsic.contrast;
+    cfg.data.sat_thresh = hsic.saturationThreshold;
 
-    return disp_api_set_global_pa_config(mHandle, 0, 1, &config);
+    return intf->setGlobalPAConfig(mHandle, 0, 1, cfg);
 }
 
 bool SDM::hasFeature(Feature feature) {
-    uint32_t id = 0, flags = 0;
-    struct version {
-        uint8_t x, y;
-        uint16_t z;
-    };
-    version v;
+    uint32_t feature_id;
+    status_t rc;
+    version_info ver;
 
     switch (feature) {
         case Feature::DISPLAY_MODES:
-            id = 4;
+            feature_id = 4;
             break;
         case Feature::COLOR_TEMPERATURE:
-            id = 3;
+            feature_id = 3;
             break;
         case Feature::PICTURE_ADJUSTMENT:
-            id = 1;
+            feature_id = 1;
         case Feature::ADAPTIVE_BACKLIGHT:
             if (property_get_int32("ro.qualcomm.foss", 0) > 0) {
                 return true;
@@ -516,8 +431,18 @@ bool SDM::hasFeature(Feature feature) {
             return false;
     }
 
-    if (disp_api_get_feature_version(mHandle, id, &v, &flags) == 0) {
-        if (v.x > 0 || v.y > 0 || v.z > 0) {
+    intf->getFeatureVersion(mHandle, feature_id,
+            [&](int32_t _rc, version_info _ver, uint32_t flags) {
+                rc = _rc;
+                if (rc == OK) {
+                    ver.major = _ver.major;
+                    ver.minor = _ver.minor;
+                    ver.step = _ver.step;
+                }
+            });
+
+    if (rc == OK) {
+        if (ver.major > 0 || ver.minor > 0 || ver.step > 0) {
 
             // Color balance depends on calibration data in SDM
             if (feature == Feature::DISPLAY_MODES ||
@@ -545,13 +470,21 @@ bool SDM::hasFeature(Feature feature) {
 }
 
 status_t SDM::saveInitialDisplayMode() {
-    int32_t id = 0;
+    int32_t mode_id = 0;
     uint32_t flags = 0;
-    if (Utils::readInitialModeId(&id) != OK || id < 0) {
-        if (disp_api_get_default_display_mode(mHandle, 0, &id, &flags) == OK && id >= 0) {
-            return Utils::writeInitialModeId(id);
+    status_t rc;
+    if (Utils::readInitialModeId(&mode_id) != OK || mode_id < 0) {
+        intf->getDefaultDisplayMode(mHandle, 0,
+                [&](int32_t _rc, int32_t _mode_id, uint32_t flags) {
+                    rc = _rc;
+                    if (rc == OK) {
+                        mode_id = _mode_id;
+                    }
+                });
+        if (rc == OK && mode_id >= 0) {
+            return Utils::writeInitialModeId(mode_id);
         } else {
-            return Utils::writeInitialModeId(id = 0);
+            return Utils::writeInitialModeId(mode_id = 0);
         }
     }
     return OK;
