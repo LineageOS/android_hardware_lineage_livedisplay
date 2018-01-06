@@ -240,7 +240,7 @@ status_t LiveDisplay::getPictureAdjustment(HSIC& hsic) {
     Mutex::Autolock _l(mLock);
 
     if (check(Feature::PICTURE_ADJUSTMENT)) {
-        rc = mBackend->setPictureAdjustment(hsic);
+        rc = mBackend->getPictureAdjustment(hsic);
         if (rc != OK) {
             error("Unable to get picture adjustment!");
         }
