@@ -13,6 +13,9 @@
 #define FOSS_OFF "foss:off"
 #define FOSS_STATUS "foss:status"
 
+// For use when only sysfs modes are available
+#define STANDARD_NODE_ID 600
+
 #define SRGB_NODE "/sys/class/graphics/fb0/srgb"
 #define SRGB_NODE_ID 601
 
@@ -99,6 +102,7 @@ class SDM : public LiveDisplayBackend {
     status_t setModeState(sp<DisplayMode> mode, bool state);
     status_t saveInitialDisplayMode();
     uint32_t getNumDisplayModes();
+    uint32_t getNumSDMDisplayModes();
 
     int64_t mHandle;
     bool mCachedFOSSStatus;
