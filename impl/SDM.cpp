@@ -234,12 +234,17 @@ int32_t SDM::getColorBalance() {
     return value;
 }
 
-uint32_t SDM::getNumDisplayModes() {
+uint32_t SDM::getNumSDMDisplayModes() {
     uint32_t flags = 0;
     int32_t count = 0;
     if (disp_api_get_num_display_modes(mHandle, 0, 0, &count, &flags)) {
         count = 0;
     }
+    return count;
+}
+
+uint32_t SDM::getNumDisplayModes() {
+    int32_t count = getNumSDMDisplayModes();
     if (getLocalSRGBMode() != nullptr) {
         count++;
     }
@@ -258,13 +263,8 @@ status_t SDM::getDisplayModes(List<sp<DisplayMode>>& profiles) {
 
     sp<DisplayMode> srgb = getLocalSRGBMode();
     sp<DisplayMode> dci_p3 = getLocalDCIP3Mode();
-    uint32_t sdm_count = count;
-    if (srgb != nullptr) {
-        sdm_count--;
-    }
-    if (dci_p3 != nullptr) {
-        sdm_count--;
-    }
+
+    uint32_t sdm_count = getNumSDMDisplayModes();
 
     struct sdm_mode {
         int32_t id;
@@ -291,6 +291,13 @@ status_t SDM::getDisplayModes(List<sp<DisplayMode>>& profiles) {
         }
     }
     delete[] tmp;
+
+    if (sdm_count == 0) {
+        const sp<DisplayMode> m = new DisplayMode(STANDARD_NODE_ID, "standard", 8);
+        m->privFlags = PRIV_MODE_FLAG_SYSFS;
+        m->privData.setTo("");
+        profiles.push_back(m);
+    }
 
     if (srgb != nullptr) {
         profiles.push_back(srgb);
@@ -399,8 +406,13 @@ status_t SDM::setModeState(sp<DisplayMode> mode, bool state) {
     int32_t id = 0;
 
     if (mode->privFlags == PRIV_MODE_FLAG_SYSFS) {
-        ALOGV("sysfs node: %s state=%d", mode->privData.string(), state);
-        return Utils::writeInt(mode->privData.string(), state ? 1 : 0);
+        if (mode->id != STANDARD_NODE_ID) {
+           ALOGV("sysfs node: %s state=%d", mode->privData.string(), state);
+           return Utils::writeInt(mode->privData.string(), state ? 1 : 0);
+        } else {
+           // NOOP
+           return OK;
+        }
     } else if (mode->privFlags == PRIV_MODE_FLAG_SDM) {
         if (state) {
             return disp_api_set_active_display_mode(mHandle, 0, mode->id, 0);
