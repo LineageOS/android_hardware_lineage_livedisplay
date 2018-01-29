@@ -27,7 +27,7 @@
 
 #include "Utils.h"
 
-#define LOCAL_STORAGE_PATH "/data/misc/display"
+#define LOCAL_STORAGE_PATH "/data/vendor/display"
 #define LOCAL_MODE_ID "livedisplay_mode"
 #define LOCAL_INITIAL_MODE_ID "livedisplay_initial_mode"
 
