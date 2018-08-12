@@ -22,24 +22,27 @@ namespace livedisplay {
 namespace V2_0 {
 namespace qti {
 
+SunlightEnhancement::SunlightEnhancement() {
+    mColorHal = IColor::getService();
+}
+
 // Methods from ::vendor::lineage::livedisplay::V2_0::ISunlightEnhancement follow.
 Return<bool> SunlightEnhancement::isEnabled() {
-    // TODO implement
-    return bool {};
+    if (mColorHal != nullptr) {
+        return mColorHal->isOutdoorModeEnabled();
+    }
+
+    return false;
 }
 
 Return<bool> SunlightEnhancement::setEnabled(bool enabled) {
-    // TODO implement
-    return bool {};
+    if (mColorHal != nullptr) {
+        return mColorHal->setOutdoorModeEnabled(enabled);
+    }
+
+    return false;
 }
 
-
-// Methods from ::android::hidl::base::V1_0::IBase follow.
-
-//ISunlightEnhancement* HIDL_FETCH_ISunlightEnhancement(const char* /* name */) {
-    //return new SunlightEnhancement();
-//}
-//
 }  // namespace qti
 }  // namespace V2_0
 }  // namespace livedisplay

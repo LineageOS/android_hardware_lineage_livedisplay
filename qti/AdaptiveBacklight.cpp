@@ -22,24 +22,27 @@ namespace livedisplay {
 namespace V2_0 {
 namespace qti {
 
+AdaptiveBacklight::AdaptiveBacklight() {
+    mColorHal = IColor::getService();
+}
+
 // Methods from ::vendor::lineage::livedisplay::V2_0::IAdaptiveBacklight follow.
 Return<bool> AdaptiveBacklight::isEnabled() {
-    // TODO implement
-    return bool {};
+    if (mColorHal != nullptr) {
+        return mColorHal->isAdaptiveBacklightEnabled();
+    }
+
+    return false;
 }
 
 Return<bool> AdaptiveBacklight::setEnabled(bool enabled) {
-    // TODO implement
-    return bool {};
+    if (mColorHal != nullptr) {
+        return mColorHal->setAdaptiveBacklightEnabled(enabled);
+    }
+
+    return false;
 }
 
-
-// Methods from ::android::hidl::base::V1_0::IBase follow.
-
-//IAdaptiveBacklight* HIDL_FETCH_IAdaptiveBacklight(const char* /* name */) {
-    //return new AdaptiveBacklight();
-//}
-//
 }  // namespace qti
 }  // namespace V2_0
 }  // namespace livedisplay

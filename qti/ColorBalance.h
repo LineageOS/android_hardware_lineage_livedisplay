@@ -17,6 +17,7 @@
 #ifndef VENDOR_LINEAGE_LIVEDISPLAY_V2_0_COLORBALANCE_H
 #define VENDOR_LINEAGE_LIVEDISPLAY_V2_0_COLORBALANCE_H
 
+#include <vendor/lineage/livedisplay/1.0/IColor.h>
 #include <vendor/lineage/livedisplay/2.0/IColorBalance.h>
 #include <hidl/MQDescriptor.h>
 #include <hidl/Status.h>
@@ -35,18 +36,20 @@ using ::android::hardware::Return;
 using ::android::hardware::Void;
 using ::android::sp;
 
-struct ColorBalance : public IColorBalance {
+using ::vendor::lineage::livedisplay::V1_0::IColor;
+
+class ColorBalance : public IColorBalance {
+  public:
+    ColorBalance();
+
     // Methods from ::vendor::lineage::livedisplay::V2_0::IColorBalance follow.
     Return<void> getColorBalanceRange(getColorBalanceRange_cb _hidl_cb) override;
     Return<int32_t> getColorBalance() override;
     Return<bool> setColorBalance(int32_t value) override;
 
-    // Methods from ::android::hidl::base::V1_0::IBase follow.
-
+  private:
+    sp<IColor> mColorHal;
 };
-
-// FIXME: most likely delete, this is only for passthrough implementations
-// extern "C" IColorBalance* HIDL_FETCH_IColorBalance(const char* name);
 
 }  // namespace qti
 }  // namespace V2_0

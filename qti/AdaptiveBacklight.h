@@ -17,6 +17,7 @@
 #ifndef VENDOR_LINEAGE_LIVEDISPLAY_V2_0_ADAPTIVEBACKLIGHT_H
 #define VENDOR_LINEAGE_LIVEDISPLAY_V2_0_ADAPTIVEBACKLIGHT_H
 
+#include <vendor/lineage/livedisplay/1.0/IColor.h>
 #include <vendor/lineage/livedisplay/2.0/IAdaptiveBacklight.h>
 #include <hidl/MQDescriptor.h>
 #include <hidl/Status.h>
@@ -35,17 +36,19 @@ using ::android::hardware::Return;
 using ::android::hardware::Void;
 using ::android::sp;
 
-struct AdaptiveBacklight : public IAdaptiveBacklight {
+using ::vendor::lineage::livedisplay::V1_0::IColor;
+
+class AdaptiveBacklight : public IAdaptiveBacklight {
+  public:
+    AdaptiveBacklight();
+
     // Methods from ::vendor::lineage::livedisplay::V2_0::IAdaptiveBacklight follow.
     Return<bool> isEnabled() override;
     Return<bool> setEnabled(bool enabled) override;
 
-    // Methods from ::android::hidl::base::V1_0::IBase follow.
-
+  private:
+    sp<IColor> mColorHal;
 };
-
-// FIXME: most likely delete, this is only for passthrough implementations
-// extern "C" IAdaptiveBacklight* HIDL_FETCH_IAdaptiveBacklight(const char* name);
 
 }  // namespace qti
 }  // namespace V2_0

@@ -22,34 +22,43 @@ namespace livedisplay {
 namespace V2_0 {
 namespace qti {
 
+DisplayModes::DisplayModes() {
+    mColorHal = IColor::getService();
+}
+
 // Methods from ::vendor::lineage::livedisplay::V2_0::IDisplayModes follow.
 Return<void> DisplayModes::getDisplayModes(getDisplayModes_cb _hidl_cb) {
-    // TODO implement
+    if (mColorHal != nullptr) {
+        return mColorHal->getDisplayModes(_hidl_cb);
+    }
+
     return Void();
 }
 
 Return<void> DisplayModes::getCurrentDisplayMode(getCurrentDisplayMode_cb _hidl_cb) {
-    // TODO implement
+    if (mColorHal != nullptr) {
+        return mColorHal->getCurrentDisplayMode(_hidl_cb);
+    }
+
     return Void();
 }
 
 Return<void> DisplayModes::getDefaultDisplayMode(getDefaultDisplayMode_cb _hidl_cb) {
-    // TODO implement
+    if (mColorHal != nullptr) {
+        return mColorHal->getDefaultDisplayMode(_hidl_cb);
+    }
+
     return Void();
 }
 
 Return<bool> DisplayModes::setDisplayMode(int32_t modeID, bool makeDefault) {
-    // TODO implement
-    return bool {};
+    if (mColorHal != nullptr) {
+        return mColorHal->setDisplayMode(modeID, makeDefault);
+    }
+
+    return false;
 }
 
-
-// Methods from ::android::hidl::base::V1_0::IBase follow.
-
-//IDisplayModes* HIDL_FETCH_IDisplayModes(const char* /* name */) {
-    //return new DisplayModes();
-//}
-//
 }  // namespace qti
 }  // namespace V2_0
 }  // namespace livedisplay

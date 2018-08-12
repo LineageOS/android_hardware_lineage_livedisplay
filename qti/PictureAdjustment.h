@@ -17,6 +17,7 @@
 #ifndef VENDOR_LINEAGE_LIVEDISPLAY_V2_0_PICTUREADJUSTMENT_H
 #define VENDOR_LINEAGE_LIVEDISPLAY_V2_0_PICTUREADJUSTMENT_H
 
+#include <vendor/lineage/livedisplay/1.0/IColor.h>
 #include <vendor/lineage/livedisplay/2.0/IPictureAdjustment.h>
 #include <hidl/MQDescriptor.h>
 #include <hidl/Status.h>
@@ -35,7 +36,12 @@ using ::android::hardware::Return;
 using ::android::hardware::Void;
 using ::android::sp;
 
-struct PictureAdjustment : public IPictureAdjustment {
+using ::vendor::lineage::livedisplay::V1_0::IColor;
+
+class PictureAdjustment : public IPictureAdjustment {
+  public:
+    PictureAdjustment();
+
     // Methods from ::vendor::lineage::livedisplay::V2_0::IPictureAdjustment follow.
     Return<void> getHueRange(getHueRange_cb _hidl_cb) override;
     Return<void> getSaturationRange(getSaturationRange_cb _hidl_cb) override;
@@ -46,12 +52,9 @@ struct PictureAdjustment : public IPictureAdjustment {
     Return<void> getDefaultPictureAdjustment(getDefaultPictureAdjustment_cb _hidl_cb) override;
     Return<bool> setPictureAdjustment(const ::vendor::lineage::livedisplay::V1_0::HSIC& hsic) override;
 
-    // Methods from ::android::hidl::base::V1_0::IBase follow.
-
+  private:
+    sp<IColor> mColorHal;
 };
-
-// FIXME: most likely delete, this is only for passthrough implementations
-// extern "C" IPictureAdjustment* HIDL_FETCH_IPictureAdjustment(const char* name);
 
 }  // namespace qti
 }  // namespace V2_0

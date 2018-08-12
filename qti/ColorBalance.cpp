@@ -22,29 +22,35 @@ namespace livedisplay {
 namespace V2_0 {
 namespace qti {
 
+ColorBalance::ColorBalance() {
+    mColorHal = IColor::getService();
+}
+
 // Methods from ::vendor::lineage::livedisplay::V2_0::IColorBalance follow.
 Return<void> ColorBalance::getColorBalanceRange(getColorBalanceRange_cb _hidl_cb) {
-    // TODO implement
+    if (mColorHal != nullptr) {
+        return mColorHal->getColorBalanceRange(_hidl_cb);
+    }
+
     return Void();
 }
 
 Return<int32_t> ColorBalance::getColorBalance() {
-    // TODO implement
-    return int32_t {};
+    if (mColorHal != nullptr) {
+        return mColorHal->getColorBalance();
+    }
+
+    return 0;
 }
 
 Return<bool> ColorBalance::setColorBalance(int32_t value) {
-    // TODO implement
-    return bool {};
+    if (mColorHal != nullptr) {
+        return mColorHal->setColorBalance(value);
+    }
+
+    return false;
 }
 
-
-// Methods from ::android::hidl::base::V1_0::IBase follow.
-
-//IColorBalance* HIDL_FETCH_IColorBalance(const char* /* name */) {
-    //return new ColorBalance();
-//}
-//
 }  // namespace qti
 }  // namespace V2_0
 }  // namespace livedisplay

@@ -22,54 +22,75 @@ namespace livedisplay {
 namespace V2_0 {
 namespace qti {
 
+PictureAdjustment::PictureAdjustment() {
+    mColorHal = IColor::getService();
+}
+
 // Methods from ::vendor::lineage::livedisplay::V2_0::IPictureAdjustment follow.
 Return<void> PictureAdjustment::getHueRange(getHueRange_cb _hidl_cb) {
-    // TODO implement
+    if (mColorHal != nullptr) {
+       return mColorHal->getHueRange(_hidl_cb);
+    }
+
     return Void();
 }
 
 Return<void> PictureAdjustment::getSaturationRange(getSaturationRange_cb _hidl_cb) {
-    // TODO implement
+    if (mColorHal != nullptr) {
+       return mColorHal->getSaturationRange(_hidl_cb);
+    }
+
     return Void();
 }
 
 Return<void> PictureAdjustment::getIntensityRange(getIntensityRange_cb _hidl_cb) {
-    // TODO implement
+    if (mColorHal != nullptr) {
+       return mColorHal->getIntensityRange(_hidl_cb);
+    }
+
     return Void();
 }
 
 Return<void> PictureAdjustment::getContrastRange(getContrastRange_cb _hidl_cb) {
-    // TODO implement
+    if (mColorHal != nullptr) {
+       return mColorHal->getContrastRange(_hidl_cb);
+    }
+
     return Void();
 }
 
 Return<void> PictureAdjustment::getSaturationThresholdRange(getSaturationThresholdRange_cb _hidl_cb) {
-    // TODO implement
+    if (mColorHal != nullptr) {
+        return mColorHal->getSaturationThresholdRange(_hidl_cb);
+    }
+
     return Void();
 }
 
 Return<void> PictureAdjustment::getPictureAdjustment(getPictureAdjustment_cb _hidl_cb) {
-    // TODO implement
+    if (mColorHal != nullptr) {
+        return mColorHal->getPictureAdjustment(_hidl_cb);
+    }
+
     return Void();
 }
 
 Return<void> PictureAdjustment::getDefaultPictureAdjustment(getDefaultPictureAdjustment_cb _hidl_cb) {
-    // TODO implement
+    if (mColorHal != nullptr) {
+        return mColorHal->getDefaultPictureAdjustment(_hidl_cb);
+    }
+
     return Void();
 }
 
 Return<bool> PictureAdjustment::setPictureAdjustment(const ::vendor::lineage::livedisplay::V1_0::HSIC& hsic) {
-    // TODO implement
-    return bool {};
+    if (mColorHal != nullptr) {
+        return mColorHal->setPictureAdjustment(hsic);
+    }
+
+    return false;
 }
 
-
-// Methods from ::android::hidl::base::V1_0::IBase follow.
-
-//IPictureAdjustment* HIDL_FETCH_IPictureAdjustment(const char* /* name */) {
-    //return new PictureAdjustment();
-//}
-//
 }  // namespace qti
 }  // namespace V2_0
 }  // namespace livedisplay
