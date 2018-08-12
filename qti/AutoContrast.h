@@ -38,7 +38,7 @@ using ::android::sp;
 struct AutoContrast : public IAutoContrast {
     // Methods from ::vendor::lineage::livedisplay::V2_0::IAutoContrast follow.
     Return<bool> isEnabled() override;
-    Return<bool> setEnabled(bool enabled) override;
+    Return<bool> setEnabled(bool) override;
 
     // Methods from ::android::hidl::base::V1_0::IBase follow.
 

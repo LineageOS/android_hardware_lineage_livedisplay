@@ -39,8 +39,8 @@ struct DisplayColorCalibration : public IDisplayColorCalibration {
     // Methods from ::vendor::lineage::livedisplay::V2_0::IDisplayColorCalibration follow.
     Return<int32_t> getMaxValue() override;
     Return<int32_t> getMinValue() override;
-    Return<void> getCalibration(getCalibration_cb _hidl_cb) override;
-    Return<bool> setCalibration(const hidl_vec<int32_t>& rgb) override;
+    Return<void> getCalibration(getCalibration_cb) override;
+    Return<bool> setCalibration(const hidl_vec<int32_t>&) override;
 
     // Methods from ::android::hidl::base::V1_0::IBase follow.
 

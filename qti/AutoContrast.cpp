@@ -28,7 +28,7 @@ Return<bool> AutoContrast::isEnabled() {
     return bool {};
 }
 
-Return<bool> AutoContrast::setEnabled(bool enabled) {
+Return<bool> AutoContrast::setEnabled(bool) {
     // TODO implement
     return bool {};
 }

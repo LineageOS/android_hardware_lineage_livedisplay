@@ -28,7 +28,7 @@ Return<bool> ReadingEnhancement::isEnabled() {
     return bool {};
 }
 
-Return<bool> ReadingEnhancement::setEnabled(bool enabled) {
+Return<bool> ReadingEnhancement::setEnabled(bool) {
     // TODO implement
     return bool {};
 }

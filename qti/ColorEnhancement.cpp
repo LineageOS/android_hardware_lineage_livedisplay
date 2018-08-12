@@ -28,7 +28,7 @@ Return<bool> ColorEnhancement::isEnabled() {
     return bool {};
 }
 
-Return<bool> ColorEnhancement::setEnabled(bool enabled) {
+Return<bool> ColorEnhancement::setEnabled(bool) {
     // TODO implement
     return bool {};
 }
