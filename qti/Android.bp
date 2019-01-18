@@ -12,14 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-cc_binary {
-    name: "vendor.lineage.livedisplay@2.0-service-qti",
-    init_rc: ["vendor.lineage.livedisplay@2.0-service-qti.rc"],
+cc_defaults {
+    name: "livedisplay_qti_defaults",
     defaults: ["hidl_defaults"],
     relative_install_path: "hw",
-    // FIXME: this should be 'vendor: true' for modules that will eventually be
-    // on AOSP.
-    proprietary: true,
     srcs: [
         "AdaptiveBacklight.cpp",
         "AutoContrast.cpp",
@@ -38,7 +34,20 @@ cc_binary {
         "libhidlbase",
         "libhidltransport",
         "libutils",
-        "vendor.lineage.livedisplay@2.0",
         "vendor.lineage.livedisplay@1.0",
+        "vendor.lineage.livedisplay@2.0",
     ],
+}
+
+cc_binary {
+    name: "lineage.livedisplay@2.0-service-qti",
+    init_rc: ["lineage.livedisplay@2.0-service-qti.rc"],
+    defaults: ["livedisplay_qti_defaults"],
+}
+
+cc_binary {
+    name: "vendor.lineage.livedisplay@2.0-service-qti",
+    init_rc: ["vendor.lineage.livedisplay@2.0-service-qti.rc"],
+    defaults: ["livedisplay_qti_defaults"],
+    proprietary: true,
 }
