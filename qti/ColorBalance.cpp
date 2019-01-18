@@ -26,6 +26,14 @@ ColorBalance::ColorBalance() {
     mColorHal = IColor::getService();
 }
 
+bool ColorBalance::isSupported() {
+    if (mColorHal != nullptr) {
+        return mColorHal->getSupportedFeatures() & Feature::COLOR_BALANCE;
+    }
+
+    return false;
+}
+
 // Methods from ::vendor::lineage::livedisplay::V2_0::IColorBalance follow.
 Return<void> ColorBalance::getColorBalanceRange(getColorBalanceRange_cb _hidl_cb) {
     if (mColorHal != nullptr) {

@@ -36,11 +36,14 @@ using ::android::hardware::Return;
 using ::android::hardware::Void;
 using ::android::sp;
 
+using ::vendor::lineage::livedisplay::V1_0::Feature;
 using ::vendor::lineage::livedisplay::V1_0::IColor;
 
 class DisplayModes : public IDisplayModes {
   public:
     DisplayModes();
+
+    bool isSupported();
 
     // Methods from ::vendor::lineage::livedisplay::V2_0::IDisplayModes follow.
     Return<void> getDisplayModes(getDisplayModes_cb _hidl_cb) override;

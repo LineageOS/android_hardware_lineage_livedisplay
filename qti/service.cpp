@@ -50,6 +50,7 @@ int main() {
     sp<PictureAdjustment> pa;
     sp<SunlightEnhancement> se;
     status_t status;
+    uint8_t services = 0;
 
     LOG(INFO) << "LiveDisplay HAL service is starting.";
 
@@ -59,17 +60,26 @@ int main() {
             << "Can not create an instance of LiveDisplay HAL AdaptiveBacklight Iface, exiting.";
         goto shutdown;
     }
+    if (ab->isSupported()) {
+        services++;
+    }
 
     cb = new ColorBalance();
     if (cb == nullptr) {
         LOG(ERROR) << "Can not create an instance of LiveDisplay HAL ColorBalance Iface, exiting.";
         goto shutdown;
     }
+    if (cb->isSupported()) {
+        services++;
+    }
 
     dm = new DisplayModes();
     if (dm == nullptr) {
         LOG(ERROR) << "Can not create an instance of LiveDisplay HAL DisplayModes Iface, exiting.";
         goto shutdown;
+    }
+    if (dm->isSupported()) {
+        services++;
     }
 
     pa = new PictureAdjustment();
@@ -78,6 +88,9 @@ int main() {
             << "Can not create an instance of LiveDisplay HAL PictureAdjustment Iface, exiting.";
         goto shutdown;
     }
+    if (pa->isSupported()) {
+        services++;
+    }
 
     se = new SunlightEnhancement();
     if (se == nullptr) {
@@ -85,42 +98,56 @@ int main() {
             << "Can not create an instance of LiveDisplay HAL SunlightEnhancement Iface, exiting.";
         goto shutdown;
     }
-
-    configureRpcThreadpool(5, true /*callerWillJoin*/);
-
-    status = ab->registerAsService();
-    if (status != OK) {
-        LOG(ERROR) << "Could not register service for LiveDisplay HAL AdaptiveBacklight Iface ("
-                   << status << ")";
-        goto shutdown;
+    if (se->isSupported()) {
+        services++;
     }
 
-    status = cb->registerAsService();
-    if (status != OK) {
-        LOG(ERROR) << "Could not register service for LiveDisplay HAL ColorBalance Iface ("
-                   << status << ")";
-        goto shutdown;
+    configureRpcThreadpool(services, true /*callerWillJoin*/);
+
+    if (ab->isSupported()) {
+        status = ab->registerAsService();
+        if (status != OK) {
+            LOG(ERROR) << "Could not register service for LiveDisplay HAL AdaptiveBacklight Iface ("
+                       << status << ")";
+            goto shutdown;
+        }
     }
 
-    status = dm->registerAsService();
-    if (status != OK) {
-        LOG(ERROR) << "Could not register service for LiveDisplay HAL DisplayModes Iface ("
-                   << status << ")";
-        goto shutdown;
+    if (cb->isSupported()) {
+        status = cb->registerAsService();
+        if (status != OK) {
+            LOG(ERROR) << "Could not register service for LiveDisplay HAL ColorBalance Iface ("
+                       << status << ")";
+            goto shutdown;
+        }
     }
 
-    status = pa->registerAsService();
-    if (status != OK) {
-        LOG(ERROR) << "Could not register service for LiveDisplay HAL PictureAdjustment Iface ("
-                   << status << ")";
-        goto shutdown;
+    if (dm->isSupported()) {
+        status = dm->registerAsService();
+        if (status != OK) {
+            LOG(ERROR) << "Could not register service for LiveDisplay HAL DisplayModes Iface ("
+                       << status << ")";
+            goto shutdown;
+        }
     }
 
-    status = se->registerAsService();
-    if (status != OK) {
-        LOG(ERROR) << "Could not register service for LiveDisplay HAL SunlightEnhancement Iface ("
-                   << status << ")";
-        goto shutdown;
+    if (pa->isSupported()) {
+        status = pa->registerAsService();
+        if (status != OK) {
+            LOG(ERROR) << "Could not register service for LiveDisplay HAL PictureAdjustment Iface ("
+                       << status << ")";
+            goto shutdown;
+        }
+    }
+
+    if (se->isSupported()) {
+        status = se->registerAsService();
+        if (status != OK) {
+            LOG(ERROR)
+                << "Could not register service for LiveDisplay HAL SunlightEnhancement Iface ("
+                << status << ")";
+            goto shutdown;
+        }
     }
 
     LOG(INFO) << "LiveDisplay HAL service is ready.";

@@ -26,6 +26,14 @@ SunlightEnhancement::SunlightEnhancement() {
     mColorHal = IColor::getService();
 }
 
+bool SunlightEnhancement::isSupported() {
+    if (mColorHal != nullptr) {
+        return mColorHal->getSupportedFeatures() & Feature::OUTDOOR_MODE;
+    }
+
+    return false;
+}
+
 // Methods from ::vendor::lineage::livedisplay::V2_0::ISunlightEnhancement follow.
 Return<bool> SunlightEnhancement::isEnabled() {
     if (mColorHal != nullptr) {

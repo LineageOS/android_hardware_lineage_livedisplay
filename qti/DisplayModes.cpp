@@ -26,6 +26,14 @@ DisplayModes::DisplayModes() {
     mColorHal = IColor::getService();
 }
 
+bool DisplayModes::isSupported() {
+    if (mColorHal != nullptr) {
+        return mColorHal->getSupportedFeatures() & Feature::DISPLAY_MODES;
+    }
+
+    return false;
+}
+
 // Methods from ::vendor::lineage::livedisplay::V2_0::IDisplayModes follow.
 Return<void> DisplayModes::getDisplayModes(getDisplayModes_cb _hidl_cb) {
     if (mColorHal != nullptr) {

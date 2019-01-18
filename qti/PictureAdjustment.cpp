@@ -26,6 +26,14 @@ PictureAdjustment::PictureAdjustment() {
     mColorHal = IColor::getService();
 }
 
+bool PictureAdjustment::isSupported() {
+    if (mColorHal != nullptr) {
+        return mColorHal->getSupportedFeatures() & Feature::PICTURE_ADJUSTMENT;
+    }
+
+    return false;
+}
+
 // Methods from ::vendor::lineage::livedisplay::V2_0::IPictureAdjustment follow.
 Return<void> PictureAdjustment::getHueRange(getHueRange_cb _hidl_cb) {
     if (mColorHal != nullptr) {

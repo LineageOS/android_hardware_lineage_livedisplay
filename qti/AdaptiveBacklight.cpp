@@ -26,6 +26,14 @@ AdaptiveBacklight::AdaptiveBacklight() {
     mColorHal = IColor::getService();
 }
 
+bool AdaptiveBacklight::isSupported() {
+    if (mColorHal != nullptr) {
+        return mColorHal->getSupportedFeatures() & Feature::ADAPTIVE_BACKLIGHT;
+    }
+
+    return false;
+}
+
 // Methods from ::vendor::lineage::livedisplay::V2_0::IAdaptiveBacklight follow.
 Return<bool> AdaptiveBacklight::isEnabled() {
     if (mColorHal != nullptr) {
