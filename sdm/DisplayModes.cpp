@@ -14,26 +14,31 @@
  * limitations under the License.
  */
 
-#include "ColorBalance.h"
+#include "DisplayModes.h"
 
 namespace vendor {
 namespace lineage {
 namespace livedisplay {
 namespace V2_0 {
-namespace qti {
+namespace sdm {
 
-// Methods from ::vendor::lineage::livedisplay::V2_0::IColorBalance follow.
-Return<void> ColorBalance::getColorBalanceRange(getColorBalanceRange_cb _hidl_cb) {
+// Methods from ::vendor::lineage::livedisplay::V2_0::IDisplayModes follow.
+Return<void> DisplayModes::getDisplayModes(getDisplayModes_cb _hidl_cb) {
     // TODO implement
     return Void();
 }
 
-Return<int32_t> ColorBalance::getColorBalance() {
+Return<void> DisplayModes::getCurrentDisplayMode(getCurrentDisplayMode_cb _hidl_cb) {
     // TODO implement
-    return int32_t {};
+    return Void();
 }
 
-Return<bool> ColorBalance::setColorBalance(int32_t value) {
+Return<void> DisplayModes::getDefaultDisplayMode(getDefaultDisplayMode_cb _hidl_cb) {
+    // TODO implement
+    return Void();
+}
+
+Return<bool> DisplayModes::setDisplayMode(int32_t modeID, bool makeDefault) {
     // TODO implement
     return bool {};
 }
@@ -41,11 +46,11 @@ Return<bool> ColorBalance::setColorBalance(int32_t value) {
 
 // Methods from ::android::hidl::base::V1_0::IBase follow.
 
-//IColorBalance* HIDL_FETCH_IColorBalance(const char* /* name */) {
-    //return new ColorBalance();
+//IDisplayModes* HIDL_FETCH_IDisplayModes(const char* /* name */) {
+    //return new DisplayModes();
 //}
 //
-}  // namespace qti
+}  // namespace sdm
 }  // namespace V2_0
 }  // namespace livedisplay
 }  // namespace lineage

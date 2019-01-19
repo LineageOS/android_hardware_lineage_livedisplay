@@ -20,7 +20,7 @@ namespace vendor {
 namespace lineage {
 namespace livedisplay {
 namespace V2_0 {
-namespace qti {
+namespace legacymm {
 
 // Methods from ::vendor::lineage::livedisplay::V2_0::IReadingEnhancement follow.
 Return<bool> ReadingEnhancement::isEnabled() {
@@ -40,7 +40,7 @@ Return<bool> ReadingEnhancement::setEnabled(bool enabled) {
     //return new ReadingEnhancement();
 //}
 //
-}  // namespace qti
+}  // namespace legacymm
 }  // namespace V2_0
 }  // namespace livedisplay
 }  // namespace lineage

@@ -14,21 +14,21 @@
  * limitations under the License.
  */
 
-#include "AutoContrast.h"
+#include "ColorEnhancement.h"
 
 namespace vendor {
 namespace lineage {
 namespace livedisplay {
 namespace V2_0 {
-namespace qti {
+namespace legacymm {
 
-// Methods from ::vendor::lineage::livedisplay::V2_0::IAutoContrast follow.
-Return<bool> AutoContrast::isEnabled() {
+// Methods from ::vendor::lineage::livedisplay::V2_0::IColorEnhancement follow.
+Return<bool> ColorEnhancement::isEnabled() {
     // TODO implement
     return bool {};
 }
 
-Return<bool> AutoContrast::setEnabled(bool enabled) {
+Return<bool> ColorEnhancement::setEnabled(bool enabled) {
     // TODO implement
     return bool {};
 }
@@ -36,11 +36,11 @@ Return<bool> AutoContrast::setEnabled(bool enabled) {
 
 // Methods from ::android::hidl::base::V1_0::IBase follow.
 
-//IAutoContrast* HIDL_FETCH_IAutoContrast(const char* /* name */) {
-    //return new AutoContrast();
+//IColorEnhancement* HIDL_FETCH_IColorEnhancement(const char* /* name */) {
+    //return new ColorEnhancement();
 //}
 //
-}  // namespace qti
+}  // namespace legacymm
 }  // namespace V2_0
 }  // namespace livedisplay
 }  // namespace lineage

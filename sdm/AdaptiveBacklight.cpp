@@ -14,31 +14,21 @@
  * limitations under the License.
  */
 
-#include "DisplayModes.h"
+#include "AdaptiveBacklight.h"
 
 namespace vendor {
 namespace lineage {
 namespace livedisplay {
 namespace V2_0 {
-namespace qti {
+namespace sdm {
 
-// Methods from ::vendor::lineage::livedisplay::V2_0::IDisplayModes follow.
-Return<void> DisplayModes::getDisplayModes(getDisplayModes_cb _hidl_cb) {
+// Methods from ::vendor::lineage::livedisplay::V2_0::IAdaptiveBacklight follow.
+Return<bool> AdaptiveBacklight::isEnabled() {
     // TODO implement
-    return Void();
+    return bool {};
 }
 
-Return<void> DisplayModes::getCurrentDisplayMode(getCurrentDisplayMode_cb _hidl_cb) {
-    // TODO implement
-    return Void();
-}
-
-Return<void> DisplayModes::getDefaultDisplayMode(getDefaultDisplayMode_cb _hidl_cb) {
-    // TODO implement
-    return Void();
-}
-
-Return<bool> DisplayModes::setDisplayMode(int32_t modeID, bool makeDefault) {
+Return<bool> AdaptiveBacklight::setEnabled(bool enabled) {
     // TODO implement
     return bool {};
 }
@@ -46,11 +36,11 @@ Return<bool> DisplayModes::setDisplayMode(int32_t modeID, bool makeDefault) {
 
 // Methods from ::android::hidl::base::V1_0::IBase follow.
 
-//IDisplayModes* HIDL_FETCH_IDisplayModes(const char* /* name */) {
-    //return new DisplayModes();
+//IAdaptiveBacklight* HIDL_FETCH_IAdaptiveBacklight(const char* /* name */) {
+    //return new AdaptiveBacklight();
 //}
 //
-}  // namespace qti
+}  // namespace sdm
 }  // namespace V2_0
 }  // namespace livedisplay
 }  // namespace lineage

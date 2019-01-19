@@ -20,7 +20,7 @@ namespace vendor {
 namespace lineage {
 namespace livedisplay {
 namespace V2_0 {
-namespace qti {
+namespace sdm {
 
 // Methods from ::vendor::lineage::livedisplay::V2_0::ISunlightEnhancement follow.
 Return<bool> SunlightEnhancement::isEnabled() {
@@ -40,7 +40,7 @@ Return<bool> SunlightEnhancement::setEnabled(bool enabled) {
     //return new SunlightEnhancement();
 //}
 //
-}  // namespace qti
+}  // namespace sdm
 }  // namespace V2_0
 }  // namespace livedisplay
 }  // namespace lineage
