@@ -17,9 +17,9 @@
 #ifndef VENDOR_LINEAGE_LIVEDISPLAY_V2_0_COLORBALANCE_H
 #define VENDOR_LINEAGE_LIVEDISPLAY_V2_0_COLORBALANCE_H
 
-#include <vendor/lineage/livedisplay/2.0/IColorBalance.h>
 #include <hidl/MQDescriptor.h>
 #include <hidl/Status.h>
+#include <vendor/lineage/livedisplay/2.0/IColorBalance.h>
 
 namespace vendor {
 namespace lineage {
@@ -35,18 +35,26 @@ using ::android::hardware::Return;
 using ::android::hardware::Void;
 using ::android::sp;
 
-struct ColorBalance : public IColorBalance {
+class ColorBalance : public IColorBalance {
+  public:
+    ColorBalance(void* libHandle);
+
+    bool isSupported();
+
     // Methods from ::vendor::lineage::livedisplay::V2_0::IColorBalance follow.
     Return<void> getColorBalanceRange(getColorBalanceRange_cb _hidl_cb) override;
     Return<int32_t> getColorBalance() override;
     Return<bool> setColorBalance(int32_t value) override;
 
-    // Methods from ::android::hidl::base::V1_0::IBase follow.
+  private:
+    void* mLibHandle;
 
+    int (*disp_api_supported)(int32_t, int32_t);
+    int (*disp_api_get_color_balance_range)(int32_t, void*);
+    int (*disp_api_get_color_balance)(int32_t, int*);
+    int (*disp_api_set_color_balance)(int32_t, int);
+    int (*disp_api_get_num_display_modes)(int32_t, int32_t, int*);
 };
-
-// FIXME: most likely delete, this is only for passthrough implementations
-// extern "C" IColorBalance* HIDL_FETCH_IColorBalance(const char* name);
 
 }  // namespace legacymm
 }  // namespace V2_0
