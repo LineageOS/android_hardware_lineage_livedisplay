@@ -14,10 +14,10 @@
  * limitations under the License.
  */
 
-#ifndef VENDOR_LINEAGE_LIVEDISPLAY_V2_0_SUNLIGHTENHANCEMENT_H
-#define VENDOR_LINEAGE_LIVEDISPLAY_V2_0_SUNLIGHTENHANCEMENT_H
+#ifndef VENDOR_LINEAGE_LIVEDISPLAY_V2_0_AUTOCONTRAST_H
+#define VENDOR_LINEAGE_LIVEDISPLAY_V2_0_AUTOCONTRAST_H
 
-#include <vendor/lineage/livedisplay/2.0/ISunlightEnhancement.h>
+#include <vendor/lineage/livedisplay/2.0/IAutoContrast.h>
 #include <hidl/MQDescriptor.h>
 #include <hidl/Status.h>
 
@@ -25,7 +25,7 @@ namespace vendor {
 namespace lineage {
 namespace livedisplay {
 namespace V2_0 {
-namespace qti {
+namespace legacymm {
 
 using ::android::hardware::hidl_array;
 using ::android::hardware::hidl_memory;
@@ -35,8 +35,8 @@ using ::android::hardware::Return;
 using ::android::hardware::Void;
 using ::android::sp;
 
-struct SunlightEnhancement : public ISunlightEnhancement {
-    // Methods from ::vendor::lineage::livedisplay::V2_0::ISunlightEnhancement follow.
+struct AutoContrast : public IAutoContrast {
+    // Methods from ::vendor::lineage::livedisplay::V2_0::IAutoContrast follow.
     Return<bool> isEnabled() override;
     Return<bool> setEnabled(bool enabled) override;
 
@@ -45,12 +45,12 @@ struct SunlightEnhancement : public ISunlightEnhancement {
 };
 
 // FIXME: most likely delete, this is only for passthrough implementations
-// extern "C" ISunlightEnhancement* HIDL_FETCH_ISunlightEnhancement(const char* name);
+// extern "C" IAutoContrast* HIDL_FETCH_IAutoContrast(const char* name);
 
-}  // namespace qti
+}  // namespace legacymm
 }  // namespace V2_0
 }  // namespace livedisplay
 }  // namespace lineage
 }  // namespace vendor
 
-#endif  // VENDOR_LINEAGE_LIVEDISPLAY_V2_0_SUNLIGHTENHANCEMENT_H
+#endif  // VENDOR_LINEAGE_LIVEDISPLAY_V2_0_AUTOCONTRAST_H

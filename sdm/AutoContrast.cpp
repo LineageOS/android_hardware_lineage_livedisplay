@@ -14,21 +14,21 @@
  * limitations under the License.
  */
 
-#include "ReadingEnhancement.h"
+#include "AutoContrast.h"
 
 namespace vendor {
 namespace lineage {
 namespace livedisplay {
 namespace V2_0 {
-namespace qti {
+namespace sdm {
 
-// Methods from ::vendor::lineage::livedisplay::V2_0::IReadingEnhancement follow.
-Return<bool> ReadingEnhancement::isEnabled() {
+// Methods from ::vendor::lineage::livedisplay::V2_0::IAutoContrast follow.
+Return<bool> AutoContrast::isEnabled() {
     // TODO implement
     return bool {};
 }
 
-Return<bool> ReadingEnhancement::setEnabled(bool enabled) {
+Return<bool> AutoContrast::setEnabled(bool enabled) {
     // TODO implement
     return bool {};
 }
@@ -36,11 +36,11 @@ Return<bool> ReadingEnhancement::setEnabled(bool enabled) {
 
 // Methods from ::android::hidl::base::V1_0::IBase follow.
 
-//IReadingEnhancement* HIDL_FETCH_IReadingEnhancement(const char* /* name */) {
-    //return new ReadingEnhancement();
+//IAutoContrast* HIDL_FETCH_IAutoContrast(const char* /* name */) {
+    //return new AutoContrast();
 //}
 //
-}  // namespace qti
+}  // namespace sdm
 }  // namespace V2_0
 }  // namespace livedisplay
 }  // namespace lineage

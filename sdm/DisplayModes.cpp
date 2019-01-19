@@ -14,21 +14,31 @@
  * limitations under the License.
  */
 
-#include "SunlightEnhancement.h"
+#include "DisplayModes.h"
 
 namespace vendor {
 namespace lineage {
 namespace livedisplay {
 namespace V2_0 {
-namespace qti {
+namespace sdm {
 
-// Methods from ::vendor::lineage::livedisplay::V2_0::ISunlightEnhancement follow.
-Return<bool> SunlightEnhancement::isEnabled() {
+// Methods from ::vendor::lineage::livedisplay::V2_0::IDisplayModes follow.
+Return<void> DisplayModes::getDisplayModes(getDisplayModes_cb _hidl_cb) {
     // TODO implement
-    return bool {};
+    return Void();
 }
 
-Return<bool> SunlightEnhancement::setEnabled(bool enabled) {
+Return<void> DisplayModes::getCurrentDisplayMode(getCurrentDisplayMode_cb _hidl_cb) {
+    // TODO implement
+    return Void();
+}
+
+Return<void> DisplayModes::getDefaultDisplayMode(getDefaultDisplayMode_cb _hidl_cb) {
+    // TODO implement
+    return Void();
+}
+
+Return<bool> DisplayModes::setDisplayMode(int32_t modeID, bool makeDefault) {
     // TODO implement
     return bool {};
 }
@@ -36,11 +46,11 @@ Return<bool> SunlightEnhancement::setEnabled(bool enabled) {
 
 // Methods from ::android::hidl::base::V1_0::IBase follow.
 
-//ISunlightEnhancement* HIDL_FETCH_ISunlightEnhancement(const char* /* name */) {
-    //return new SunlightEnhancement();
+//IDisplayModes* HIDL_FETCH_IDisplayModes(const char* /* name */) {
+    //return new DisplayModes();
 //}
 //
-}  // namespace qti
+}  // namespace sdm
 }  // namespace V2_0
 }  // namespace livedisplay
 }  // namespace lineage

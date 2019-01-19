@@ -14,10 +14,10 @@
  * limitations under the License.
  */
 
-#ifndef VENDOR_LINEAGE_LIVEDISPLAY_V2_0_COLORENHANCEMENT_H
-#define VENDOR_LINEAGE_LIVEDISPLAY_V2_0_COLORENHANCEMENT_H
+#ifndef VENDOR_LINEAGE_LIVEDISPLAY_V2_0_COLORBALANCE_H
+#define VENDOR_LINEAGE_LIVEDISPLAY_V2_0_COLORBALANCE_H
 
-#include <vendor/lineage/livedisplay/2.0/IColorEnhancement.h>
+#include <vendor/lineage/livedisplay/2.0/IColorBalance.h>
 #include <hidl/MQDescriptor.h>
 #include <hidl/Status.h>
 
@@ -25,7 +25,7 @@ namespace vendor {
 namespace lineage {
 namespace livedisplay {
 namespace V2_0 {
-namespace qti {
+namespace sdm {
 
 using ::android::hardware::hidl_array;
 using ::android::hardware::hidl_memory;
@@ -35,22 +35,23 @@ using ::android::hardware::Return;
 using ::android::hardware::Void;
 using ::android::sp;
 
-struct ColorEnhancement : public IColorEnhancement {
-    // Methods from ::vendor::lineage::livedisplay::V2_0::IColorEnhancement follow.
-    Return<bool> isEnabled() override;
-    Return<bool> setEnabled(bool enabled) override;
+struct ColorBalance : public IColorBalance {
+    // Methods from ::vendor::lineage::livedisplay::V2_0::IColorBalance follow.
+    Return<void> getColorBalanceRange(getColorBalanceRange_cb _hidl_cb) override;
+    Return<int32_t> getColorBalance() override;
+    Return<bool> setColorBalance(int32_t value) override;
 
     // Methods from ::android::hidl::base::V1_0::IBase follow.
 
 };
 
 // FIXME: most likely delete, this is only for passthrough implementations
-// extern "C" IColorEnhancement* HIDL_FETCH_IColorEnhancement(const char* name);
+// extern "C" IColorBalance* HIDL_FETCH_IColorBalance(const char* name);
 
-}  // namespace qti
+}  // namespace sdm
 }  // namespace V2_0
 }  // namespace livedisplay
 }  // namespace lineage
 }  // namespace vendor
 
-#endif  // VENDOR_LINEAGE_LIVEDISPLAY_V2_0_COLORENHANCEMENT_H
+#endif  // VENDOR_LINEAGE_LIVEDISPLAY_V2_0_COLORBALANCE_H
