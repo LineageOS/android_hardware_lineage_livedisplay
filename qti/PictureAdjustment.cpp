@@ -42,7 +42,7 @@ Return<void> PictureAdjustment::getDefaultPictureAdjustment(getDefaultPictureAdj
     return Void();
 }
 
-Return<bool> PictureAdjustment::setPictureAdjustment(const ::vendor::lineage::livedisplay::V1_0::HSIC& hsic) {
+Return<bool> PictureAdjustment::setPictureAdjustment(const ::vendor::lineage::livedisplay::V2_0::HSIC& hsic) {
     // TODO implement
     return bool {};
 }

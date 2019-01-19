@@ -29,6 +29,5 @@ cc_library_shared {
         "libhidltransport",
         "libutils",
         "vendor.lineage.livedisplay@2.0",
-        "vendor.lineage.livedisplay@1.0",
     ],
 }

@@ -28,7 +28,7 @@ struct PictureAdjustment : public IPictureAdjustment {
     Return<void> getSaturationThresholdRange(getSaturationThresholdRange_cb _hidl_cb) override;
     Return<void> getPictureAdjustment(getPictureAdjustment_cb _hidl_cb) override;
     Return<void> getDefaultPictureAdjustment(getDefaultPictureAdjustment_cb _hidl_cb) override;
-    Return<bool> setPictureAdjustment(const ::vendor::lineage::livedisplay::V1_0::HSIC& hsic) override;
+    Return<bool> setPictureAdjustment(const ::vendor::lineage::livedisplay::V2_0::HSIC& hsic) override;
 
     // Methods from ::android::hidl::base::V1_0::IBase follow.
 
