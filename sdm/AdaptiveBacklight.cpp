@@ -14,7 +14,15 @@
  * limitations under the License.
  */
 
+#include <stdio.h>
+#include <string.h>
+
+#include <android-base/properties.h>
+
 #include "AdaptiveBacklight.h"
+#include "Constants.h"
+#include "Types.h"
+#include "Utils.h"
 
 namespace vendor {
 namespace lineage {
@@ -22,24 +30,42 @@ namespace livedisplay {
 namespace V2_0 {
 namespace sdm {
 
+using ::android::base::GetBoolProperty;
+
+AdaptiveBacklight::AdaptiveBacklight() {
+    mEnabled = false;
+}
+
+bool AdaptiveBacklight::isSupported() {
+    return GetBoolProperty(FOSS_PROPERTY, false);
+}
+
 // Methods from ::vendor::lineage::livedisplay::V2_0::IAdaptiveBacklight follow.
 Return<bool> AdaptiveBacklight::isEnabled() {
-    // TODO implement
-    return bool {};
+    return mEnabled;
 }
 
 Return<bool> AdaptiveBacklight::setEnabled(bool enabled) {
-    // TODO implement
-    return bool {};
+    char* buf = new char[DPPS_BUF_SIZE];
+
+    if (mEnabled == enabled) {
+        delete[] buf;
+        return true;
+    }
+
+    sprintf(buf, "%s", enabled ? FOSS_ON : FOSS_OFF);
+    if (Utils::sendDPPSCommand(buf, DPPS_BUF_SIZE) == 0) {
+        if (strncmp(buf, "Success", 7) == 0) {
+            mEnabled = enabled;
+            delete[] buf;
+            return true;
+        }
+    }
+
+    delete[] buf;
+    return false;
 }
 
-
-// Methods from ::android::hidl::base::V1_0::IBase follow.
-
-//IAdaptiveBacklight* HIDL_FETCH_IAdaptiveBacklight(const char* /* name */) {
-    //return new AdaptiveBacklight();
-//}
-//
 }  // namespace sdm
 }  // namespace V2_0
 }  // namespace livedisplay
