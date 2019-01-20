@@ -29,14 +29,9 @@ cc_library_shared {
     proprietary: true,
     srcs: [
         "AdaptiveBacklight.cpp",
-        "AutoContrast.cpp",
         "ColorBalance.cpp",
-        "ColorEnhancement.cpp",
-        "DisplayColorCalibration.cpp",
         "DisplayModes.cpp",
         "PictureAdjustment.cpp",
-        "ReadingEnhancement.cpp",
-        "SunlightEnhancement.cpp",
     ],
     shared_libs: [
         "libhidlbase",
