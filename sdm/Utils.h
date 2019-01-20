@@ -1,5 +1,6 @@
 /*
- * Copyright (C) 2018-2019 The LineageOS Project
+ * Copyright (C) 2016 The CyanogenMod Project
+ *               2017-2019 The LineageOS Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,7 +15,8 @@
  * limitations under the License.
  */
 
-#include "AdaptiveBacklight.h"
+#ifndef VENDOR_LINEAGE_LIVEDISPLAY_V2_0_SDM_UTILS_H
+#define VENDOR_LINEAGE_LIVEDISPLAY_V2_0_SDM_UTILS_H
 
 namespace vendor {
 namespace lineage {
@@ -22,25 +24,15 @@ namespace livedisplay {
 namespace V2_0 {
 namespace sdm {
 
-// Methods from ::vendor::lineage::livedisplay::V2_0::IAdaptiveBacklight follow.
-Return<bool> AdaptiveBacklight::isEnabled() {
-    // TODO implement
-    return bool{};
-}
+struct sdm_feature_version {
+    uint8_t x, y;
+    uint16_t z;
+};
 
-Return<bool> AdaptiveBacklight::setEnabled(bool enabled) {
-    // TODO implement
-    return bool{};
-}
-
-// Methods from ::android::hidl::base::V1_0::IBase follow.
-
-// IAdaptiveBacklight* HIDL_FETCH_IAdaptiveBacklight(const char* /* name */) {
-// return new AdaptiveBacklight();
-//}
-//
 }  // namespace sdm
 }  // namespace V2_0
 }  // namespace livedisplay
 }  // namespace lineage
 }  // namespace vendor
+
+#endif  // VENDOR_LINEAGE_LIVEDISPLAY_V2_0_SDM_UTILS_H

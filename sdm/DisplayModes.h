@@ -17,9 +17,9 @@
 #ifndef VENDOR_LINEAGE_LIVEDISPLAY_V2_0_DISPLAYMODES_H
 #define VENDOR_LINEAGE_LIVEDISPLAY_V2_0_DISPLAYMODES_H
 
-#include <vendor/lineage/livedisplay/2.0/IDisplayModes.h>
 #include <hidl/MQDescriptor.h>
 #include <hidl/Status.h>
+#include <vendor/lineage/livedisplay/2.0/IDisplayModes.h>
 
 namespace vendor {
 namespace lineage {
@@ -35,19 +35,44 @@ using ::android::hardware::Return;
 using ::android::hardware::Void;
 using ::android::sp;
 
-struct DisplayModes : public IDisplayModes {
+#define DISPLAY_MODES_FEATURE 4
+
+struct sdm_disp_mode {
+    int32_t id;
+    int32_t type;
+    int32_t len;
+    char* name;
+};
+
+class DisplayModes : public IDisplayModes {
+  public:
+    DisplayModes(void* libHandle, int64_t cookie);
+
+    bool isSupported();
+
     // Methods from ::vendor::lineage::livedisplay::V2_0::IDisplayModes follow.
     Return<void> getDisplayModes(getDisplayModes_cb _hidl_cb) override;
     Return<void> getCurrentDisplayMode(getCurrentDisplayMode_cb _hidl_cb) override;
     Return<void> getDefaultDisplayMode(getDefaultDisplayMode_cb _hidl_cb) override;
     Return<bool> setDisplayMode(int32_t modeID, bool makeDefault) override;
 
-    // Methods from ::android::hidl::base::V1_0::IBase follow.
+  private:
+    void* mLibHandle;
+    int64_t mCookie;
 
+    int32_t (*disp_api_get_feature_version)(int64_t, uint32_t, void*, uint32_t*);
+    int32_t (*disp_api_get_num_display_modes)(int64_t, uint32_t, int32_t, int32_t*, uint32_t*);
+    int32_t (*disp_api_get_display_modes)(int64_t, uint32_t, int32_t, void*, int32_t, uint32_t*);
+    int32_t (*disp_api_get_active_display_mode)(int64_t, uint32_t, int32_t*, uint32_t*, uint32_t*);
+    int32_t (*disp_api_set_active_display_mode)(int64_t, uint32_t, int32_t, uint32_t);
+    int32_t (*disp_api_get_default_display_mode)(int64_t, uint32_t, int32_t*, uint32_t*);
+    int32_t (*disp_api_set_default_display_mode)(int64_t, uint32_t, int32_t, uint32_t);
+
+    std::vector<DisplayMode> getDisplayModesInternal();
+    DisplayMode getDisplayModeById(int32_t id);
+    DisplayMode getCurrentDisplayModeInternal();
+    DisplayMode getDefaultDisplayModeInternal();
 };
-
-// FIXME: most likely delete, this is only for passthrough implementations
-// extern "C" IDisplayModes* HIDL_FETCH_IDisplayModes(const char* name);
 
 }  // namespace sdm
 }  // namespace V2_0

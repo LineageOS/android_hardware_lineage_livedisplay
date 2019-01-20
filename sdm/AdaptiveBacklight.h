@@ -17,9 +17,9 @@
 #ifndef VENDOR_LINEAGE_LIVEDISPLAY_V2_0_ADAPTIVEBACKLIGHT_H
 #define VENDOR_LINEAGE_LIVEDISPLAY_V2_0_ADAPTIVEBACKLIGHT_H
 
-#include <vendor/lineage/livedisplay/2.0/IAdaptiveBacklight.h>
 #include <hidl/MQDescriptor.h>
 #include <hidl/Status.h>
+#include <vendor/lineage/livedisplay/2.0/IAdaptiveBacklight.h>
 
 namespace vendor {
 namespace lineage {
@@ -41,7 +41,6 @@ struct AdaptiveBacklight : public IAdaptiveBacklight {
     Return<bool> setEnabled(bool enabled) override;
 
     // Methods from ::android::hidl::base::V1_0::IBase follow.
-
 };
 
 // FIXME: most likely delete, this is only for passthrough implementations
