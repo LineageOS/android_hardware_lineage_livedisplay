@@ -14,7 +14,11 @@
  * limitations under the License.
  */
 
+#include <dlfcn.h>
+
 #include "ColorBalance.h"
+#include "Constants.h"
+#include "Types.h"
 
 namespace vendor {
 namespace lineage {
@@ -22,29 +26,98 @@ namespace livedisplay {
 namespace V2_0 {
 namespace sdm {
 
+ColorBalance::ColorBalance(void* libHandle, uint64_t cookie) {
+    mLibHandle = libHandle;
+    mCookie = cookie;
+    disp_api_get_feature_version =
+        reinterpret_cast<int32_t (*)(uint64_t, uint32_t, void*, uint32_t*)>(
+            dlsym(mLibHandle, "disp_api_get_feature_version"));
+    disp_api_get_global_color_balance_range =
+        reinterpret_cast<int32_t (*)(uint64_t, uint32_t, void*)>(
+            dlsym(mLibHandle, "disp_api_get_global_color_balance_range"));
+    disp_api_get_global_color_balance =
+        reinterpret_cast<int32_t (*)(uint64_t, uint32_t, int32_t*, uint32_t*)>(
+            dlsym(mLibHandle, "disp_api_get_global_color_balance"));
+    disp_api_set_global_color_balance =
+        reinterpret_cast<int32_t (*)(uint64_t, uint32_t, int32_t, uint32_t)>(
+            dlsym(mLibHandle, "disp_api_set_global_color_balance"));
+    disp_api_get_num_display_modes =
+        reinterpret_cast<int32_t (*)(uint64_t, uint32_t, int32_t, int32_t*, uint32_t*)>(
+            dlsym(mLibHandle, "disp_api_get_num_display_modes"));
+}
+
+bool ColorBalance::isSupported() {
+    Range range{};
+    sdm_feature_version version{};
+    // int32_t count = 0;
+    uint32_t flags = 0;
+
+    if (disp_api_get_feature_version == nullptr ||
+        disp_api_get_feature_version(mCookie, COLOR_BALANCE_FEATURE, &version, &flags) != 0) {
+        return false;
+    }
+
+    if (version.x <= 0 && version.y <= 0 && version.z <= 0) {
+        return false;
+    }
+
+    if (disp_api_get_global_color_balance_range == nullptr ||
+        disp_api_get_global_color_balance_range(mCookie, 0, &range) != 0) {
+        return false;
+    }
+
+    if (range.max == 0 || range.min == 0) {
+        return false;
+    }
+
+    // This is how this is supposed to work, but for some reason it causes conflicts
+    /*
+        if (disp_api_get_feature_version(mCookie, DISPLAY_MODES_FEATURE, &version, &flags) == 0 &&
+            (version.x > 0 && version.y > 0 && version.z > 0) &&
+            disp_api_get_num_display_modes != nullptr &&
+            disp_api_get_num_display_modes(mCookie, 0, 0, &count, &flags) == 0) {
+            return count > 0;
+        }
+    */
+
+    return false;
+}
+
 // Methods from ::vendor::lineage::livedisplay::V2_0::IColorBalance follow.
 Return<void> ColorBalance::getColorBalanceRange(getColorBalanceRange_cb _hidl_cb) {
-    // TODO implement
+    Range range{};
+
+    if (disp_api_get_global_color_balance_range != nullptr) {
+        if (disp_api_get_global_color_balance_range(mCookie, 0, &range) != 0) {
+            range.max = range.min = 0;
+        }
+    }
+
+    _hidl_cb(range);
     return Void();
 }
 
 Return<int32_t> ColorBalance::getColorBalance() {
-    // TODO implement
-    return int32_t {};
+    int32_t value = 0;
+    uint32_t flags = 0;
+
+    if (disp_api_get_global_color_balance != nullptr) {
+        if (disp_api_get_global_color_balance(mCookie, 0, &value, &flags) != 0) {
+            value = 0;
+        }
+    }
+
+    return value;
 }
 
 Return<bool> ColorBalance::setColorBalance(int32_t value) {
-    // TODO implement
-    return bool {};
+    if (disp_api_set_global_color_balance != nullptr) {
+        return disp_api_set_global_color_balance(mCookie, 0, value, 0) == 0;
+    }
+
+    return false;
 }
 
-
-// Methods from ::android::hidl::base::V1_0::IBase follow.
-
-//IColorBalance* HIDL_FETCH_IColorBalance(const char* /* name */) {
-    //return new ColorBalance();
-//}
-//
 }  // namespace sdm
 }  // namespace V2_0
 }  // namespace livedisplay
