@@ -14,7 +14,10 @@
  * limitations under the License.
  */
 
+#include <dlfcn.h>
+
 #include "ColorBalance.h"
+#include "Types.h"
 
 namespace vendor {
 namespace lineage {
@@ -22,29 +25,72 @@ namespace livedisplay {
 namespace V2_0 {
 namespace sdm {
 
+ColorBalance::ColorBalance(std::shared_ptr<SDMController> controller, uint64_t cookie)
+    : mController(std::move(controller)), mCookie(cookie) {}
+
+bool ColorBalance::isSupported() {
+#if 0
+    Range range{};
+    sdm_feature_version version{};
+    // int32_t count = 0;
+    uint32_t flags = 0;
+
+    if (mController->get_feature_version(mCookie, COLOR_BALANCE_FEATURE, &version, &flags) != 0) {
+        return false;
+    }
+
+    if (version.x <= 0 && version.y <= 0 && version.z <= 0) {
+        return false;
+    }
+
+    if (mController->get_global_color_balance_range(mCookie, 0, &range) != 0) {
+        return false;
+    }
+
+    if (range.max == 0 || range.min == 0) {
+        return false;
+    }
+
+    // This is how this is supposed to work, but it doesn't work quite right
+    /*
+        if (disp_api_get_feature_version(mCookie, DISPLAY_MODES_FEATURE, &version, &flags) == 0 &&
+            (version.x > 0 && version.y > 0 && version.z > 0) &&
+            disp_api_get_num_display_modes != nullptr &&
+            disp_api_get_num_display_modes(mCookie, 0, 0, &count, &flags) == 0) {
+            return count > 0;
+        }
+    */
+#endif
+    return false;
+}
+
 // Methods from ::vendor::lineage::livedisplay::V2_0::IColorBalance follow.
 Return<void> ColorBalance::getColorBalanceRange(getColorBalanceRange_cb _hidl_cb) {
-    // TODO implement
+    Range range{};
+
+    if (mController->get_global_color_balance_range(mCookie, 0, &range) != 0) {
+        range.max = range.min = 0;
+    }
+
+    _hidl_cb(range);
     return Void();
 }
 
 Return<int32_t> ColorBalance::getColorBalance() {
-    // TODO implement
-    return int32_t {};
+    int32_t value = 0;
+    uint32_t flags = 0;
+
+    if (mController->get_global_color_balance(mCookie, 0, &value, &flags) != 0) {
+        value = 0;
+    }
+
+    return value;
 }
 
 Return<bool> ColorBalance::setColorBalance(int32_t value) {
-    // TODO implement
-    return bool {};
+    return mController->set_global_color_balance(mCookie, 0, value, 0) == 0;
 }
 
-
-// Methods from ::android::hidl::base::V1_0::IBase follow.
-
-//IColorBalance* HIDL_FETCH_IColorBalance(const char* /* name */) {
-    //return new ColorBalance();
-//}
-//
 }  // namespace sdm
 }  // namespace V2_0
 }  // namespace livedisplay
