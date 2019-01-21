@@ -193,6 +193,30 @@
     },
     {
       "key": {
+        "uuid": "aba33181_ac6e7eb2",
+        "filename": "sdm/ColorBalance.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 11801
+      },
+      "writtenOn": "2019-01-21T16:55:59Z",
+      "side": 1,
+      "message": "First of all, \"Bring up some SDM devices\" is not an appropriate response here. If you\u0027re not going to provide helpful information, just don\u0027t say anything at all. Second of all, the commit you pointed out says they conflict with each other, not providing any details how or why. Third, Steve\u0027s initial sdm and legacymm implementations both supported color balance in addition to display modes, so I lack clarity as to what the issue is in the first place. You haven\u0027t done anything to explain what the underlying issue is here. I did my best to interpret your commit message, but you haven\u0027t appropriately explained what\u0027s going on.",
+      "parentUuid": "dba13385_76d5c137",
+      "range": {
+        "startLine": 50,
+        "startChar": 0,
+        "endLine": 80,
+        "endChar": 16
+      },
+      "revId": "cc3c02f7230aee03488548b0f77219d074d62689",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4c33dd38_6b0dfc8a",
         "filename": "sdm/lineage.livedisplay@2.0-service-sdm.rc",
         "patchSetId": 6
