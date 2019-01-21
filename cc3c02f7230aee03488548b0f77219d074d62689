@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "2894b409_918cb415",
+        "filename": "sdm/ColorBalance.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 10258
+      },
+      "writtenOn": "2019-01-21T13:57:52Z",
+      "side": 1,
+      "message": "The ColorBalance API is introduced by Steve to avoid implementing RGB offset postprocessing in 3.18 kernel. Now that all SDM devices(3.18+) are using HWC2 with HW backend color transform support, so ColorBalance becomes redundant. In fact it should just be nuked.",
+      "parentUuid": "416f7911_7329c625",
+      "range": {
+        "startLine": 50,
+        "startChar": 0,
+        "endLine": 80,
+        "endChar": 16
+      },
+      "revId": "cc3c02f7230aee03488548b0f77219d074d62689",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4c33dd38_6b0dfc8a",
         "filename": "sdm/lineage.livedisplay@2.0-service-sdm.rc",
         "patchSetId": 6
