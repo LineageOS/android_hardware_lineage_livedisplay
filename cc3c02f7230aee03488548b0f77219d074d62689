@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "416f7911_7329c625",
+        "filename": "sdm/ColorBalance.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 11801
+      },
+      "writtenOn": "2019-01-21T13:41:01Z",
+      "side": 1,
+      "message": "Why would I do that? I already check if any display modes are present, and only return true if there are no display modes. If you actually read my code, you could see that I\u0027m doing a smarter check.",
+      "parentUuid": "b2794bb3_91b08d68",
+      "range": {
+        "startLine": 50,
+        "startChar": 0,
+        "endLine": 80,
+        "endChar": 16
+      },
+      "revId": "cc3c02f7230aee03488548b0f77219d074d62689",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4c33dd38_6b0dfc8a",
         "filename": "sdm/lineage.livedisplay@2.0-service-sdm.rc",
         "patchSetId": 6
@@ -36,6 +60,30 @@
       "writtenOn": "2019-01-21T09:48:38Z",
       "side": 1,
       "message": "Remove please.",
+      "range": {
+        "startLine": 1,
+        "startChar": 47,
+        "endLine": 1,
+        "endChar": 54
+      },
+      "revId": "cc3c02f7230aee03488548b0f77219d074d62689",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4f89204_9dafb2b8",
+        "filename": "sdm/lineage.livedisplay@2.0-service-sdm.rc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 11801
+      },
+      "writtenOn": "2019-01-21T13:41:01Z",
+      "side": 1,
+      "message": "Done. Thanks.",
+      "parentUuid": "4c33dd38_6b0dfc8a",
       "range": {
         "startLine": 1,
         "startChar": 47,
