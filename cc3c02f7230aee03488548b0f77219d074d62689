@@ -241,6 +241,30 @@
     },
     {
       "key": {
+        "uuid": "ff694357_a981a5f9",
+        "filename": "sdm/ColorBalance.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 11801
+      },
+      "writtenOn": "2019-01-21T17:15:10Z",
+      "side": 1,
+      "message": "*HOW* does it conflict? I have 0 idea how, and Steve\u0027s initial implementation set it up so that ColorBalance only worked *with* DisplayModes, never without.",
+      "parentUuid": "d9b7b0aa_71fd73e5",
+      "range": {
+        "startLine": 50,
+        "startChar": 0,
+        "endLine": 80,
+        "endChar": 16
+      },
+      "revId": "cc3c02f7230aee03488548b0f77219d074d62689",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4c33dd38_6b0dfc8a",
         "filename": "sdm/lineage.livedisplay@2.0-service-sdm.rc",
         "patchSetId": 6
