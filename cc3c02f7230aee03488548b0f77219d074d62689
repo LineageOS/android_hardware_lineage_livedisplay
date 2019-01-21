@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4c33dd38_6b0dfc8a",
+        "filename": "sdm/lineage.livedisplay@2.0-service-sdm.rc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 13648
+      },
+      "writtenOn": "2019-01-21T09:48:38Z",
+      "side": 1,
+      "message": "Remove please.",
+      "range": {
+        "startLine": 1,
+        "startChar": 47,
+        "endLine": 1,
+        "endChar": 54
+      },
+      "revId": "cc3c02f7230aee03488548b0f77219d074d62689",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
+    }
+  ]
+}
