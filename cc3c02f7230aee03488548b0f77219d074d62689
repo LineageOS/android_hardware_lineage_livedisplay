@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "e82b3113_95062a28",
+        "filename": "sdm/ColorBalance.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 10258
+      },
+      "writtenOn": "2019-01-21T14:11:41Z",
+      "side": 1,
+      "message": "Another reason is the api makes color become very inaccurate an strange, at least on op3.",
+      "parentUuid": "2894b409_918cb415",
+      "range": {
+        "startLine": 50,
+        "startChar": 0,
+        "endLine": 80,
+        "endChar": 16
+      },
+      "revId": "cc3c02f7230aee03488548b0f77219d074d62689",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4c33dd38_6b0dfc8a",
         "filename": "sdm/lineage.livedisplay@2.0-service-sdm.rc",
         "patchSetId": 6
