@@ -97,6 +97,30 @@
     },
     {
       "key": {
+        "uuid": "579d73de_57a26405",
+        "filename": "sdm/ColorBalance.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 11801
+      },
+      "writtenOn": "2019-01-21T15:06:46Z",
+      "side": 1,
+      "message": "That means your qdcm XML is bad. ColorBalance is far accurate than PCC or HWC2 because it actually knows the color temperature calibration of the display.",
+      "parentUuid": "e82b3113_95062a28",
+      "range": {
+        "startLine": 50,
+        "startChar": 0,
+        "endLine": 80,
+        "endChar": 16
+      },
+      "revId": "cc3c02f7230aee03488548b0f77219d074d62689",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4c33dd38_6b0dfc8a",
         "filename": "sdm/lineage.livedisplay@2.0-service-sdm.rc",
         "patchSetId": 6
