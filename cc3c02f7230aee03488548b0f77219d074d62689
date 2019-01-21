@@ -169,6 +169,30 @@
     },
     {
       "key": {
+        "uuid": "dba13385_76d5c137",
+        "filename": "sdm/ColorBalance.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 10258
+      },
+      "writtenOn": "2019-01-21T16:41:29Z",
+      "side": 1,
+      "message": "QDCM XML contains nothing but color profiles. Don\u0027t have color profiles means color is uncalibrated, how could color balance be accurate in this case which you enable it for??? And Steve\u0027s calibration IS accurate, color balance API just picked some random color space as baseline and the only way to restore the previous one is switching between color profiles. Bring up some SDM devices and test yourself, we should really stop such meaningless debate.",
+      "parentUuid": "a7af2612_a4e897f9",
+      "range": {
+        "startLine": 50,
+        "startChar": 0,
+        "endLine": 80,
+        "endChar": 16
+      },
+      "revId": "cc3c02f7230aee03488548b0f77219d074d62689",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4c33dd38_6b0dfc8a",
         "filename": "sdm/lineage.livedisplay@2.0-service-sdm.rc",
         "patchSetId": 6
