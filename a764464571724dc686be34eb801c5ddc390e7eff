@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "19f746b7_f6255a78",
+        "filename": "sdm/PictureAdjustment.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 10258
+      },
+      "writtenOn": "2019-01-23T14:29:14Z",
+      "side": 1,
+      "message": "cache the result instead of invoking qdcm api every time",
+      "range": {
+        "startLine": 50,
+        "startChar": 0,
+        "endLine": 50,
+        "endChar": 39
+      },
+      "revId": "a764464571724dc686be34eb801c5ddc390e7eff",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc0f71e6_42b59763",
+        "filename": "sdm/PictureAdjustment.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 10258
+      },
+      "writtenOn": "2019-01-23T14:29:14Z",
+      "side": 1,
+      "message": "move this part and dlsym above to a utils class to avoid dlsym multiple times and copypasta.",
+      "range": {
+        "startLine": 55,
+        "startChar": 0,
+        "endLine": 62,
+        "endChar": 5
+      },
+      "revId": "a764464571724dc686be34eb801c5ddc390e7eff",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8daa980c_f556b1d9",
+        "filename": "sdm/service.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 10258
+      },
+      "writtenOn": "2019-01-23T14:29:14Z",
+      "side": 1,
+      "message": "make this uint64_t to match qcom api",
+      "range": {
+        "startLine": 60,
+        "startChar": 4,
+        "endLine": 60,
+        "endChar": 24
+      },
+      "revId": "a764464571724dc686be34eb801c5ddc390e7eff",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dbf216b6_a715edb6",
+        "filename": "sdm/service.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 10258
+      },
+      "writtenOn": "2019-01-23T14:29:14Z",
+      "side": 1,
+      "message": "reinterpret_cast",
+      "range": {
+        "startLine": 92,
+        "startChar": 22,
+        "endLine": 92,
+        "endChar": 33
+      },
+      "revId": "a764464571724dc686be34eb801c5ddc390e7eff",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00bb81af_d51c6e8b",
+        "filename": "sdm/service.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 10258
+      },
+      "writtenOn": "2019-01-23T14:29:14Z",
+      "side": 1,
+      "message": "add a new jump label for this line and above to avoid rely on cookie \u003d -1, when disp_api_init failed it\u0027ll return negative value but there\u0027s no guarantee cookie won\u0027t change.",
+      "range": {
+        "startLine": 102,
+        "startChar": 8,
+        "endLine": 102,
+        "endChar": 22
+      },
+      "revId": "a764464571724dc686be34eb801c5ddc390e7eff",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8550c2e7_8229f0b6",
+        "filename": "sdm/service.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 10258
+      },
+      "writtenOn": "2019-01-23T14:29:14Z",
+      "side": 1,
+      "message": "redundant",
+      "range": {
+        "startLine": 189,
+        "startChar": 8,
+        "endLine": 189,
+        "endChar": 20
+      },
+      "revId": "a764464571724dc686be34eb801c5ddc390e7eff",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
+    }
+  ]
+}
