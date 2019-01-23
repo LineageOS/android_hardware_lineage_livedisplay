@@ -188,6 +188,30 @@
     },
     {
       "key": {
+        "uuid": "34630712_3caccd0a",
+        "filename": "sdm/service.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 13648
+      },
+      "writtenOn": "2019-01-23T18:26:51Z",
+      "side": 1,
+      "message": "As pointed out by Jitao:\n\n\u003e  07-04 13:33:39.782   890   890 F DEBUG   : pid: 650, tid: 650, name: lineage.livedis  \u003e\u003e\u003e /system/bin/hw/lineage.livedisplay@2.0-service-sdm \u003c\u003c\u003c\n\u003e  07-04 13:33:39.782   890   890 F DEBUG   : signal 6 (SIGABRT), code -6 (SI_TKILL), fault addr --------\n\u003e  07-04 13:33:39.782   890   890 F DEBUG   : Abort message: \u0027Binder threadpool must have a minimum of one thread.\u0027",
+      "parentUuid": "3feea8a4_90469e3d",
+      "range": {
+        "startLine": 143,
+        "startChar": 27,
+        "endLine": 143,
+        "endChar": 35
+      },
+      "revId": "a764464571724dc686be34eb801c5ddc390e7eff",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8550c2e7_8229f0b6",
         "filename": "sdm/service.cpp",
         "patchSetId": 12
