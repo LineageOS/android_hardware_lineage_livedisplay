@@ -165,6 +165,29 @@
     },
     {
       "key": {
+        "uuid": "3feea8a4_90469e3d",
+        "filename": "sdm/service.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 10258
+      },
+      "writtenOn": "2019-01-23T14:47:47Z",
+      "side": 1,
+      "message": "This can be 0 and crash the service, because display.qservice might not have been published before the hal started",
+      "range": {
+        "startLine": 143,
+        "startChar": 27,
+        "endLine": 143,
+        "endChar": 35
+      },
+      "revId": "a764464571724dc686be34eb801c5ddc390e7eff",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8550c2e7_8229f0b6",
         "filename": "sdm/service.cpp",
         "patchSetId": 12
