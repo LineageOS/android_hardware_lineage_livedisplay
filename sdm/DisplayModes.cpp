@@ -30,6 +30,7 @@ namespace sdm {
 DisplayModes::DisplayModes(void* libHandle, int64_t cookie) {
     mLibHandle = libHandle;
     mCookie = cookie;
+    mCurrentModeId = -1;
     disp_api_get_feature_version =
         reinterpret_cast<int32_t (*)(int64_t, uint32_t, void*, uint32_t*)>(
             dlsym(mLibHandle, "disp_api_get_feature_version"));
@@ -39,9 +40,6 @@ DisplayModes::DisplayModes(void* libHandle, int64_t cookie) {
     disp_api_get_display_modes =
         reinterpret_cast<int32_t (*)(int64_t, uint32_t, int32_t, void*, int32_t, uint32_t*)>(
             dlsym(mLibHandle, "disp_api_get_display_modes"));
-    disp_api_get_active_display_mode =
-        reinterpret_cast<int32_t (*)(int64_t, uint32_t, int32_t*, uint32_t*, uint32_t*)>(
-            dlsym(mLibHandle, "disp_api_get_active_display_mode"));
     disp_api_set_active_display_mode =
         reinterpret_cast<int32_t (*)(int64_t, uint32_t, int32_t, uint32_t)>(
             dlsym(mLibHandle, "disp_api_set_active_display_mode"));
@@ -130,19 +128,6 @@ DisplayMode DisplayModes::getDisplayModeById(int32_t id) {
     return DisplayMode{-1, ""};
 }
 
-DisplayMode DisplayModes::getCurrentDisplayModeInternal() {
-    int32_t id = 0;
-    uint32_t mask = 0, flags = 0;
-
-    if (disp_api_get_active_display_mode != nullptr) {
-        if (disp_api_get_active_display_mode(mCookie, 0, &id, &mask, &flags) == 0 && id >= 0) {
-            return getDisplayModeById(id);
-        }
-    }
-
-    return DisplayMode{-1, ""};
-}
-
 DisplayMode DisplayModes::getDefaultDisplayModeInternal() {
     int32_t id = 0;
     uint32_t flags = 0;
@@ -163,7 +148,7 @@ Return<void> DisplayModes::getDisplayModes(getDisplayModes_cb _hidl_cb) {
 }
 
 Return<void> DisplayModes::getCurrentDisplayMode(getCurrentDisplayMode_cb _hidl_cb) {
-    _hidl_cb(getCurrentDisplayModeInternal());
+    _hidl_cb(getDisplayModeById(mCurrentModeId));
     return Void();
 }
 
@@ -173,9 +158,7 @@ Return<void> DisplayModes::getDefaultDisplayMode(getDefaultDisplayMode_cb _hidl_
 }
 
 Return<bool> DisplayModes::setDisplayMode(int32_t modeID, bool makeDefault) {
-    DisplayMode currentMode = getCurrentDisplayModeInternal();
-
-    if (currentMode.id >= 0 && currentMode.id == modeID) {
+    if (mCurrentModeId >= 0 && mCurrentModeId == modeID) {
         return true;
     }
 
@@ -193,6 +176,8 @@ Return<bool> DisplayModes::setDisplayMode(int32_t modeID, bool makeDefault) {
                         disp_api_set_default_display_mode(mCookie, 0, modeID, 0))) {
         return false;
     }
+
+    mCurrentModeId = modeID;
 
     PictureAdjustment::updateDefaultPictureAdjustment();
 
