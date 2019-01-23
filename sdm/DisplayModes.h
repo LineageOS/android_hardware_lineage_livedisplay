@@ -50,18 +50,17 @@ class DisplayModes : public IDisplayModes {
   private:
     void* mLibHandle;
     uint64_t mCookie;
+    int32_t mCurrentModeId;
 
     int32_t (*disp_api_get_feature_version)(int64_t, uint32_t, void*, uint32_t*);
     int32_t (*disp_api_get_num_display_modes)(int64_t, uint32_t, int32_t, int32_t*, uint32_t*);
     int32_t (*disp_api_get_display_modes)(int64_t, uint32_t, int32_t, void*, int32_t, uint32_t*);
-    int32_t (*disp_api_get_active_display_mode)(int64_t, uint32_t, int32_t*, uint32_t*, uint32_t*);
     int32_t (*disp_api_set_active_display_mode)(int64_t, uint32_t, int32_t, uint32_t);
     int32_t (*disp_api_get_default_display_mode)(int64_t, uint32_t, int32_t*, uint32_t*);
     int32_t (*disp_api_set_default_display_mode)(int64_t, uint32_t, int32_t, uint32_t);
 
     std::vector<DisplayMode> getDisplayModesInternal();
     DisplayMode getDisplayModeById(int32_t id);
-    DisplayMode getCurrentDisplayModeInternal();
     DisplayMode getDefaultDisplayModeInternal();
 };
 
