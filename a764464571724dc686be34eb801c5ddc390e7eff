@@ -71,6 +71,30 @@
     },
     {
       "key": {
+        "uuid": "84e61264_6c260f6e",
+        "filename": "sdm/service.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 11801
+      },
+      "writtenOn": "2019-01-23T14:38:10Z",
+      "side": 1,
+      "message": "Umm, the api is int64_t.",
+      "parentUuid": "8daa980c_f556b1d9",
+      "range": {
+        "startLine": 60,
+        "startChar": 4,
+        "endLine": 60,
+        "endChar": 24
+      },
+      "revId": "a764464571724dc686be34eb801c5ddc390e7eff",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dbf216b6_a715edb6",
         "filename": "sdm/service.cpp",
         "patchSetId": 12
@@ -117,6 +141,30 @@
     },
     {
       "key": {
+        "uuid": "aabab97f_f6c9fbfa",
+        "filename": "sdm/service.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 11801
+      },
+      "writtenOn": "2019-01-23T14:38:10Z",
+      "side": 1,
+      "message": "disp_api_deinit is nullptr at this point.",
+      "parentUuid": "00bb81af_d51c6e8b",
+      "range": {
+        "startLine": 102,
+        "startChar": 8,
+        "endLine": 102,
+        "endChar": 22
+      },
+      "revId": "a764464571724dc686be34eb801c5ddc390e7eff",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8550c2e7_8229f0b6",
         "filename": "sdm/service.cpp",
         "patchSetId": 12
@@ -128,6 +176,30 @@
       "writtenOn": "2019-01-23T14:29:14Z",
       "side": 1,
       "message": "redundant",
+      "range": {
+        "startLine": 189,
+        "startChar": 8,
+        "endLine": 189,
+        "endChar": 20
+      },
+      "revId": "a764464571724dc686be34eb801c5ddc390e7eff",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c5d1faf_fc2527ab",
+        "filename": "sdm/service.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 11801
+      },
+      "writtenOn": "2019-01-23T14:38:10Z",
+      "side": 1,
+      "message": "No, it\u0027s not.",
+      "parentUuid": "8550c2e7_8229f0b6",
       "range": {
         "startLine": 189,
         "startChar": 8,
