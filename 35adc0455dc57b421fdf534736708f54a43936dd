@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fd565c00_4323dc5b",
+        "filename": "sdm/service.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 10258
+      },
+      "writtenOn": "2019-01-24T01:07:48Z",
+      "side": 1,
+      "message": "This doesn\u0027t make sense, sort of a hack. It\u0027s better to start all interfaces here and perform isSupported checks in sdk, which is what we do in 1.0 hal",
+      "range": {
+        "startLine": 144,
+        "startChar": 0,
+        "endLine": 146,
+        "endChar": 5
+      },
+      "revId": "35adc0455dc57b421fdf534736708f54a43936dd",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
+    }
+  ]
+}
