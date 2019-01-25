@@ -87,6 +87,30 @@
       "revId": "35adc0455dc57b421fdf534736708f54a43936dd",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83b17d3d_8cbdc26c",
+        "filename": "sdm/service.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 11883
+      },
+      "writtenOn": "2019-01-25T15:04:15Z",
+      "side": 1,
+      "message": "Then we should add code to start our hal when the other service is running\non property:init.svc.display.qservice\u003drunning\n    start vendor.bla.bla\n\nOr like google does, make a separate thread that waits for the prop being set while the hal ignores all the hints unless  we set \"ready \u003d true\"\nhttps://android.googlesource.com/device/google/crosshatch/+/android-9.0.0_r30/power-libperfmgr/Power.cpp#63",
+      "parentUuid": "0ac788a1_63310ead",
+      "range": {
+        "startLine": 144,
+        "startChar": 0,
+        "endLine": 146,
+        "endChar": 5
+      },
+      "revId": "35adc0455dc57b421fdf534736708f54a43936dd",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
     }
   ]
 }
