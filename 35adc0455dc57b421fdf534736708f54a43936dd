@@ -63,6 +63,30 @@
       "revId": "35adc0455dc57b421fdf534736708f54a43936dd",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ac788a1_63310ead",
+        "filename": "sdm/service.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 10258
+      },
+      "writtenOn": "2019-01-25T13:59:44Z",
+      "side": 1,
+      "message": "The problem is our hal starts before display.qservice is ready, thus isSupported always return false on that early stage, and the service always goto shutdown for several times until display is up.",
+      "parentUuid": "425fa7ec_f9880fa2",
+      "range": {
+        "startLine": 144,
+        "startChar": 0,
+        "endLine": 146,
+        "endChar": 5
+      },
+      "revId": "35adc0455dc57b421fdf534736708f54a43936dd",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
     }
   ]
 }
