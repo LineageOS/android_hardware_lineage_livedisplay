@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "a447a55c_ac076059",
+        "filename": "sdm/service.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1063
+      },
+      "writtenOn": "2019-01-25T13:46:25Z",
+      "side": 1,
+      "message": "Cleaner than the above would be this:\n\nstd::vector\u003csp\u003cIBase\u003e \u003e services;\nsp\u003cAdaptiveBacklight\u003e ab \u003d new AdaptiveBacklight();\nif (adaptiveBacklight-\u003eisSupported()) {\n    services.push_back(ab);\n}\n\n[... other services ... ]\nif (services.empty()) {\n    goto shutdown;\n}\n\nfor (auto\u0026 service : services) {\n    if (service-\u003eregisterAsService() !\u003d OK) {\n        [... log error ... ]\n        goto shutdown;\n    }\n}",
+      "revId": "35adc0455dc57b421fdf534736708f54a43936dd",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fd565c00_4323dc5b",
         "filename": "sdm/service.cpp",
         "patchSetId": 19
