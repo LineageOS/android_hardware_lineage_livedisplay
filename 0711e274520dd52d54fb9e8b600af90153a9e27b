@@ -16,6 +16,24 @@
       "revId": "0711e274520dd52d54fb9e8b600af90153a9e27b",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a16173dd_717ff2b8",
+        "filename": "sdm/ColorBalance.cpp",
+        "patchSetId": 27
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 10258
+      },
+      "writtenOn": "2019-02-03T09:22:21Z",
+      "side": 1,
+      "message": "ColorBalance is a no-op but Paul isn\u0027t willing to kill it.",
+      "parentUuid": "8328c331_e5703b30",
+      "revId": "0711e274520dd52d54fb9e8b600af90153a9e27b",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
     }
   ]
 }
