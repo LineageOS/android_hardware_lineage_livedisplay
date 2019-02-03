@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8328c331_e5703b30",
+        "filename": "sdm/ColorBalance.cpp",
+        "patchSetId": 27
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 11883
+      },
+      "writtenOn": "2019-02-03T09:02:35Z",
+      "side": 1,
+      "message": "Am I missing something?",
+      "revId": "0711e274520dd52d54fb9e8b600af90153a9e27b",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
+    }
+  ]
+}
