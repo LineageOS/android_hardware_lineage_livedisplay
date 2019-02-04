@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6d62af1c_1f15ae73",
+        "filename": "legacymm/service.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 11801
+      },
+      "writtenOn": "2019-02-04T17:27:55Z",
+      "side": 1,
+      "message": "Yeah, I think so. I\u0027ll have to give it a compile test later.",
+      "parentUuid": "ddf0e359_4ae444fd",
+      "revId": "c6635ad5ad8f364fc04f6e2b31dcf32491327d2d",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f204fe44_a0552bb0",
         "filename": "sdm/service.cpp",
         "patchSetId": 1
@@ -78,6 +96,30 @@
       "side": 1,
       "message": "Isn\u0027t Moto G5 based on MSM8937? That\u0027s 64bit.",
       "parentUuid": "d3e6372f_8b9d7fe0",
+      "range": {
+        "startLine": 76,
+        "startChar": 0,
+        "endLine": 78,
+        "endChar": 6
+      },
+      "revId": "c6635ad5ad8f364fc04f6e2b31dcf32491327d2d",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2be2b0e_6d4bad48",
+        "filename": "sdm/service.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 11801
+      },
+      "writtenOn": "2019-02-04T17:27:55Z",
+      "side": 1,
+      "message": "Moto shipped everything until the G6 as 32-bit.",
+      "parentUuid": "9d41acaa_19f36eea",
       "range": {
         "startLine": 76,
         "startChar": 0,
