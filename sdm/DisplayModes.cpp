@@ -16,10 +16,10 @@
 
 #include <dlfcn.h>
 
-#include "Constants.h"
 #include "DisplayModes.h"
 #include "PictureAdjustment.h"
 #include "Types.h"
+#include "Utils.h"
 
 namespace vendor {
 namespace lineage {
@@ -38,7 +38,6 @@ DisplayModes::DisplayModes(std::shared_ptr<SDMController> controller, uint64_t c
 }
 
 bool DisplayModes::isSupported() {
-    sdm_feature_version version{};
     int32_t count = 0;
     uint32_t flags = 0;
     static int supported = -1;
@@ -47,12 +46,7 @@ bool DisplayModes::isSupported() {
         goto out;
     }
 
-    if (mController->get_feature_version(mCookie, DISPLAY_MODES_FEATURE, &version, &flags) != 0) {
-        supported = 0;
-        goto out;
-    }
-
-    if (version.x <= 0 && version.y <= 0 && version.z <= 0) {
+    if (!Utils::checkFeatureVersion(mController.get(), mCookie, FEATURE_VER_SW_SAVEMODES_API)) {
         supported = 0;
         goto out;
     }

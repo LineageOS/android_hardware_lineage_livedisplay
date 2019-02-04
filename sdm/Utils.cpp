@@ -26,6 +26,7 @@
 
 #include <cutils/sockets.h>
 
+#include "Types.h"
 #include "Utils.h"
 
 namespace vendor {
@@ -64,6 +65,22 @@ int Utils::sendDPPSCommand(char* buf, size_t len) {
 
     close(sock);
     return rc;
+}
+
+bool Utils::checkFeatureVersion(SDMController* controller, uint64_t cookie,
+                                feature_ver_sw feature) {
+    sdm_feature_version version;
+    uint32_t flags = 0;
+
+    if (controller->get_feature_version(cookie, feature, &version, &flags) != 0) {
+        return false;
+    }
+
+    if (version.x <= 0 && version.y <= 0 && version.z <= 0) {
+        return false;
+    }
+
+    return true;
 }
 
 }  // namespace sdm
