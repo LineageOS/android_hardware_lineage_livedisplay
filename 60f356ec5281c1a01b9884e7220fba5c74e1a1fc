@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6ae1dc99_f5f81241",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 13648
+      },
+      "writtenOn": "2019-02-04T15:12:42Z",
+      "side": 1,
+      "message": "Make this the only change and ditch the rest.",
+      "range": {
+        "startLine": 9,
+        "startChar": 2,
+        "endLine": 9,
+        "endChar": 15
+      },
+      "revId": "60f356ec5281c1a01b9884e7220fba5c74e1a1fc",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b5eabb1_1f7e7ef2",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 13648
+      },
+      "writtenOn": "2019-02-04T15:12:42Z",
+      "side": 1,
+      "message": "Already done in https://review.lineageos.org/c/LineageOS/android_hardware_lineage_livedisplay/+/240569.",
+      "range": {
+        "startLine": 10,
+        "startChar": 2,
+        "endLine": 10,
+        "endChar": 47
+      },
+      "revId": "60f356ec5281c1a01b9884e7220fba5c74e1a1fc",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
+    }
+  ]
+}
