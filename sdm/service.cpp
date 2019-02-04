@@ -27,7 +27,6 @@
 #include <hidl/HidlTransportSupport.h>
 
 #include "AdaptiveBacklight.h"
-#include "ColorBalance.h"
 #include "DisplayModes.h"
 #include "PictureAdjustment.h"
 
@@ -44,11 +43,9 @@ using android::hardware::configureRpcThreadpool;
 using android::hardware::joinRpcThreadpool;
 
 using ::vendor::lineage::livedisplay::V2_0::IAdaptiveBacklight;
-using ::vendor::lineage::livedisplay::V2_0::IColorBalance;
 using ::vendor::lineage::livedisplay::V2_0::IDisplayModes;
 using ::vendor::lineage::livedisplay::V2_0::IPictureAdjustment;
 using ::vendor::lineage::livedisplay::V2_0::sdm::AdaptiveBacklight;
-using ::vendor::lineage::livedisplay::V2_0::sdm::ColorBalance;
 using ::vendor::lineage::livedisplay::V2_0::sdm::DisplayModes;
 using ::vendor::lineage::livedisplay::V2_0::sdm::PictureAdjustment;
 
@@ -61,7 +58,6 @@ int main() {
 
     // HIDL frontend
     sp<AdaptiveBacklight> ab;
-    sp<ColorBalance> cb;
     sp<DisplayModes> dm;
     sp<PictureAdjustment> pa;
 
@@ -113,12 +109,6 @@ int main() {
         goto shutdown;
     }
 
-    cb = new ColorBalance(libHandle, cookie);
-    if (cb == nullptr) {
-        LOG(ERROR) << "Can not create an instance of LiveDisplay HAL ColorBalance Iface, exiting.";
-        goto shutdown;
-    }
-
     dm = new DisplayModes(libHandle, cookie);
     if (dm == nullptr) {
         LOG(ERROR) << "Can not create an instance of LiveDisplay HAL DisplayModes Iface, exiting.";
@@ -138,15 +128,6 @@ int main() {
         status = ab->registerAsService();
         if (status != OK) {
             LOG(ERROR) << "Could not register service for LiveDisplay HAL AdaptiveBacklight Iface ("
-                       << status << ")";
-            goto shutdown;
-        }
-    }
-
-    if (cb->isSupported()) {
-        status = cb->registerAsService();
-        if (status != OK) {
-            LOG(ERROR) << "Could not register service for LiveDisplay HAL ColorBalance Iface ("
                        << status << ")";
             goto shutdown;
         }
