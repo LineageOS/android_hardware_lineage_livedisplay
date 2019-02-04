@@ -63,6 +63,10 @@ int main() {
     android::ProcessState::initWithDriver("/dev/vndbinder");
 #endif
 
+#ifdef ARCH_ARM_32
+    android::hardware::ProcessState::initWithMmapSize((size_t)8192);
+#endif
+
     LOG(INFO) << "LiveDisplay HAL service is starting.";
 
     controller = std::make_unique<SDMController>();
