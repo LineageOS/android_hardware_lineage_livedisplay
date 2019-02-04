@@ -64,7 +64,6 @@ int main() {
     sp<ColorBalance> cb;
     sp<DisplayModes> dm;
     sp<PictureAdjustment> pa;
-    uint8_t services = 0;
 
     status_t status = OK;
 
@@ -109,26 +108,17 @@ int main() {
             << "Can not create an instance of LiveDisplay HAL AdaptiveBacklight Iface, exiting.";
         goto shutdown;
     }
-    if (ab->isSupported()) {
-        services++;
-    }
 
     cb = new ColorBalance(libHandle, cookie);
     if (cb == nullptr) {
         LOG(ERROR) << "Can not create an instance of LiveDisplay HAL ColorBalance Iface, exiting.";
         goto shutdown;
     }
-    if (cb->isSupported()) {
-        services++;
-    }
 
     dm = new DisplayModes(libHandle, cookie);
     if (dm == nullptr) {
         LOG(ERROR) << "Can not create an instance of LiveDisplay HAL DisplayModes Iface, exiting.";
         goto shutdown;
-    }
-    if (dm->isSupported()) {
-        services++;
     }
 
     pa = new PictureAdjustment(libHandle, cookie);
@@ -137,15 +127,8 @@ int main() {
             << "Can not create an instance of LiveDisplay HAL PictureAdjustment Iface, exiting.";
         goto shutdown;
     }
-    if (pa->isSupported()) {
-        services++;
-    }
 
-    if (services == 0) {
-        goto shutdown;
-    }
-
-    configureRpcThreadpool(services, true /*callerWillJoin*/);
+    configureRpcThreadpool(1, true /*callerWillJoin*/);
 
     if (ab->isSupported()) {
         status = ab->registerAsService();

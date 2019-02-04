@@ -88,12 +88,11 @@ std::vector<DisplayMode> DisplayModes::getDisplayModesInternal() {
         if (disp_api_get_display_modes(0, 0, tmp, count) == 0) {
             for (int i = 0; i < count; i++) {
                 modes.push_back(DisplayMode{tmp[i].id, std::string(tmp[i].name)});
-                delete[] tmp[i].name;
             }
-        } else {
-            for (int i = 0; i < count; i++) {
-                delete[] tmp[i].name;
-            }
+        }
+
+        for (int i = 0; i < count; i++) {
+            delete[] tmp[i].name;
         }
 
         delete[] tmp;
