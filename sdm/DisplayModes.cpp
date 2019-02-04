@@ -14,12 +14,20 @@
  * limitations under the License.
  */
 
-#include <dlfcn.h>
-
-#include "Constants.h"
 #include "DisplayModes.h"
 #include "PictureAdjustment.h"
-#include "Types.h"
+#include "Utils.h"
+
+namespace {
+struct sdm_disp_mode {
+    int32_t id;
+    int32_t type;
+    int32_t len;
+    char* name;
+    sdm_disp_mode() : id(-1), type(0), len(128) { name = new char[128]; }
+    ~sdm_disp_mode() { delete[] name; }
+};
+}  // anonymous namespace
 
 namespace vendor {
 namespace lineage {
@@ -31,7 +39,6 @@ DisplayModes::DisplayModes(std::shared_ptr<SDMController> controller, uint64_t c
     : mController(std::move(controller)), mCookie(cookie) {}
 
 bool DisplayModes::isSupported() {
-    sdm_feature_version version{};
     int32_t count = 0;
     uint32_t flags = 0;
     static int supported = -1;
@@ -40,12 +47,7 @@ bool DisplayModes::isSupported() {
         goto out;
     }
 
-    if (mController->get_feature_version(mCookie, DISPLAY_MODES_FEATURE, &version, &flags) != 0) {
-        supported = 0;
-        goto out;
-    }
-
-    if (version.x <= 0 && version.y <= 0 && version.z <= 0) {
+    if (!Utils::checkFeatureVersion(mController, mCookie, FEATURE_VER_SW_SAVEMODES_API)) {
         supported = 0;
         goto out;
     }
@@ -69,33 +71,25 @@ std::vector<DisplayMode> DisplayModes::getDisplayModesInternal() {
         return modes;
     }
 
-    sdm_disp_mode* tmp = new sdm_disp_mode[count];
-    for (int i = 0; i < count; i++) {
-        tmp[i].id = -1;
-        tmp[i].name = new char[128];
-        tmp[i].len = 128;
-    }
+    sdm_disp_mode tmp[count];
 
     if (mController->get_display_modes(mCookie, 0, 0, tmp, count, &flags) == 0) {
         for (int i = 0; i < count; i++) {
-            modes.push_back(DisplayMode{tmp[i].id, std::string(tmp[i].name)});
+            modes.push_back({tmp[i].id, std::string(tmp[i].name)});
         }
     }
-
-    for (int i = 0; i < count; i++) {
-        delete[] tmp[i].name;
-    }
-    delete[] tmp;
 
     return modes;
 }
 
 DisplayMode DisplayModes::getDisplayModeById(int32_t id) {
-    std::vector<DisplayMode> modes = getDisplayModesInternal();
+    if (id >= 0) {
+        std::vector<DisplayMode> modes = getDisplayModesInternal();
 
-    for (const DisplayMode& mode : modes) {
-        if (mode.id == id) {
-            return mode;
+        for (const DisplayMode& mode : modes) {
+            if (mode.id == id) {
+                return mode;
+            }
         }
     }
 
@@ -103,25 +97,29 @@ DisplayMode DisplayModes::getDisplayModeById(int32_t id) {
 }
 
 DisplayMode DisplayModes::getCurrentDisplayModeInternal() {
+    return getDisplayModeById(getCurrentDisplayModeId());
+}
+
+int32_t DisplayModes::getCurrentDisplayModeId() {
     int32_t id = 0;
     uint32_t mask = 0, flags = 0;
 
-    if (mController->get_active_display_mode(mCookie, 0, &id, &mask, &flags) == 0 && id >= 0) {
-        return getDisplayModeById(id);
+    if (mController->get_active_display_mode(mCookie, 0, &id, &mask, &flags) != 0) {
+        id = -1;
     }
 
-    return DisplayMode{-1, ""};
+    return id;
 }
 
 DisplayMode DisplayModes::getDefaultDisplayModeInternal() {
     int32_t id = 0;
     uint32_t flags = 0;
 
-    if (mController->get_default_display_mode(mCookie, 0, &id, &flags) == 0 && id >= 0) {
-        return getDisplayModeById(id);
+    if (mController->get_default_display_mode(mCookie, 0, &id, &flags) != 0) {
+        id = -1;
     }
 
-    return DisplayMode{-1, ""};
+    return getDisplayModeById(id);
 }
 
 // Methods from ::vendor::lineage::livedisplay::V2_0::IDisplayModes follow.
@@ -141,9 +139,9 @@ Return<void> DisplayModes::getDefaultDisplayMode(getDefaultDisplayMode_cb _hidl_
 }
 
 Return<bool> DisplayModes::setDisplayMode(int32_t modeID, bool makeDefault) {
-    DisplayMode currentMode = getCurrentDisplayModeInternal();
+    int32_t curModeId = getCurrentDisplayModeId();
 
-    if (currentMode.id >= 0 && currentMode.id == modeID) {
+    if (curModeId >= 0 && curModeId == modeID) {
         return true;
     }
 

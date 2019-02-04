@@ -14,17 +14,52 @@
  * limitations under the License.
  */
 
-#include <dlfcn.h>
-
-#include "Constants.h"
 #include "PictureAdjustment.h"
-#include "Types.h"
+#include "Utils.h"
+
+namespace {
+struct hsic_data {
+    int32_t hue;
+    float saturation;
+    float intensity;
+    float contrast;
+    float saturationThreshold;
+};
+
+struct hsic_config {
+    uint32_t unused;
+    hsic_data data;
+};
+
+struct hsic_int_range {
+    int32_t max;
+    int32_t min;
+    uint32_t step;
+};
+
+struct hsic_float_range {
+    float max;
+    float min;
+    float step;
+};
+
+struct hsic_ranges {
+    uint32_t unused;
+    struct hsic_int_range hue;
+    struct hsic_float_range saturation;
+    struct hsic_float_range intensity;
+    struct hsic_float_range contrast;
+    struct hsic_float_range saturationThreshold;
+};
+}  // anonymous namespace
 
 namespace vendor {
 namespace lineage {
 namespace livedisplay {
 namespace V2_0 {
 namespace sdm {
+
+using ::android::sp;
 
 static sp<PictureAdjustment> sInstance;
 
@@ -35,22 +70,14 @@ PictureAdjustment::PictureAdjustment(std::shared_ptr<SDMController> controller, 
 }
 
 bool PictureAdjustment::isSupported() {
-    sdm_feature_version version;
     hsic_ranges r;
-    uint32_t flags = 0;
     static int supported = -1;
 
     if (supported >= 0) {
         goto out;
     }
 
-    if (mController->get_feature_version(mCookie, PICTURE_ADJUSTMENT_FEATURE, &version, &flags) !=
-        0) {
-        supported = 0;
-        goto out;
-    }
-
-    if (version.x <= 0 && version.y <= 0 && version.z <= 0) {
+    if (!Utils::checkFeatureVersion(mController, mCookie, FEATURE_VER_SW_PA_API)) {
         supported = 0;
         goto out;
     }

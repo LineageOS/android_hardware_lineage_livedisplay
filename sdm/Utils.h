@@ -18,7 +18,8 @@
 #ifndef VENDOR_LINEAGE_LIVEDISPLAY_V2_0_SDM_UTILS_H
 #define VENDOR_LINEAGE_LIVEDISPLAY_V2_0_SDM_UTILS_H
 
-#include <stdlib.h>
+#include "SDMController.h"
+#include "Types.h"
 
 namespace vendor {
 namespace lineage {
@@ -29,6 +30,8 @@ namespace sdm {
 class Utils {
    public:
     static int sendDPPSCommand(char* buf, size_t len);
+    static bool checkFeatureVersion(const std::shared_ptr<SDMController>& controller,
+                                    uint64_t cookie, feature_ver_sw feature);
 };
 
 }  // namespace sdm

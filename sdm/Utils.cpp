@@ -15,18 +15,19 @@
  * limitations under the License.
  */
 
-#include <errno.h>
-#include <fcntl.h>
 #include <poll.h>
-#include <signal.h>
-#include <stdio.h>
-#include <sys/stat.h>
 #include <unistd.h>
-#include <string>
 
 #include <cutils/sockets.h>
 
 #include "Utils.h"
+
+namespace {
+struct sdm_feature_version {
+    uint8_t x, y;
+    uint16_t z;
+};
+}  // anonymous namespace
 
 namespace vendor {
 namespace lineage {
@@ -64,6 +65,22 @@ int Utils::sendDPPSCommand(char* buf, size_t len) {
 
     close(sock);
     return rc;
+}
+
+bool Utils::checkFeatureVersion(const std::shared_ptr<SDMController>& controller, uint64_t cookie,
+                                feature_ver_sw feature) {
+    sdm_feature_version version;
+    uint32_t flags = 0;
+
+    if (controller->get_feature_version(cookie, feature, &version, &flags) != 0) {
+        return false;
+    }
+
+    if (version.x <= 0 && version.y <= 0 && version.z <= 0) {
+        return false;
+    }
+
+    return true;
 }
 
 }  // namespace sdm

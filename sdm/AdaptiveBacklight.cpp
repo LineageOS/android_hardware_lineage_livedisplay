@@ -14,15 +14,17 @@
  * limitations under the License.
  */
 
-#include <stdio.h>
-#include <string.h>
-
 #include <android-base/properties.h>
 
 #include "AdaptiveBacklight.h"
-#include "Constants.h"
-#include "Types.h"
 #include "Utils.h"
+
+namespace {
+constexpr size_t kDppsBufSize = 64;
+constexpr char kFossOn[] = "foss:on";
+constexpr char kFossOff[] = "foss:off";
+constexpr char kFossProperty[] = "ro.vendor.display.foss";
+}  // anonymous namespace
 
 namespace vendor {
 namespace lineage {
@@ -32,12 +34,8 @@ namespace sdm {
 
 using ::android::base::GetBoolProperty;
 
-AdaptiveBacklight::AdaptiveBacklight() {
-    mEnabled = false;
-}
-
 bool AdaptiveBacklight::isSupported() {
-    return GetBoolProperty(FOSS_PROPERTY, false);
+    return GetBoolProperty(kFossProperty, false);
 }
 
 // Methods from ::vendor::lineage::livedisplay::V2_0::IAdaptiveBacklight follow.
@@ -50,18 +48,15 @@ Return<bool> AdaptiveBacklight::setEnabled(bool enabled) {
         return true;
     }
 
-    char* buf = new char[DPPS_BUF_SIZE];
-
-    sprintf(buf, "%s", enabled ? FOSS_ON : FOSS_OFF);
-    if (Utils::sendDPPSCommand(buf, DPPS_BUF_SIZE) == 0) {
+    char buf[kDppsBufSize];
+    sprintf(buf, "%s", enabled ? kFossOn : kFossOff);
+    if (Utils::sendDPPSCommand(buf, kDppsBufSize) == 0) {
         if (strncmp(buf, "Success", 7) == 0) {
             mEnabled = enabled;
-            delete[] buf;
             return true;
         }
     }
 
-    delete[] buf;
     return false;
 }
 
