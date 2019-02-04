@@ -27,7 +27,6 @@ namespace livedisplay {
 namespace V2_0 {
 namespace sdm {
 
-using ::android::sp;
 using ::android::hardware::Return;
 using ::android::hardware::Void;
 
