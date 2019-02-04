@@ -22,6 +22,30 @@
       "revId": "c6635ad5ad8f364fc04f6e2b31dcf32491327d2d",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3e6372f_8b9d7fe0",
+        "filename": "sdm/service.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 11801
+      },
+      "writtenOn": "2019-02-04T16:02:48Z",
+      "side": 1,
+      "message": "Good question, was the Moto G5 an sdm device?",
+      "parentUuid": "f204fe44_a0552bb0",
+      "range": {
+        "startLine": 76,
+        "startChar": 0,
+        "endLine": 78,
+        "endChar": 6
+      },
+      "revId": "c6635ad5ad8f364fc04f6e2b31dcf32491327d2d",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
     }
   ]
 }
