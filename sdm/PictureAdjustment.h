@@ -19,6 +19,8 @@
 
 #include <vendor/lineage/livedisplay/2.0/IPictureAdjustment.h>
 
+#include "SDMController.h"
+
 namespace vendor {
 namespace lineage {
 namespace livedisplay {
@@ -31,7 +33,7 @@ using ::android::hardware::Void;
 
 class PictureAdjustment : public IPictureAdjustment {
    public:
-    PictureAdjustment(void* libHandle, uint64_t cookie);
+    PictureAdjustment(std::shared_ptr<SDMController> controller, uint64_t cookie);
 
     bool isSupported();
 
@@ -49,17 +51,11 @@ class PictureAdjustment : public IPictureAdjustment {
     static void updateDefaultPictureAdjustment();
 
    private:
-    void* mLibHandle;
+    std::shared_ptr<SDMController> mController;
     uint64_t mCookie;
-
-    int32_t (*disp_api_get_feature_version)(uint64_t, uint32_t, void*, uint32_t*);
-    int32_t (*disp_api_get_global_pa_range)(uint64_t, uint32_t, void*);
-    int32_t (*disp_api_get_global_pa_config)(uint64_t, uint32_t, uint32_t*, void*);
-    int32_t (*disp_api_set_global_pa_config)(uint64_t, uint32_t, uint32_t, void*);
+    HSIC mDefaultPictureAdjustment;
 
     HSIC getPictureAdjustmentInternal();
-
-    HSIC mDefaultPictureAdjustment;
 };
 
 }  // namespace sdm
