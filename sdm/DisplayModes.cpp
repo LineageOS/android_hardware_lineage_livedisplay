@@ -51,13 +51,6 @@ DisplayModes::DisplayModes(void* libHandle, uint64_t cookie) {
     disp_api_set_default_display_mode =
         reinterpret_cast<int32_t (*)(uint64_t, uint32_t, int32_t, uint32_t)>(
             dlsym(mLibHandle, "disp_api_set_default_display_mode"));
-
-    if (isSupported()) {
-        DisplayMode mode = getDefaultDisplayModeInternal();
-        if (mode.id > 0) {
-            setDisplayMode(mode.id, false);
-        }
-    }
 }
 
 bool DisplayModes::isSupported() {
@@ -113,12 +106,11 @@ std::vector<DisplayMode> DisplayModes::getDisplayModesInternal() {
         if (disp_api_get_display_modes(mCookie, 0, 0, tmp, count, &flags) == 0) {
             for (int i = 0; i < count; i++) {
                 modes.push_back(DisplayMode{tmp[i].id, std::string(tmp[i].name)});
-                delete[] tmp[i].name;
             }
-        } else {
-            for (int i = 0; i < count; i++) {
-                delete[] tmp[i].name;
-            }
+        }
+
+        for (int i = 0; i < count; i++) {
+            delete[] tmp[i].name;
         }
 
         delete[] tmp;
