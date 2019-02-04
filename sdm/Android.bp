@@ -18,7 +18,6 @@ cc_defaults {
     relative_install_path: "hw",
     srcs: [
         "AdaptiveBacklight.cpp",
-        "ColorBalance.cpp",
         "DisplayModes.cpp",
         "PictureAdjustment.cpp",
         "Utils.cpp",
