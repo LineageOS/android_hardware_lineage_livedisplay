@@ -27,31 +27,8 @@ namespace livedisplay {
 namespace V2_0 {
 namespace sdm {
 
-DisplayModes::DisplayModes(void* libHandle, uint64_t cookie) {
-    mLibHandle = libHandle;
-    mCookie = cookie;
-    disp_api_get_feature_version =
-        reinterpret_cast<int32_t (*)(uint64_t, uint32_t, void*, uint32_t*)>(
-            dlsym(mLibHandle, "disp_api_get_feature_version"));
-    disp_api_get_num_display_modes =
-        reinterpret_cast<int32_t (*)(uint64_t, uint32_t, int32_t, int32_t*, uint32_t*)>(
-            dlsym(mLibHandle, "disp_api_get_num_display_modes"));
-    disp_api_get_display_modes =
-        reinterpret_cast<int32_t (*)(uint64_t, uint32_t, int32_t, void*, int32_t, uint32_t*)>(
-            dlsym(mLibHandle, "disp_api_get_display_modes"));
-    disp_api_get_active_display_mode =
-        reinterpret_cast<int32_t (*)(uint64_t, uint32_t, int32_t*, uint32_t*, uint32_t*)>(
-            dlsym(mLibHandle, "disp_api_get_active_display_mode"));
-    disp_api_set_active_display_mode =
-        reinterpret_cast<int32_t (*)(uint64_t, uint32_t, int32_t, uint32_t)>(
-            dlsym(mLibHandle, "disp_api_set_active_display_mode"));
-    disp_api_get_default_display_mode =
-        reinterpret_cast<int32_t (*)(uint64_t, uint32_t, int32_t*, uint32_t*)>(
-            dlsym(mLibHandle, "disp_api_get_default_display_mode"));
-    disp_api_set_default_display_mode =
-        reinterpret_cast<int32_t (*)(uint64_t, uint32_t, int32_t, uint32_t)>(
-            dlsym(mLibHandle, "disp_api_set_default_display_mode"));
-}
+DisplayModes::DisplayModes(std::shared_ptr<SDMController> controller, uint64_t cookie)
+    : mController(std::move(controller)), mCookie(cookie) {}
 
 bool DisplayModes::isSupported() {
     sdm_feature_version version{};
@@ -63,8 +40,7 @@ bool DisplayModes::isSupported() {
         goto out;
     }
 
-    if (disp_api_get_feature_version == nullptr ||
-        disp_api_get_feature_version(mCookie, DISPLAY_MODES_FEATURE, &version, &flags) != 0) {
+    if (mController->get_feature_version(mCookie, DISPLAY_MODES_FEATURE, &version, &flags) != 0) {
         supported = 0;
         goto out;
     }
@@ -74,8 +50,7 @@ bool DisplayModes::isSupported() {
         goto out;
     }
 
-    if (disp_api_get_num_display_modes == nullptr ||
-        disp_api_get_num_display_modes(mCookie, 0, 0, &count, &flags) != 0) {
+    if (mController->get_num_display_modes(mCookie, 0, 0, &count, &flags) != 0) {
         supported = 0;
         goto out;
     }
@@ -90,31 +65,27 @@ std::vector<DisplayMode> DisplayModes::getDisplayModesInternal() {
     int32_t count = 0;
     uint32_t flags = 0;
 
-    if (disp_api_get_num_display_modes == nullptr ||
-        disp_api_get_num_display_modes(mCookie, 0, 0, &count, &flags) != 0) {
+    if (mController->get_num_display_modes(mCookie, 0, 0, &count, &flags) != 0 || count == 0) {
         return modes;
     }
 
-    if (disp_api_get_display_modes != nullptr) {
-        sdm_disp_mode* tmp = new sdm_disp_mode[count];
-        for (int i = 0; i < count; i++) {
-            tmp[i].id = -1;
-            tmp[i].name = new char[128];
-            tmp[i].len = 128;
-        }
-
-        if (disp_api_get_display_modes(mCookie, 0, 0, tmp, count, &flags) == 0) {
-            for (int i = 0; i < count; i++) {
-                modes.push_back(DisplayMode{tmp[i].id, std::string(tmp[i].name)});
-            }
-        }
-
-        for (int i = 0; i < count; i++) {
-            delete[] tmp[i].name;
-        }
-
-        delete[] tmp;
+    sdm_disp_mode* tmp = new sdm_disp_mode[count];
+    for (int i = 0; i < count; i++) {
+        tmp[i].id = -1;
+        tmp[i].name = new char[128];
+        tmp[i].len = 128;
     }
+
+    if (mController->get_display_modes(mCookie, 0, 0, tmp, count, &flags) == 0) {
+        for (int i = 0; i < count; i++) {
+            modes.push_back(DisplayMode{tmp[i].id, std::string(tmp[i].name)});
+        }
+    }
+
+    for (int i = 0; i < count; i++) {
+        delete[] tmp[i].name;
+    }
+    delete[] tmp;
 
     return modes;
 }
@@ -135,10 +106,8 @@ DisplayMode DisplayModes::getCurrentDisplayModeInternal() {
     int32_t id = 0;
     uint32_t mask = 0, flags = 0;
 
-    if (disp_api_get_active_display_mode != nullptr) {
-        if (disp_api_get_active_display_mode(mCookie, 0, &id, &mask, &flags) == 0 && id >= 0) {
-            return getDisplayModeById(id);
-        }
+    if (mController->get_active_display_mode(mCookie, 0, &id, &mask, &flags) == 0 && id >= 0) {
+        return getDisplayModeById(id);
     }
 
     return DisplayMode{-1, ""};
@@ -148,10 +117,8 @@ DisplayMode DisplayModes::getDefaultDisplayModeInternal() {
     int32_t id = 0;
     uint32_t flags = 0;
 
-    if (disp_api_get_default_display_mode != nullptr) {
-        if (disp_api_get_default_display_mode(mCookie, 0, &id, &flags) == 0 && id >= 0) {
-            return getDisplayModeById(id);
-        }
+    if (mController->get_default_display_mode(mCookie, 0, &id, &flags) == 0 && id >= 0) {
+        return getDisplayModeById(id);
     }
 
     return DisplayMode{-1, ""};
@@ -185,13 +152,11 @@ Return<bool> DisplayModes::setDisplayMode(int32_t modeID, bool makeDefault) {
         return false;
     }
 
-    if (disp_api_set_active_display_mode == nullptr ||
-        disp_api_set_active_display_mode(mCookie, 0, modeID, 0)) {
+    if (mController->set_active_display_mode(mCookie, 0, modeID, 0)) {
         return false;
     }
 
-    if (makeDefault && (disp_api_set_default_display_mode == nullptr ||
-                        disp_api_set_default_display_mode(mCookie, 0, modeID, 0))) {
+    if (makeDefault && mController->set_default_display_mode(mCookie, 0, modeID, 0)) {
         return false;
     }
 

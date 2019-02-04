@@ -20,6 +20,7 @@ cc_defaults {
         "AdaptiveBacklight.cpp",
         "DisplayModes.cpp",
         "PictureAdjustment.cpp",
+        "SDMController.cpp",
         "Utils.cpp",
         "service.cpp",
     ],
