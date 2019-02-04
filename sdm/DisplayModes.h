@@ -49,6 +49,7 @@ class DisplayModes : public IDisplayModes {
     std::vector<DisplayMode> getDisplayModesInternal();
     DisplayMode getDisplayModeById(int32_t id);
     DisplayMode getCurrentDisplayModeInternal();
+    int32_t getCurrentDisplayModeId();
     DisplayMode getDefaultDisplayModeInternal();
 };
 
