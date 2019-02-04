@@ -14,12 +14,24 @@
  * limitations under the License.
  */
 
-#include <dlfcn.h>
-
-#include "Constants.h"
 #include "DisplayModes.h"
 #include "PictureAdjustment.h"
-#include "Types.h"
+#include "Utils.h"
+
+namespace {
+struct sdm_disp_mode {
+    int32_t id;
+    int32_t type;
+    int32_t len;
+    char* name;
+    sdm_disp_mode() : id(-1), type(0), len(128) {
+        name = new char[128];
+    }
+    ~sdm_disp_mode() {
+        delete name;
+    }
+};
+}  // anonymous namespace
 
 namespace vendor {
 namespace lineage {
@@ -31,7 +43,6 @@ DisplayModes::DisplayModes(std::shared_ptr<SDMController> controller, uint64_t c
     : mController(std::move(controller)), mCookie(cookie) {}
 
 bool DisplayModes::isSupported() {
-    sdm_feature_version version{};
     int32_t count = 0;
     uint32_t flags = 0;
     static int supported = -1;
@@ -40,12 +51,7 @@ bool DisplayModes::isSupported() {
         goto out;
     }
 
-    if (mController->get_feature_version(mCookie, DISPLAY_MODES_FEATURE, &version, &flags) != 0) {
-        supported = 0;
-        goto out;
-    }
-
-    if (version.x <= 0 && version.y <= 0 && version.z <= 0) {
+    if (!Utils::checkFeatureVersion(mController.get(), mCookie, FEATURE_VER_SW_SAVEMODES_API)) {
         supported = 0;
         goto out;
     }
@@ -69,23 +75,13 @@ std::vector<DisplayMode> DisplayModes::getDisplayModesInternal() {
         return modes;
     }
 
-    sdm_disp_mode* tmp = new sdm_disp_mode[count];
-    for (int i = 0; i < count; i++) {
-        tmp[i].id = -1;
-        tmp[i].name = new char[128];
-        tmp[i].len = 128;
-    }
+    sdm_disp_mode tmp[count];
 
     if (mController->get_display_modes(mCookie, 0, 0, tmp, count, &flags) == 0) {
         for (int i = 0; i < count; i++) {
             modes.push_back(DisplayMode{tmp[i].id, std::string(tmp[i].name)});
         }
     }
-
-    for (int i = 0; i < count; i++) {
-        delete[] tmp[i].name;
-    }
-    delete[] tmp;
 
     return modes;
 }

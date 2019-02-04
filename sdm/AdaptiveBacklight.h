@@ -29,8 +29,6 @@ using ::android::hardware::Return;
 
 class AdaptiveBacklight : public IAdaptiveBacklight {
    public:
-    AdaptiveBacklight();
-
     bool isSupported();
 
     // Methods from ::vendor::lineage::livedisplay::V2_0::IAdaptiveBacklight follow.
@@ -38,7 +36,7 @@ class AdaptiveBacklight : public IAdaptiveBacklight {
     Return<bool> setEnabled(bool enabled) override;
 
    private:
-    bool mEnabled;
+    bool mEnabled = false;
 };
 
 }  // namespace sdm
