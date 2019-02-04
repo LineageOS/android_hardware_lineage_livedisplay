@@ -30,7 +30,13 @@ cc_binary {
         "libdl",
         "libhidlbase",
         "libhidltransport",
+        "libhwbinder",
         "libutils",
         "vendor.lineage.livedisplay@2.0",
     ],
+    arch: {
+        arm: {
+            cflags: ["-DARCH_ARM_32"],
+        },
+    },
 }

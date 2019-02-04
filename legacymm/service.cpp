@@ -53,6 +53,10 @@ int main() {
 
     status_t status = OK;
 
+#ifdef ARCH_ARM_32
+    android::hardware::ProcessState::initWithMmapSize((size_t)8192);
+#endif
+
     LOG(INFO) << "LiveDisplay HAL service is starting.";
 
     libHandle = dlopen(MM_DISP_LIB, RTLD_NOW);
