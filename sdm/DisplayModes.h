@@ -19,6 +19,8 @@
 
 #include <vendor/lineage/livedisplay/2.0/IDisplayModes.h>
 
+#include "SDMController.h"
+
 namespace vendor {
 namespace lineage {
 namespace livedisplay {
@@ -30,7 +32,7 @@ using ::android::hardware::Void;
 
 class DisplayModes : public IDisplayModes {
    public:
-    DisplayModes(void* libHandle, uint64_t cookie);
+    DisplayModes(std::shared_ptr<SDMController> controller, uint64_t cookie);
 
     bool isSupported();
 
@@ -41,16 +43,8 @@ class DisplayModes : public IDisplayModes {
     Return<bool> setDisplayMode(int32_t modeID, bool makeDefault) override;
 
    private:
-    void* mLibHandle;
+    std::shared_ptr<SDMController> mController;
     uint64_t mCookie;
-
-    int32_t (*disp_api_get_feature_version)(uint64_t, uint32_t, void*, uint32_t*);
-    int32_t (*disp_api_get_num_display_modes)(uint64_t, uint32_t, int32_t, int32_t*, uint32_t*);
-    int32_t (*disp_api_get_display_modes)(uint64_t, uint32_t, int32_t, void*, int32_t, uint32_t*);
-    int32_t (*disp_api_get_active_display_mode)(uint64_t, uint32_t, int32_t*, uint32_t*, uint32_t*);
-    int32_t (*disp_api_set_active_display_mode)(uint64_t, uint32_t, int32_t, uint32_t);
-    int32_t (*disp_api_get_default_display_mode)(uint64_t, uint32_t, int32_t*, uint32_t*);
-    int32_t (*disp_api_set_default_display_mode)(uint64_t, uint32_t, int32_t, uint32_t);
 
     std::vector<DisplayMode> getDisplayModesInternal();
     DisplayMode getDisplayModeById(int32_t id);
