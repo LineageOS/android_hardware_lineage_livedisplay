@@ -19,7 +19,6 @@ cc_binary {
     relative_install_path: "hw",
     proprietary: true,
     srcs: [
-        "ColorBalance.cpp",
         "DisplayModes.cpp",
         "PictureAdjustment.cpp",
         "service.cpp",
