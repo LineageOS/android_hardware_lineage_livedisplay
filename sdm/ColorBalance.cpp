@@ -26,25 +26,8 @@ namespace livedisplay {
 namespace V2_0 {
 namespace sdm {
 
-ColorBalance::ColorBalance(void* libHandle, uint64_t cookie) {
-    mLibHandle = libHandle;
-    mCookie = cookie;
-    disp_api_get_feature_version =
-        reinterpret_cast<int32_t (*)(uint64_t, uint32_t, void*, uint32_t*)>(
-            dlsym(mLibHandle, "disp_api_get_feature_version"));
-    disp_api_get_global_color_balance_range =
-        reinterpret_cast<int32_t (*)(uint64_t, uint32_t, void*)>(
-            dlsym(mLibHandle, "disp_api_get_global_color_balance_range"));
-    disp_api_get_global_color_balance =
-        reinterpret_cast<int32_t (*)(uint64_t, uint32_t, int32_t*, uint32_t*)>(
-            dlsym(mLibHandle, "disp_api_get_global_color_balance"));
-    disp_api_set_global_color_balance =
-        reinterpret_cast<int32_t (*)(uint64_t, uint32_t, int32_t, uint32_t)>(
-            dlsym(mLibHandle, "disp_api_set_global_color_balance"));
-    disp_api_get_num_display_modes =
-        reinterpret_cast<int32_t (*)(uint64_t, uint32_t, int32_t, int32_t*, uint32_t*)>(
-            dlsym(mLibHandle, "disp_api_get_num_display_modes"));
-}
+ColorBalance::ColorBalance(std::shared_ptr<SDMController> controller, uint64_t cookie)
+    : mController(std::move(controller)), mCookie(cookie) {}
 
 bool ColorBalance::isSupported() {
 #if 0
@@ -53,8 +36,7 @@ bool ColorBalance::isSupported() {
     // int32_t count = 0;
     uint32_t flags = 0;
 
-    if (disp_api_get_feature_version == nullptr ||
-        disp_api_get_feature_version(mCookie, COLOR_BALANCE_FEATURE, &version, &flags) != 0) {
+    if (mController->get_feature_version(mCookie, COLOR_BALANCE_FEATURE, &version, &flags) != 0) {
         return false;
     }
 
@@ -62,8 +44,7 @@ bool ColorBalance::isSupported() {
         return false;
     }
 
-    if (disp_api_get_global_color_balance_range == nullptr ||
-        disp_api_get_global_color_balance_range(mCookie, 0, &range) != 0) {
+    if (mController->get_global_color_balance_range(mCookie, 0, &range) != 0) {
         return false;
     }
 
@@ -88,10 +69,8 @@ bool ColorBalance::isSupported() {
 Return<void> ColorBalance::getColorBalanceRange(getColorBalanceRange_cb _hidl_cb) {
     Range range{};
 
-    if (disp_api_get_global_color_balance_range != nullptr) {
-        if (disp_api_get_global_color_balance_range(mCookie, 0, &range) != 0) {
-            range.max = range.min = 0;
-        }
+    if (mController->get_global_color_balance_range(mCookie, 0, &range) != 0) {
+        range.max = range.min = 0;
     }
 
     _hidl_cb(range);
@@ -102,21 +81,15 @@ Return<int32_t> ColorBalance::getColorBalance() {
     int32_t value = 0;
     uint32_t flags = 0;
 
-    if (disp_api_get_global_color_balance != nullptr) {
-        if (disp_api_get_global_color_balance(mCookie, 0, &value, &flags) != 0) {
-            value = 0;
-        }
+    if (mController->get_global_color_balance(mCookie, 0, &value, &flags) != 0) {
+        value = 0;
     }
 
     return value;
 }
 
 Return<bool> ColorBalance::setColorBalance(int32_t value) {
-    if (disp_api_set_global_color_balance != nullptr) {
-        return disp_api_set_global_color_balance(mCookie, 0, value, 0) == 0;
-    }
-
-    return false;
+    return mController->set_global_color_balance(mCookie, 0, value, 0) == 0;
 }
 
 }  // namespace sdm

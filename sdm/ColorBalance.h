@@ -19,6 +19,8 @@
 
 #include <vendor/lineage/livedisplay/2.0/IColorBalance.h>
 
+#include "SDMController.h"
+
 namespace vendor {
 namespace lineage {
 namespace livedisplay {
@@ -30,7 +32,7 @@ using ::android::hardware::Void;
 
 class ColorBalance : public IColorBalance {
    public:
-    ColorBalance(void* libHandle, uint64_t cookie);
+    ColorBalance(std::shared_ptr<SDMController> controller, uint64_t cookie);
 
     bool isSupported();
 
@@ -40,14 +42,8 @@ class ColorBalance : public IColorBalance {
     Return<bool> setColorBalance(int32_t value) override;
 
    private:
-    void* mLibHandle;
+    std::shared_ptr<SDMController> mController;
     uint64_t mCookie;
-
-    int32_t (*disp_api_get_feature_version)(uint64_t, uint32_t, void*, uint32_t*);
-    int32_t (*disp_api_get_global_color_balance_range)(uint64_t, uint32_t, void*);
-    int32_t (*disp_api_get_global_color_balance)(uint64_t, uint32_t, int32_t*, uint32_t*);
-    int32_t (*disp_api_set_global_color_balance)(uint64_t, uint32_t, int32_t, uint32_t);
-    int32_t (*disp_api_get_num_display_modes)(uint64_t, uint32_t, int32_t, int32_t*, uint32_t*);
 };
 
 }  // namespace sdm
