@@ -69,6 +69,17 @@ struct hsic_ranges {
     struct hsic_float_range saturationThreshold;
 };
 
+enum feature_ver_sw {
+    FEATURE_VER_SW_API,
+    FEATURE_VER_SW_PA_API,
+    FEATURE_VER_SW_MEMCOLOR_API,
+    FEATURE_VER_SW_COLORBAL_API,
+    FEATURE_VER_SW_SAVEMODES_API,
+    FEATURE_VER_SW_ADAPT_BACKLIGHT_API,
+    FEATURE_VER_SW_SVI_API,
+    FEATURE_VER_SW_DISP_INFO_API
+};
+
 }  // namespace sdm
 }  // namespace V2_0
 }  // namespace livedisplay
