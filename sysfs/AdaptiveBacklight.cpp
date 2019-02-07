@@ -14,7 +14,18 @@
  * limitations under the License.
  */
 
+#include <android-base/file.h>
+#include <android-base/properties.h>
+#include <android-base/strings.h>
+
+#include <fstream>
+
 #include "AdaptiveBacklight.h"
+
+using android::base::GetBoolProperty;
+using android::base::ReadFileToString;
+using android::base::Trim;
+using android::base::WriteStringToFile;
 
 namespace vendor {
 namespace lineage {
@@ -22,24 +33,39 @@ namespace livedisplay {
 namespace V2_0 {
 namespace sysfs {
 
+bool AdaptiveBacklight::isSupported() {
+    if (GetBoolProperty("ro.vendor.display.foss", false)) {
+        return false;
+    }
+
+    std::fstream acl(FILE_ACL, acl.in | acl.out);
+    std::fstream cabc(FILE_CABC, cabc.in | cabc.out);
+
+    if (acl.good()) {
+        mFile = FILE_ACL;
+    } else if (cabc.good()) {
+        mFile = FILE_CABC;
+    }
+
+    return !mFile.empty();
+}
+
 // Methods from ::vendor::lineage::livedisplay::V2_0::IAdaptiveBacklight follow.
 Return<bool> AdaptiveBacklight::isEnabled() {
-    // TODO implement
-    return bool {};
+    std::string tmp;
+    int32_t contents = 0;
+
+    if (ReadFileToString(mFile, &tmp)) {
+        contents = std::stoi(Trim(tmp));
+    }
+
+    return contents > 0;
 }
 
 Return<bool> AdaptiveBacklight::setEnabled(bool enabled) {
-    // TODO implement
-    return bool {};
+    return WriteStringToFile(enabled ? "1" : "0", mFile, true);
 }
 
-
-// Methods from ::android::hidl::base::V1_0::IBase follow.
-
-//IAdaptiveBacklight* HIDL_FETCH_IAdaptiveBacklight(const char* /* name */) {
-    //return new AdaptiveBacklight();
-//}
-//
 }  // namespace sysfs
 }  // namespace V2_0
 }  // namespace livedisplay
