@@ -1,4 +1,4 @@
 service livedisplay-hal-2-0-sdm /system/bin/hw/lineage.livedisplay@2.0-service-sdm
-    class main
+    class late_start
     user system
     group system
