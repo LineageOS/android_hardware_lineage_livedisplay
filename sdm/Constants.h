@@ -33,6 +33,14 @@ namespace sdm {
 #define DISPLAY_MODES_FEATURE 4
 #define PICTURE_ADJUSTMENT_FEATURE 1
 
+#ifdef LIVES_IN_SYSTEM
+#define STORAGE_PATH "/data/display"
+#else
+#define STORAGE_PATH "/data/vendor/display"
+#endif
+
+#define DEFAULT_MODE_FILE "livedisplay_initial_mode"
+
 }  // namespace sdm
 }  // namespace V2_0
 }  // namespace livedisplay
