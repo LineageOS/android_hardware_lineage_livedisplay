@@ -16,10 +16,17 @@
 
 #include <dlfcn.h>
 
+#include <android-base/file.h>
+#include <android-base/strings.h>
+
 #include "Constants.h"
 #include "DisplayModes.h"
 #include "PictureAdjustment.h"
 #include "Types.h"
+
+using android::base::ReadFileToString;
+using android::base::Trim;
+using android::base::WriteStringToFile;
 
 namespace vendor {
 namespace lineage {
@@ -51,6 +58,13 @@ DisplayModes::DisplayModes(void* libHandle, uint64_t cookie) {
     disp_api_set_default_display_mode =
         reinterpret_cast<int32_t (*)(uint64_t, uint32_t, int32_t, uint32_t)>(
             dlsym(mLibHandle, "disp_api_set_default_display_mode"));
+
+    if (isSupported()) {
+        DisplayMode mode = getDefaultDisplayModeInternal();
+        if (mode.id > 0) {
+            setDisplayMode(mode.id, false);
+        }
+    }
 }
 
 bool DisplayModes::isSupported() {
@@ -145,8 +159,16 @@ DisplayMode DisplayModes::getCurrentDisplayModeInternal() {
 }
 
 DisplayMode DisplayModes::getDefaultDisplayModeInternal() {
+    std::string modeId;
     int32_t id = 0;
     uint32_t flags = 0;
+
+    if (ReadFileToString(STORAGE_PATH "/" DISPLAY_MODE_FILE, &modeId)) {
+        Trim(modeId) >> id;
+        if (id >= 0) {
+            return getDisplayModeById(id);
+        }
+    }
 
     if (disp_api_get_default_display_mode != nullptr) {
         if (disp_api_get_default_display_mode(mCookie, 0, &id, &flags) == 0 && id >= 0) {
@@ -190,9 +212,19 @@ Return<bool> DisplayModes::setDisplayMode(int32_t modeID, bool makeDefault) {
         return false;
     }
 
-    if (makeDefault && (disp_api_set_default_display_mode == nullptr ||
-                        disp_api_set_default_display_mode(mCookie, 0, modeID, 0))) {
-        return false;
+    if (makeDefault) {
+        std::string modeId;
+
+        modeId << modeID << std::endl;
+
+        if (!WriteStringToFile(STORAGE_PATH "/" DEFAULT_MODE_FILE, modeId, false)) {
+            return false;
+        }
+
+        if (disp_api_set_default_display_mode == nullptr ||
+            disp_api_set_default_display_mode(mCookie, 0, modeID, 0)) {
+            return false;
+        }
     }
 
     PictureAdjustment::updateDefaultPictureAdjustment();
