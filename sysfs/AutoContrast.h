@@ -17,9 +17,9 @@
 #ifndef VENDOR_LINEAGE_LIVEDISPLAY_V2_0_AUTOCONTRAST_H
 #define VENDOR_LINEAGE_LIVEDISPLAY_V2_0_AUTOCONTRAST_H
 
-#include <vendor/lineage/livedisplay/2.0/IAutoContrast.h>
 #include <hidl/MQDescriptor.h>
 #include <hidl/Status.h>
+#include <vendor/lineage/livedisplay/2.0/IAutoContrast.h>
 
 namespace vendor {
 namespace lineage {
@@ -27,25 +27,21 @@ namespace livedisplay {
 namespace V2_0 {
 namespace sysfs {
 
-using ::android::hardware::hidl_array;
-using ::android::hardware::hidl_memory;
-using ::android::hardware::hidl_string;
-using ::android::hardware::hidl_vec;
 using ::android::hardware::Return;
 using ::android::hardware::Void;
-using ::android::sp;
 
-struct AutoContrast : public IAutoContrast {
+#define FILE_ACO "/sys/class/graphics/fb0/aco"
+
+class AutoContrast : public IAutoContrast {
+   public:
+    AutoContrast() = default;
+
+    bool isSupported();
+
     // Methods from ::vendor::lineage::livedisplay::V2_0::IAutoContrast follow.
     Return<bool> isEnabled() override;
     Return<bool> setEnabled(bool enabled) override;
-
-    // Methods from ::android::hidl::base::V1_0::IBase follow.
-
 };
-
-// FIXME: most likely delete, this is only for passthrough implementations
-// extern "C" IAutoContrast* HIDL_FETCH_IAutoContrast(const char* name);
 
 }  // namespace sysfs
 }  // namespace V2_0
