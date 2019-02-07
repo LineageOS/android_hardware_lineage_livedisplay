@@ -17,7 +17,7 @@ cc_binary {
     init_rc: ["vendor.lineage.livedisplay@2.0-service-legacymm.rc"],
     defaults: ["hidl_defaults"],
     relative_install_path: "hw",
-    proprietary: true,
+    vendor: true,
     srcs: [
         "DisplayModes.cpp",
         "PictureAdjustment.cpp",
