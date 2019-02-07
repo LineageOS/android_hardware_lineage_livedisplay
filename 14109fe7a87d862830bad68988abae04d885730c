@@ -22,6 +22,23 @@
       "revId": "14109fe7a87d862830bad68988abae04d885730c",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f120e3c1_c1de69c8",
+        "filename": "sdm/service.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 13648
+      },
+      "writtenOn": "2019-02-07T07:45:15Z",
+      "side": 1,
+      "message": "!ab-\u003eisSupported() is missing.",
+      "revId": "14109fe7a87d862830bad68988abae04d885730c",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
     }
   ]
 }
