@@ -14,7 +14,16 @@
  * limitations under the License.
  */
 
+#include <android-base/file.h>
+#include <android-base/strings.h>
+
+#include <fstream>
+
 #include "ColorEnhancement.h"
+
+using android::base::ReadFileToString;
+using android::base::Trim;
+using android::base::WriteStringToFile;
 
 namespace vendor {
 namespace lineage {
@@ -22,24 +31,29 @@ namespace livedisplay {
 namespace V2_0 {
 namespace sysfs {
 
+bool ColorEnhancement::isSupported() {
+    std::fstream ce(FILE_CE, ce.in | ce.out);
+
+    return ce.good();
+}
+
 // Methods from ::vendor::lineage::livedisplay::V2_0::IColorEnhancement follow.
 Return<bool> ColorEnhancement::isEnabled() {
-    // TODO implement
-    return bool {};
+    std::string tmp;
+    int32_t contents;
+
+    if (ReadFileToString(FILE_CE, &tmp)) {
+        contents = std::atoi(Trim(tmp).c_str());
+        return contents > 0;
+    }
+
+    return false;
 }
 
 Return<bool> ColorEnhancement::setEnabled(bool enabled) {
-    // TODO implement
-    return bool {};
+    return WriteStringToFile(enabled ? "1" : "0", FILE_CE, true);
 }
 
-
-// Methods from ::android::hidl::base::V1_0::IBase follow.
-
-//IColorEnhancement* HIDL_FETCH_IColorEnhancement(const char* /* name */) {
-    //return new ColorEnhancement();
-//}
-//
 }  // namespace sysfs
 }  // namespace V2_0
 }  // namespace livedisplay
