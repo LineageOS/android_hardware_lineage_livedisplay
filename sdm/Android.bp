@@ -46,5 +46,5 @@ cc_binary {
     name: "vendor.lineage.livedisplay@2.0-service-sdm",
     init_rc: ["vendor.lineage.livedisplay@2.0-service-sdm.rc"],
     defaults: ["livedisplay_sdm_defaults"],
-    proprietary: true,
+    vendor: true,
 }
