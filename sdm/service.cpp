@@ -118,7 +118,7 @@ int main() {
         goto shutdown;
     }
 
-    if (!ab->isSupported() && !dm->isSupported() && !pa->isSupported()) {
+    if (!dm->isSupported() && !pa->isSupported()) {
         // Backend isn't ready yet, so restart and try again
         goto shutdown;
     }
