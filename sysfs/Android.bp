@@ -30,11 +30,8 @@ cc_library_shared {
     srcs: [
         "AdaptiveBacklight.cpp",
         "AutoContrast.cpp",
-        "ColorBalance.cpp",
         "ColorEnhancement.cpp",
         "DisplayColorCalibration.cpp",
-        "DisplayModes.cpp",
-        "PictureAdjustment.cpp",
         "ReadingEnhancement.cpp",
         "SunlightEnhancement.cpp",
     ],
