@@ -14,7 +14,16 @@
  * limitations under the License.
  */
 
+#include <android-base/file.h>
+#include <android-base/strings.h>
+
+#include <fstream>
+
 #include "ReadingEnhancement.h"
+
+using android::base::ReadFileToString;
+using android::base::Trim;
+using android::base::WriteStringToFile;
 
 namespace vendor {
 namespace lineage {
@@ -22,24 +31,37 @@ namespace livedisplay {
 namespace V2_0 {
 namespace sysfs {
 
+bool ReadingEnhancement::isSupported() {
+    std::fstream re(FILE_RE, re.in | re.out);
+
+    return re.good();
+}
+
 // Methods from ::vendor::lineage::livedisplay::V2_0::IReadingEnhancement follow.
 Return<bool> ReadingEnhancement::isEnabled() {
-    // TODO implement
-    return bool {};
+    std::string tmp;
+    int contents;
+
+    if (ReadFileToString(FILE_RE, &tmp)) {
+        tmp >> contents;
+        return contents > 0;
+    }
+
+    return false;
 }
 
 Return<bool> ReadingEnhancement::setEnabled(bool enabled) {
-    // TODO implement
-    return bool {};
+   std::string contents;
+
+   contents << enabled ? "1" : "0" << std::endl;
+
+   if (WriteStringToFile(contents, FILE_RE, true)) {
+       return true;
+   }
+
+   return false;
 }
 
-
-// Methods from ::android::hidl::base::V1_0::IBase follow.
-
-//IReadingEnhancement* HIDL_FETCH_IReadingEnhancement(const char* /* name */) {
-    //return new ReadingEnhancement();
-//}
-//
 }  // namespace sysfs
 }  // namespace V2_0
 }  // namespace livedisplay

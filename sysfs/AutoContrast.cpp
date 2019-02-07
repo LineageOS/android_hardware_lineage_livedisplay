@@ -14,7 +14,16 @@
  * limitations under the License.
  */
 
+#include <android-base/file.h>
+#include <android-base/strings.h>
+
+#include <fstream>
+
 #include "AutoContrast.h"
+
+using android::base::ReadFileToString;
+using android::base::Trim;
+using android::base::WriteStringToFile;
 
 namespace vendor {
 namespace lineage {
@@ -22,24 +31,37 @@ namespace livedisplay {
 namespace V2_0 {
 namespace sysfs {
 
+bool AutoContrast::isSupported() {
+    std::fstream aco(FILE_ACO, aco.in | aco.out);
+
+    return aco.good();
+}
+
 // Methods from ::vendor::lineage::livedisplay::V2_0::IAutoContrast follow.
 Return<bool> AutoContrast::isEnabled() {
-    // TODO implement
-    return bool {};
+    std::string tmp;
+    int contents;
+
+    if (ReadFileToString(FILE_ACO, &tmp)) {
+        Trim(tmp) >> contents;
+        return contents > 0;
+    }
+
+    return false;
 }
 
 Return<bool> AutoContrast::setEnabled(bool enabled) {
-    // TODO implement
-    return bool {};
+   std::string contents;
+
+   contents << enabled ? "1" : "0" << std::endl;
+
+   if (WriteStringToFile(contents, FILE_ACO, true)) {
+       return true;
+   }
+
+   return false;
 }
 
-
-// Methods from ::android::hidl::base::V1_0::IBase follow.
-
-//IAutoContrast* HIDL_FETCH_IAutoContrast(const char* /* name */) {
-    //return new AutoContrast();
-//}
-//
 }  // namespace sysfs
 }  // namespace V2_0
 }  // namespace livedisplay

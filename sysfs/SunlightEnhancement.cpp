@@ -14,7 +14,16 @@
  * limitations under the License.
  */
 
+#include <android-base/file.h>
+#include <android-base/strings.h>
+
+#include <fstream>
+
 #include "SunlightEnhancement.h"
+
+using android::base::ReadFileToString;
+using android::base::Trim;
+using android::base::WriteStringToFile;
 
 namespace vendor {
 namespace lineage {
@@ -22,15 +31,46 @@ namespace livedisplay {
 namespace V2_0 {
 namespace sysfs {
 
+bool SunlightEnhancement::isSupported() {
+    std::fstream hbm(FILE_HBM, hbm.in | hbm.out);
+    std::fstream sre(FILE_SRE, sre.in | sre.out);
+
+    if (hbm.good()) {
+        mFile(FILE_HBM);
+        mEnabledMode(1);
+    } else if (sre.good()) {
+        mFile(FILE_SRE);
+        mEnabledMode(2);
+    } else {
+        mFile = nullptr;
+    }
+
+    return mFile != nullptr;
+}
+
 // Methods from ::vendor::lineage::livedisplay::V2_0::ISunlightEnhancement follow.
 Return<bool> SunlightEnhancement::isEnabled() {
-    // TODO implement
-    return bool {};
+    std::string tmp;
+    int contents;
+
+    if (ReadFileToString(mFile, &tmp)) {
+        Trim(tmp) >> contents;
+        return contents > 0;
+    }
+
+    return false;
 }
 
 Return<bool> SunlightEnhancement::setEnabled(bool enabled) {
-    // TODO implement
-    return bool {};
+   std::string contents;
+
+   contents << enabled ? std::string(mEnabledMode) : "0" << std::endl;
+
+   if (WriteStringToFile(contents, mFile, true)) {
+       return true;
+   }
+
+   return false;
 }
 
 

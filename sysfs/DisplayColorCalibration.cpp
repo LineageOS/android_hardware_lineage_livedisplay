@@ -14,7 +14,17 @@
  * limitations under the License.
  */
 
+#include <android-base/file.h>
+#include <android-base/strings.h>
+
+#include <fstream>
+
 #include "DisplayColorCalibration.h"
+
+using android::base::ReadFileToString;
+using android::base::Split;
+using android::base::Trim;
+using android::base::WriteStringToFile;
 
 namespace vendor {
 namespace lineage {
@@ -22,34 +32,51 @@ namespace livedisplay {
 namespace V2_0 {
 namespace sysfs {
 
+bool DisplayColorCalibration::isSupported() {
+    std::fstream rgb(FILE_RGB, rgb.in | rgb.out);
+
+    return rgb.good();
+}
+
 // Methods from ::vendor::lineage::livedisplay::V2_0::IDisplayColorCalibration follow.
 Return<int32_t> DisplayColorCalibration::getMaxValue() {
-    // TODO implement
-    return int32_t {};
+    return 32768;
 }
 
 Return<int32_t> DisplayColorCalibration::getMinValue() {
-    // TODO implement
-    return int32_t {};
+    return 255;
 }
 
 Return<void> DisplayColorCalibration::getCalibration(getCalibration_cb _hidl_cb) {
-    // TODO implement
+    std::vector<int32_t> rgb;
+    std::string tmp;
+
+    if (ReadFileToString(FILE_RGB, &tmp)) {
+        for (std::string color& : Split(Trim(tmp), " ")) {
+            rgb.push_back(std::atoi(color.c_str()));
+        }
+    }
+
+    _hidl_cb(rgb);
     return Void();
 }
 
 Return<bool> DisplayColorCalibration::setCalibration(const hidl_vec<int32_t>& rgb) {
-    // TODO implement
-    return bool {};
+    std::string tmp, contents;
+
+    for (int32_t color : rgb) {
+        tmp << rgb << " ";
+    }
+
+    contents << Trim(tmp) << std::endl;
+
+    if (WriteStringToFile(contents, FILE_RGB, true)) {
+        return true;
+    }
+
+    return false;
 }
 
-
-// Methods from ::android::hidl::base::V1_0::IBase follow.
-
-//IDisplayColorCalibration* HIDL_FETCH_IDisplayColorCalibration(const char* /* name */) {
-    //return new DisplayColorCalibration();
-//}
-//
 }  // namespace sysfs
 }  // namespace V2_0
 }  // namespace livedisplay
