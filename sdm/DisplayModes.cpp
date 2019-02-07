@@ -16,6 +16,8 @@
 
 #include <dlfcn.h>
 
+#include <fstream>
+
 #include "Constants.h"
 #include "DisplayModes.h"
 #include "PictureAdjustment.h"
@@ -153,8 +155,16 @@ DisplayMode DisplayModes::getCurrentDisplayModeInternal() {
 }
 
 DisplayMode DisplayModes::getDefaultDisplayModeInternal() {
+    std::ifstream ifs(STORAGE_PATH "/" DEFAULT_MODE_FILE);
     int32_t id = 0;
     uint32_t flags = 0;
+
+    if (ifs.good()) {
+        ifs >> id;
+        if (!ifs.fail() && id >= 0) {
+            return getDisplayModeById(id);
+        }
+    }
 
     if (disp_api_get_default_display_mode != nullptr) {
         if (disp_api_get_default_display_mode(mCookie, 0, &id, &flags) == 0 && id >= 0) {
@@ -198,9 +208,21 @@ Return<bool> DisplayModes::setDisplayMode(int32_t modeID, bool makeDefault) {
         return false;
     }
 
-    if (makeDefault && (disp_api_set_default_display_mode == nullptr ||
-                        disp_api_set_default_display_mode(mCookie, 0, modeID, 0))) {
-        return false;
+    if (makeDefault) {
+        std::ofstream ofs(STORAGE_PATH "/" DEFAULT_MODE_FILE,
+            std::ofstream::out | std::ofstream::trunc);
+
+        if (ofs.good()) {
+            ofs << modeID << std::endl;
+            if (ofs.fail()) {
+                return false;
+            }
+        }
+
+        if (disp_api_set_default_display_mode == nullptr ||
+            disp_api_set_default_display_mode(mCookie, 0, modeID, 0)) {
+            return false;
+        }
     }
 
     PictureAdjustment::updateDefaultPictureAdjustment();
