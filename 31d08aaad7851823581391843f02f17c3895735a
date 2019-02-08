@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ab0723fb_c47494ad",
+        "filename": "sysfs/AdaptiveBacklight.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 11801
+      },
+      "writtenOn": "2019-02-08T01:44:29Z",
+      "side": 1,
+      "message": "I prefer this because I can check it once, and not store it in a bool that I keep checking all over the place.",
+      "parentUuid": "e777ea61_6f6b2139",
+      "range": {
+        "startLine": 35,
+        "startChar": 0,
+        "endLine": 44,
+        "endChar": 26
+      },
+      "revId": "31d08aaad7851823581391843f02f17c3895735a",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d5985144_c56a51c7",
         "filename": "sysfs/AdaptiveBacklight.cpp",
         "patchSetId": 3
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "4b9984bc_b565566d",
+        "filename": "sysfs/AdaptiveBacklight.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 11801
+      },
+      "writtenOn": "2019-02-08T01:44:29Z",
+      "side": 1,
+      "message": "Oh nice. Didn\u0027t know about that, thanks.",
+      "parentUuid": "d5985144_c56a51c7",
+      "range": {
+        "startLine": 53,
+        "startChar": 19,
+        "endLine": 53,
+        "endChar": 48
+      },
+      "revId": "31d08aaad7851823581391843f02f17c3895735a",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d887f305_4439c380",
         "filename": "sysfs/AdaptiveBacklight.h",
         "patchSetId": 3
@@ -59,6 +107,30 @@
       "writtenOn": "2019-02-08T01:34:31Z",
       "side": 1,
       "message": "Convert to constexpr, the reason is explained here https://github.com/LineageOS/android_hardware_lineage_interfaces/commit/0fc93fd5ace46b811160b2e150f351b7d1a9558c",
+      "range": {
+        "startLine": 33,
+        "startChar": 1,
+        "endLine": 33,
+        "endChar": 7
+      },
+      "revId": "31d08aaad7851823581391843f02f17c3895735a",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20767c1a_8a26ed9c",
+        "filename": "sysfs/AdaptiveBacklight.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 11801
+      },
+      "writtenOn": "2019-02-08T01:44:29Z",
+      "side": 1,
+      "message": "That\u0027s a matter of personal opinion",
+      "parentUuid": "d887f305_4439c380",
       "range": {
         "startLine": 33,
         "startChar": 1,
