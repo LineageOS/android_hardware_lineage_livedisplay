@@ -51,13 +51,6 @@ DisplayModes::DisplayModes(void* libHandle, uint64_t cookie) {
     disp_api_set_default_display_mode =
         reinterpret_cast<int32_t (*)(uint64_t, uint32_t, int32_t, uint32_t)>(
             dlsym(mLibHandle, "disp_api_set_default_display_mode"));
-
-    if (isSupported()) {
-        DisplayMode mode = getDefaultDisplayModeInternal();
-        if (mode.id >= 0) {
-            setDisplayMode(mode.id, false);
-        }
-    }
 }
 
 bool DisplayModes::isSupported() {
