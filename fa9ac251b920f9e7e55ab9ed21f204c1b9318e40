@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1207584d_b7b137d0",
+        "filename": "sysfs/AdaptiveBacklight.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 11801
+      },
+      "writtenOn": "2019-02-09T02:31:26Z",
+      "side": 1,
+      "message": "Can you revert these changes for consistency with the other classes?",
+      "range": {
+        "startLine": 56,
+        "startChar": 20,
+        "endLine": 63,
+        "endChar": 0
+      },
+      "revId": "fa9ac251b920f9e7e55ab9ed21f204c1b9318e40",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
+    }
+  ]
+}
