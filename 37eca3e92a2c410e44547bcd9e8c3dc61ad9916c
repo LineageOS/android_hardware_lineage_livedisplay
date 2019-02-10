@@ -22,6 +22,30 @@
       "revId": "37eca3e92a2c410e44547bcd9e8c3dc61ad9916c",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "baacc145_66a1f129",
+        "filename": "sysfs/Android.bp",
+        "patchSetId": 15
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 11801
+      },
+      "writtenOn": "2019-02-10T20:03:38Z",
+      "side": 1,
+      "message": "Not sure -- I just wanted to make sure that I didn\u0027t exclude anyone from using this. legacymm is kind of a special case, since nothing treble and beyond will ever be using legacymm, but it\u0027s conceivable that there will be devices with a prebuilt vendor.img and sysfs nodes for display controls.",
+      "parentUuid": "f617625d_d7f28f1c",
+      "range": {
+        "startLine": 39,
+        "startChar": 0,
+        "endLine": 44,
+        "endChar": 1
+      },
+      "revId": "37eca3e92a2c410e44547bcd9e8c3dc61ad9916c",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
     }
   ]
 }
