@@ -46,6 +46,30 @@
       "revId": "8dd84c3972078a508e41ec7aca76cae1eb16931c",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc77cbcf_5aaf357f",
+        "filename": "sysfs/AdaptiveBacklight.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 10258
+      },
+      "writtenOn": "2019-02-10T14:14:22Z",
+      "side": 1,
+      "message": "The syntax is useful in special cases like making the default constructor private, here\u0027s a brief explanation https://en.wikipedia.org/wiki/C%2B%2B11#Explicitly_defaulted_and_deleted_special_member_functions",
+      "parentUuid": "c09b90cf_8affdf7d",
+      "range": {
+        "startLine": 36,
+        "startChar": 4,
+        "endLine": 36,
+        "endChar": 34
+      },
+      "revId": "8dd84c3972078a508e41ec7aca76cae1eb16931c",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
     }
   ]
 }
