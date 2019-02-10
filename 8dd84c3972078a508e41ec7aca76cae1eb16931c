@@ -22,6 +22,30 @@
       "revId": "8dd84c3972078a508e41ec7aca76cae1eb16931c",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c09b90cf_8affdf7d",
+        "filename": "sysfs/AdaptiveBacklight.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 11801
+      },
+      "writtenOn": "2019-02-10T13:55:13Z",
+      "side": 1,
+      "message": "I dunno. I like to be explicit.",
+      "parentUuid": "cbb97e95_8d989016",
+      "range": {
+        "startLine": 36,
+        "startChar": 4,
+        "endLine": 36,
+        "endChar": 34
+      },
+      "revId": "8dd84c3972078a508e41ec7aca76cae1eb16931c",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
     }
   ]
 }
