@@ -43,6 +43,13 @@ DisplayModes::DisplayModes(void* libHandle) {
         dlsym(mLibHandle, "disp_api_get_default_display_mode"));
     disp_api_set_default_display_mode = reinterpret_cast<int (*)(int32_t, int)>(
         dlsym(mLibHandle, "disp_api_set_default_display_mode"));
+
+    if (isSupported()) {
+        DisplayMode mode = getDefaultDisplayModeInternal();
+        if (mode.id >= 0) {
+            setDisplayMode(mode.id, false);
+        }
+    }
 }
 
 bool DisplayModes::isSupported() {
