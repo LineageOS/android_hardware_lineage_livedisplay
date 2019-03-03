@@ -15,6 +15,7 @@
  */
 
 #include <android-base/file.h>
+#include <android-base/stringprintf.h>
 #include <android-base/strings.h>
 
 #include <fstream>
@@ -23,6 +24,7 @@
 
 using android::base::ReadFileToString;
 using android::base::Split;
+using android::base::StringPrintf;
 using android::base::Trim;
 using android::base::WriteStringToFile;
 
@@ -63,13 +65,7 @@ Return<void> DisplayColorCalibration::getCalibration(getCalibration_cb _hidl_cb)
 }
 
 Return<bool> DisplayColorCalibration::setCalibration(const hidl_vec<int32_t>& rgb) {
-    std::string contents;
-
-    for (const int32_t& color : rgb) {
-        contents += std::to_string(color) + " ";
-    }
-
-    return WriteStringToFile(Trim(contents), FILE_RGB, true);
+    return WriteStringToFile(StringPrintf("%d %d %d", rgb[0], rgb[1], rgb[2]), FILE_RGB, true);
 }
 
 }  // namespace sysfs
