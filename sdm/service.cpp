@@ -32,6 +32,7 @@
 
 #ifdef LIVES_IN_SYSTEM
 #define SDM_DISP_LIB "libsdm-disp-apis.so"
+#define SDM_DISP_LIB_NEW "libsdm-disp-apis.qti.so"
 #else
 #define SDM_DISP_LIB "libsdm-disp-vndapis.so"
 #endif
@@ -73,8 +74,15 @@ int main() {
 
     libHandle = dlopen(SDM_DISP_LIB, RTLD_NOW);
     if (libHandle == nullptr) {
-        LOG(ERROR) << "Can not get " << SDM_DISP_LIB << " (" << dlerror() << ")";
-        goto shutdown;
+#ifdef LIVES_IN_SYSTEM
+        libHandle = dlopen(SDM_DISP_LIB_NEW, RTLD_NOW);
+        if (libHandle == nullptr) {
+#endif
+            LOG(ERROR) << "Can not get " << SDM_DISP_LIB << " (" << dlerror() << ")";
+            goto shutdown;
+#ifdef LIVES_IN_SYSTEM
+        }
+#endif
     }
 
     disp_api_init =
