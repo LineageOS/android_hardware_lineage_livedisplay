@@ -31,7 +31,7 @@
 #include "PictureAdjustment.h"
 
 #ifdef LIVES_IN_SYSTEM
-#define SDM_DISP_LIB "libsdm-disp-apis.so"
+#define SDM_DISP_LIB "libsdm-disp-apis.qti.so"
 #else
 #define SDM_DISP_LIB "libsdm-disp-vndapis.so"
 #endif
