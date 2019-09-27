@@ -30,11 +30,16 @@
 #include "DisplayModes.h"
 #include "PictureAdjustment.h"
 
+#define ARRAY_SIZE(a) (sizeof(a) / sizeof(*a))
+
+constexpr const char* SDM_DISP_LIBS[]{
 #ifdef LIVES_IN_SYSTEM
-#define SDM_DISP_LIB "libsdm-disp-apis.so"
+    "libsdm-disp-apis.qti.so",
+    "libsdm-disp-apis.so",
 #else
-#define SDM_DISP_LIB "libsdm-disp-vndapis.so"
+    "libsdm-disp-vndapis.so",
 #endif
+};
 
 using android::OK;
 using android::sp;
@@ -52,6 +57,7 @@ using ::vendor::lineage::livedisplay::V2_0::sdm::PictureAdjustment;
 int main() {
     // Vendor backend
     void* libHandle = nullptr;
+    size_t libIndex = 0;
     int32_t (*disp_api_init)(uint64_t*, uint32_t) = nullptr;
     int32_t (*disp_api_deinit)(uint64_t, uint32_t) = nullptr;
     uint64_t cookie = 0;
@@ -71,30 +77,39 @@ int main() {
 
     LOG(INFO) << "LiveDisplay HAL service is starting.";
 
-    libHandle = dlopen(SDM_DISP_LIB, RTLD_NOW);
+    for (libIndex = 0; libIndex < ARRAY_SIZE(SDM_DISP_LIBS); libIndex++) {
+        libHandle = dlopen(SDM_DISP_LIBS[libIndex], RTLD_NOW);
+        if (libHandle != nullptr) {
+            LOG(INFO) << "Loaded: " << SDM_DISP_LIBS[libIndex];
+            break;
+        }
+        LOG(ERROR) << "Can not load " << SDM_DISP_LIBS[libIndex] << " (" << dlerror() << ")";
+    }
+
     if (libHandle == nullptr) {
-        LOG(ERROR) << "Can not get " << SDM_DISP_LIB << " (" << dlerror() << ")";
+        LOG(ERROR) << "Failed to load SDM display lib, exitting.";
         goto shutdown;
     }
 
     disp_api_init =
         reinterpret_cast<int32_t (*)(uint64_t*, uint32_t)>(dlsym(libHandle, "disp_api_init"));
     if (disp_api_init == nullptr) {
-        LOG(ERROR) << "Can not get disp_api_init from " << SDM_DISP_LIB << " (" << dlerror() << ")";
+        LOG(ERROR) << "Can not get disp_api_init from " << SDM_DISP_LIBS[libIndex] << " ("
+                   << dlerror() << ")";
         goto shutdown;
     }
 
     disp_api_deinit =
         reinterpret_cast<int32_t (*)(uint64_t, uint32_t)>(dlsym(libHandle, "disp_api_deinit"));
     if (disp_api_deinit == nullptr) {
-        LOG(ERROR) << "Can not get disp_api_deinit from " << SDM_DISP_LIB << " (" << dlerror()
-                   << ")";
+        LOG(ERROR) << "Can not get disp_api_deinit from " << SDM_DISP_LIBS[libIndex] << " ("
+                   << dlerror() << ")";
         goto shutdown;
     }
 
     status = disp_api_init(&cookie, 0);
     if (status != OK) {
-        LOG(ERROR) << "Can not initialize " << SDM_DISP_LIB << " (" << status << ")";
+        LOG(ERROR) << "Can not initialize " << SDM_DISP_LIBS[libIndex] << " (" << status << ")";
         goto shutdown;
     }
 
