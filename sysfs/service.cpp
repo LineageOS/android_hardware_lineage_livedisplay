@@ -65,8 +65,8 @@ int main() {
 
     ab = new AdaptiveBacklight();
     if (ab == nullptr) {
-        LOG(ERROR)
-            << "Can not create an instance of LiveDisplay HAL AdaptiveBacklight Iface, exiting.";
+        LOG(ERROR) << "Can not create an instance of LiveDisplay HAL AdaptiveBacklight Iface, "
+                      "exiting.";
         goto shutdown;
     }
 
@@ -79,7 +79,7 @@ int main() {
     ce = new ColorEnhancement();
     if (ce == nullptr) {
         LOG(ERROR)
-            << "Can not create an instance of LiveDisplay HAL ColorEnhancement Iface, exiting.";
+                << "Can not create an instance of LiveDisplay HAL ColorEnhancement Iface, exiting.";
         goto shutdown;
     }
 
@@ -92,15 +92,15 @@ int main() {
 
     re = new ReadingEnhancement();
     if (re == nullptr) {
-        LOG(ERROR)
-            << "Can not create an instance of LiveDisplay HAL ReadingEnhancement Iface, exiting.";
+        LOG(ERROR) << "Can not create an instance of LiveDisplay HAL ReadingEnhancement Iface, "
+                      "exiting.";
         goto shutdown;
     }
 
     se = new SunlightEnhancement();
     if (se == nullptr) {
-        LOG(ERROR)
-            << "Can not create an instance of LiveDisplay HAL SunlightEnhancement Iface, exiting.";
+        LOG(ERROR) << "Can not create an instance of LiveDisplay HAL SunlightEnhancement Iface, "
+                      "exiting.";
         goto shutdown;
     }
 

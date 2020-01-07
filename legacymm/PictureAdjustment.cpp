@@ -14,10 +14,11 @@
  * limitations under the License.
  */
 
+#include "PictureAdjustment.h"
+
 #include <dlfcn.h>
 
 #include "Constants.h"
-#include "PictureAdjustment.h"
 #include "Types.h"
 
 namespace vendor {
@@ -33,13 +34,13 @@ PictureAdjustment::PictureAdjustment(void* libHandle) {
 
     mLibHandle = libHandle;
     disp_api_supported =
-        reinterpret_cast<int (*)(int32_t, int32_t)>(dlsym(mLibHandle, "disp_api_supported"));
+            reinterpret_cast<int (*)(int32_t, int32_t)>(dlsym(mLibHandle, "disp_api_supported"));
     disp_api_get_pa_range =
-        reinterpret_cast<int (*)(int32_t, void*)>(dlsym(mLibHandle, "disp_api_get_pa_range"));
+            reinterpret_cast<int (*)(int32_t, void*)>(dlsym(mLibHandle, "disp_api_get_pa_range"));
     disp_api_get_pa_config =
-        reinterpret_cast<int (*)(int32_t, void*)>(dlsym(mLibHandle, "disp_api_get_pa_config"));
+            reinterpret_cast<int (*)(int32_t, void*)>(dlsym(mLibHandle, "disp_api_get_pa_config"));
     disp_api_set_pa_config =
-        reinterpret_cast<int (*)(int32_t, void*)>(dlsym(mLibHandle, "disp_api_set_pa_config"));
+            reinterpret_cast<int (*)(int32_t, void*)>(dlsym(mLibHandle, "disp_api_set_pa_config"));
     memset(&mDefaultPictureAdjustment, 0, sizeof(HSIC));
 }
 
@@ -64,10 +65,11 @@ HSIC PictureAdjustment::getPictureAdjustmentInternal() {
 
     if (disp_api_get_pa_config != nullptr) {
         if (disp_api_get_pa_config(0, &config) == 0) {
-            return HSIC{
-                static_cast<float>(config.data.hue), static_cast<float>(config.data.saturation),
-                static_cast<float>(config.data.intensity), static_cast<float>(config.data.contrast),
-                static_cast<float>(config.data.saturationThreshold)};
+            return HSIC{static_cast<float>(config.data.hue),
+                        static_cast<float>(config.data.saturation),
+                        static_cast<float>(config.data.intensity),
+                        static_cast<float>(config.data.contrast),
+                        static_cast<float>(config.data.saturationThreshold)};
         }
     }
 
@@ -146,7 +148,7 @@ Return<void> PictureAdjustment::getContrastRange(getContrastRange_cb _hidl_cb) {
 }
 
 Return<void> PictureAdjustment::getSaturationThresholdRange(
-    getSaturationThresholdRange_cb _hidl_cb) {
+        getSaturationThresholdRange_cb _hidl_cb) {
     FloatRange range{};
     mm_pa_range r{};
 
@@ -168,13 +170,13 @@ Return<void> PictureAdjustment::getPictureAdjustment(getPictureAdjustment_cb _hi
 }
 
 Return<void> PictureAdjustment::getDefaultPictureAdjustment(
-    getDefaultPictureAdjustment_cb _hidl_cb) {
+        getDefaultPictureAdjustment_cb _hidl_cb) {
     _hidl_cb(mDefaultPictureAdjustment);
     return Void();
 }
 
 Return<bool> PictureAdjustment::setPictureAdjustment(
-    const ::vendor::lineage::livedisplay::V2_0::HSIC& hsic) {
+        const ::vendor::lineage::livedisplay::V2_0::HSIC& hsic) {
     mm_pa_config config = {0xF,
                            {static_cast<int>(hsic.hue), static_cast<int>(hsic.saturation),
                             static_cast<int>(hsic.intensity), static_cast<int>(hsic.contrast),

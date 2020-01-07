@@ -77,8 +77,8 @@ int main() {
 
     pa = new PictureAdjustment(libHandle);
     if (pa == nullptr) {
-        LOG(ERROR)
-            << "Can not create an instance of LiveDisplay HAL PictureAdjustment Iface, exiting.";
+        LOG(ERROR) << "Can not create an instance of LiveDisplay HAL PictureAdjustment Iface, "
+                      "exiting.";
         goto shutdown;
     }
 
