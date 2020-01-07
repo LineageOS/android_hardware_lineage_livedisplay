@@ -14,12 +14,12 @@
  * limitations under the License.
  */
 
+#include "AdaptiveBacklight.h"
+
+#include <android-base/properties.h>
 #include <stdio.h>
 #include <string.h>
 
-#include <android-base/properties.h>
-
-#include "AdaptiveBacklight.h"
 #include "Constants.h"
 #include "Types.h"
 #include "Utils.h"

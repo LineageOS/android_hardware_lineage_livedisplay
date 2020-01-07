@@ -14,10 +14,11 @@
  * limitations under the License.
  */
 
+#include "PictureAdjustment.h"
+
 #include <dlfcn.h>
 
 #include "Constants.h"
-#include "PictureAdjustment.h"
 #include "Types.h"
 
 namespace vendor {
