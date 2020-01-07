@@ -14,10 +14,11 @@
  * limitations under the License.
  */
 
+#include "DisplayModes.h"
+
 #include <dlfcn.h>
 
 #include "Constants.h"
-#include "DisplayModes.h"
 #include "PictureAdjustment.h"
 #include "Types.h"
 
