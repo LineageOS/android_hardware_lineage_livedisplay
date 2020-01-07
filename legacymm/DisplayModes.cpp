@@ -14,10 +14,11 @@
  * limitations under the License.
  */
 
+#include "DisplayModes.h"
+
 #include <dlfcn.h>
 
 #include "Constants.h"
-#include "DisplayModes.h"
 #include "PictureAdjustment.h"
 #include "Types.h"
 
@@ -30,19 +31,19 @@ namespace legacymm {
 DisplayModes::DisplayModes(void* libHandle) {
     mLibHandle = libHandle;
     disp_api_supported =
-        reinterpret_cast<int (*)(int32_t, int32_t)>(dlsym(mLibHandle, "disp_api_supported"));
+            reinterpret_cast<int (*)(int32_t, int32_t)>(dlsym(mLibHandle, "disp_api_supported"));
     disp_api_get_num_display_modes = reinterpret_cast<int (*)(int32_t, int32_t, int*)>(
-        dlsym(mLibHandle, "disp_api_get_num_display_modes"));
+            dlsym(mLibHandle, "disp_api_get_num_display_modes"));
     disp_api_get_display_modes = reinterpret_cast<int (*)(int32_t, int32_t, void*, int)>(
-        dlsym(mLibHandle, "disp_api_get_display_modes"));
+            dlsym(mLibHandle, "disp_api_get_display_modes"));
     disp_api_get_active_display_mode = reinterpret_cast<int (*)(int32_t, int*, uint32_t*)>(
-        dlsym(mLibHandle, "disp_api_get_active_display_mode"));
+            dlsym(mLibHandle, "disp_api_get_active_display_mode"));
     disp_api_set_active_display_mode = reinterpret_cast<int (*)(int32_t, int)>(
-        dlsym(mLibHandle, "disp_api_set_active_display_mode"));
+            dlsym(mLibHandle, "disp_api_set_active_display_mode"));
     disp_api_get_default_display_mode = reinterpret_cast<int (*)(int32_t, int*)>(
-        dlsym(mLibHandle, "disp_api_get_default_display_mode"));
+            dlsym(mLibHandle, "disp_api_get_default_display_mode"));
     disp_api_set_default_display_mode = reinterpret_cast<int (*)(int32_t, int)>(
-        dlsym(mLibHandle, "disp_api_set_default_display_mode"));
+            dlsym(mLibHandle, "disp_api_set_default_display_mode"));
 }
 
 bool DisplayModes::isSupported() {

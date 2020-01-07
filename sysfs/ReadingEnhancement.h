@@ -31,7 +31,7 @@ using ::android::hardware::Void;
 #define FILE_RE "/sys/class/graphics/fb0/reading_mode"
 
 class ReadingEnhancement : public IReadingEnhancement {
-   public:
+  public:
     bool isSupported();
 
     // Methods from ::vendor::lineage::livedisplay::V2_0::IReadingEnhancement follow.

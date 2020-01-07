@@ -32,14 +32,14 @@ using ::android::hardware::Void;
 #define FILE_SRE "/sys/class/graphics/fb0/sre"
 
 class SunlightEnhancement : public ISunlightEnhancement {
-   public:
+  public:
     bool isSupported();
 
     // Methods from ::vendor::lineage::livedisplay::V2_0::ISunlightEnhancement follow.
     Return<bool> isEnabled() override;
     Return<bool> setEnabled(bool enabled) override;
 
-   private:
+  private:
     std::string mFile;
     int32_t mEnabledMode;
 };

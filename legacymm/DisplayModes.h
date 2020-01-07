@@ -29,7 +29,7 @@ using ::android::hardware::Return;
 using ::android::hardware::Void;
 
 class DisplayModes : public IDisplayModes {
-   public:
+  public:
     DisplayModes(void* libHandle);
 
     bool isSupported();
@@ -40,7 +40,7 @@ class DisplayModes : public IDisplayModes {
     Return<void> getDefaultDisplayMode(getDefaultDisplayMode_cb _hidl_cb) override;
     Return<bool> setDisplayMode(int32_t modeID, bool makeDefault) override;
 
-   private:
+  private:
     void* mLibHandle;
 
     int (*disp_api_supported)(int32_t, int32_t);
