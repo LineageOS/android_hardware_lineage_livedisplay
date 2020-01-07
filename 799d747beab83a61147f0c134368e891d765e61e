@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "924396f2_9f78e133",
+        "filename": "sdm/service.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 11883
+      },
+      "writtenOn": "2020-01-07T13:35:46Z",
+      "side": 1,
+      "message": "Why not a simple std::vector?",
+      "revId": "799d747beab83a61147f0c134368e891d765e61e",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
+    }
+  ]
+}
