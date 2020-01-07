@@ -34,6 +34,24 @@
       "revId": "799d747beab83a61147f0c134368e891d765e61e",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31dce6ac_a4e12633",
+        "filename": "sdm/service.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 11883
+      },
+      "writtenOn": "2020-01-07T13:37:42Z",
+      "side": 1,
+      "message": "I would prefer readability over constexpr",
+      "parentUuid": "",
+      "revId": "799d747beab83a61147f0c134368e891d765e61e",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
     }
   ]
 }
