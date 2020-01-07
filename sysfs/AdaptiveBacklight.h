@@ -34,14 +34,14 @@ using ::android::hardware::Void;
 #define FILE_CABC "/sys/class/graphics/fb0/cabc"
 
 class AdaptiveBacklight : public IAdaptiveBacklight {
-   public:
+  public:
     bool isSupported();
 
     // Methods from ::vendor::lineage::livedisplay::V2_0::IAdaptiveBacklight follow.
     Return<bool> isEnabled() override;
     Return<bool> setEnabled(bool enabled) override;
 
-   private:
+  private:
     std::string mFile;
 };
 

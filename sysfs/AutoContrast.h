@@ -31,7 +31,7 @@ using ::android::hardware::Void;
 #define FILE_ACO "/sys/class/graphics/fb0/aco"
 
 class AutoContrast : public IAutoContrast {
-   public:
+  public:
     bool isSupported();
 
     // Methods from ::vendor::lineage::livedisplay::V2_0::IAutoContrast follow.
