@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c1f13ef5_4b731c30",
+        "filename": "sdm/service.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 10258
+      },
+      "writtenOn": "2020-01-07T13:59:53Z",
+      "side": 1,
+      "message": "u forgot to remove this",
+      "range": {
+        "startLine": 33,
+        "startChar": 8,
+        "endLine": 33,
+        "endChar": 18
+      },
+      "revId": "da3bf4030af1ba7783e0e9ee4648cf1257c024c4",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45c58b1e_ffb97b88",
+        "filename": "sdm/service.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 10258
+      },
+      "writtenOn": "2020-01-07T13:59:53Z",
+      "side": 1,
+      "message": "auto\u0026\u0026",
+      "range": {
+        "startLine": 80,
+        "startChar": 9,
+        "endLine": 80,
+        "endChar": 20
+      },
+      "revId": "da3bf4030af1ba7783e0e9ee4648cf1257c024c4",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
+    }
+  ]
+}
