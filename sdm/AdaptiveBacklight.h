@@ -28,7 +28,7 @@ namespace sdm {
 using ::android::hardware::Return;
 
 class AdaptiveBacklight : public IAdaptiveBacklight {
-   public:
+  public:
     AdaptiveBacklight();
 
     bool isSupported();
@@ -37,7 +37,7 @@ class AdaptiveBacklight : public IAdaptiveBacklight {
     Return<bool> isEnabled() override;
     Return<bool> setEnabled(bool enabled) override;
 
-   private:
+  private:
     bool mEnabled;
 };
 

@@ -14,10 +14,11 @@
  * limitations under the License.
  */
 
+#include "DisplayModes.h"
+
 #include <dlfcn.h>
 
 #include "Constants.h"
-#include "DisplayModes.h"
 #include "PictureAdjustment.h"
 #include "Types.h"
 
@@ -31,26 +32,26 @@ DisplayModes::DisplayModes(void* libHandle, uint64_t cookie) {
     mLibHandle = libHandle;
     mCookie = cookie;
     disp_api_get_feature_version =
-        reinterpret_cast<int32_t (*)(uint64_t, uint32_t, void*, uint32_t*)>(
-            dlsym(mLibHandle, "disp_api_get_feature_version"));
+            reinterpret_cast<int32_t (*)(uint64_t, uint32_t, void*, uint32_t*)>(
+                    dlsym(mLibHandle, "disp_api_get_feature_version"));
     disp_api_get_num_display_modes =
-        reinterpret_cast<int32_t (*)(uint64_t, uint32_t, int32_t, int32_t*, uint32_t*)>(
-            dlsym(mLibHandle, "disp_api_get_num_display_modes"));
+            reinterpret_cast<int32_t (*)(uint64_t, uint32_t, int32_t, int32_t*, uint32_t*)>(
+                    dlsym(mLibHandle, "disp_api_get_num_display_modes"));
     disp_api_get_display_modes =
-        reinterpret_cast<int32_t (*)(uint64_t, uint32_t, int32_t, void*, int32_t, uint32_t*)>(
-            dlsym(mLibHandle, "disp_api_get_display_modes"));
+            reinterpret_cast<int32_t (*)(uint64_t, uint32_t, int32_t, void*, int32_t, uint32_t*)>(
+                    dlsym(mLibHandle, "disp_api_get_display_modes"));
     disp_api_get_active_display_mode =
-        reinterpret_cast<int32_t (*)(uint64_t, uint32_t, int32_t*, uint32_t*, uint32_t*)>(
-            dlsym(mLibHandle, "disp_api_get_active_display_mode"));
+            reinterpret_cast<int32_t (*)(uint64_t, uint32_t, int32_t*, uint32_t*, uint32_t*)>(
+                    dlsym(mLibHandle, "disp_api_get_active_display_mode"));
     disp_api_set_active_display_mode =
-        reinterpret_cast<int32_t (*)(uint64_t, uint32_t, int32_t, uint32_t)>(
-            dlsym(mLibHandle, "disp_api_set_active_display_mode"));
+            reinterpret_cast<int32_t (*)(uint64_t, uint32_t, int32_t, uint32_t)>(
+                    dlsym(mLibHandle, "disp_api_set_active_display_mode"));
     disp_api_get_default_display_mode =
-        reinterpret_cast<int32_t (*)(uint64_t, uint32_t, int32_t*, uint32_t*)>(
-            dlsym(mLibHandle, "disp_api_get_default_display_mode"));
+            reinterpret_cast<int32_t (*)(uint64_t, uint32_t, int32_t*, uint32_t*)>(
+                    dlsym(mLibHandle, "disp_api_get_default_display_mode"));
     disp_api_set_default_display_mode =
-        reinterpret_cast<int32_t (*)(uint64_t, uint32_t, int32_t, uint32_t)>(
-            dlsym(mLibHandle, "disp_api_set_default_display_mode"));
+            reinterpret_cast<int32_t (*)(uint64_t, uint32_t, int32_t, uint32_t)>(
+                    dlsym(mLibHandle, "disp_api_set_default_display_mode"));
 
 #ifdef LIVES_IN_SYSTEM
     if (isSupported()) {

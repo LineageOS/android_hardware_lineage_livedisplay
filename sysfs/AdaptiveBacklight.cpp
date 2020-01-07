@@ -14,13 +14,13 @@
  * limitations under the License.
  */
 
+#include "AdaptiveBacklight.h"
+
 #include <android-base/file.h>
 #include <android-base/properties.h>
 #include <android-base/strings.h>
 
 #include <fstream>
-
-#include "AdaptiveBacklight.h"
 
 using android::base::GetBoolProperty;
 using android::base::ReadFileToString;

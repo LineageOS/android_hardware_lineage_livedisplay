@@ -15,6 +15,9 @@
  * limitations under the License.
  */
 
+#include "Utils.h"
+
+#include <cutils/sockets.h>
 #include <errno.h>
 #include <fcntl.h>
 #include <poll.h>
@@ -22,11 +25,8 @@
 #include <stdio.h>
 #include <sys/stat.h>
 #include <unistd.h>
+
 #include <string>
-
-#include <cutils/sockets.h>
-
-#include "Utils.h"
 
 namespace vendor {
 namespace lineage {
