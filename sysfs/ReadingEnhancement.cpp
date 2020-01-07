@@ -14,12 +14,12 @@
  * limitations under the License.
  */
 
+#include "ReadingEnhancement.h"
+
 #include <android-base/file.h>
 #include <android-base/strings.h>
 
 #include <fstream>
-
-#include "ReadingEnhancement.h"
 
 using android::base::ReadFileToString;
 using android::base::Trim;

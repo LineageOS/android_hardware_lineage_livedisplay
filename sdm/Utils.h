@@ -27,7 +27,7 @@ namespace V2_0 {
 namespace sdm {
 
 class Utils {
-   public:
+  public:
     static int sendDPPSCommand(char* buf, size_t len);
 };
 
