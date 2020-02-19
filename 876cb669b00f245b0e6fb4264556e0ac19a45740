@@ -45,6 +45,30 @@
       "revId": "876cb669b00f245b0e6fb4264556e0ac19a45740",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16be329f_41b2a782",
+        "filename": "sysfs/AdaptiveBacklight.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 11801
+      },
+      "writtenOn": "2020-02-19T16:53:54Z",
+      "side": 1,
+      "message": "Out of scope, but ack\u0027ed.",
+      "parentUuid": "12338672_92755520",
+      "range": {
+        "startLine": 41,
+        "startChar": 40,
+        "endLine": 41,
+        "endChar": 47
+      },
+      "revId": "876cb669b00f245b0e6fb4264556e0ac19a45740",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
     }
   ]
 }
