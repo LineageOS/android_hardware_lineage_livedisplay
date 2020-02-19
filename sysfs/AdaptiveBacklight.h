@@ -32,6 +32,7 @@ using ::android::hardware::Void;
 
 #define FILE_ACL "/sys/class/graphics/fb0/acl"
 #define FILE_CABC "/sys/class/graphics/fb0/cabc"
+#define FILE_SMARTDIMMER "/sys/devices/platform/host1x/tegradc.0/smartdimmer/enable"
 
 class AdaptiveBacklight : public IAdaptiveBacklight {
    public:

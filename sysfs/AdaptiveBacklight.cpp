@@ -40,11 +40,14 @@ bool AdaptiveBacklight::isSupported() {
 
     std::fstream acl(FILE_ACL, acl.in | acl.out);
     std::fstream cabc(FILE_CABC, cabc.in | cabc.out);
+    std::fstream smartdimmer(FILE_SMARTDIMMER, smartdimmer.in | smartdimmer.out);
 
     if (acl.good()) {
         mFile = FILE_ACL;
     } else if (cabc.good()) {
         mFile = FILE_CABC;
+    } else if (smartdimmer.good()) {
+        mFile = FILE_SMARTDIMMER;
     }
 
     return !mFile.empty();

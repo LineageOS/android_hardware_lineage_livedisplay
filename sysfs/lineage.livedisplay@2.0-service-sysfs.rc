@@ -17,6 +17,10 @@ on init
     chown system system /sys/devices/virtual/graphics/fb0/reading_mode
     chmod 0660 /sys/devices/virtual/graphics/fb0/reading_mode
 
+    # SmartDimmer sysfs
+    chown system system /sys/devices/platform/host1x/tegradc.0/smartdimmer/enable
+    chmod 0660 /sys/devices/platform/host1x/tegradc.0/smartdimmer/enable
+
 service livedisplay-hal-2-0-sysfs /system/bin/hw/lineage.livedisplay@2.0-service-sysfs
     class hal
     user system
