@@ -115,7 +115,7 @@ std::vector<DisplayMode> DisplayModes::getDisplayModesInternal() {
 
         if (disp_api_get_display_modes(mCookie, 0, 0, tmp, count, &flags) == 0) {
             for (int i = 0; i < count; i++) {
-                modes.push_back(DisplayMode{tmp[i].id, std::string(tmp[i].name)});
+                modes.push_back(DisplayMode{tmp[i].id, tmp[i].name});
             }
         }
 
