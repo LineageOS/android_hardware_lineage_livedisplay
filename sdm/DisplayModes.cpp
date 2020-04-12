@@ -106,10 +106,10 @@ std::vector<DisplayMode> DisplayModes::getDisplayModesInternal() {
     }
 
     if (disp_api_get_display_modes != nullptr) {
-        sdm_disp_mode* tmp = new sdm_disp_mode[count];
+        sdm_disp_mode* tmp = new sdm_disp_mode[count]();
         for (int i = 0; i < count; i++) {
             tmp[i].id = -1;
-            tmp[i].name = new char[128];
+            tmp[i].name = new char[128]();
             tmp[i].len = 128;
         }
 
