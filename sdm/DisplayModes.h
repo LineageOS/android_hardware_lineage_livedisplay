@@ -34,6 +34,7 @@ using ::android::hardware::Void;
 class DisplayModes : public IDisplayModes {
   public:
     explicit DisplayModes(std::shared_ptr<SDMController> controller);
+    static bool isEnabledFromManifest(const char* name = "default");
 
     // Methods from ::vendor::lineage::livedisplay::V2_0::IDisplayModes follow.
     Return<void> getDisplayModes(getDisplayModes_cb _hidl_cb) override;
