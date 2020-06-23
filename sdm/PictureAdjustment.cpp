@@ -33,15 +33,12 @@ namespace V2_0 {
 namespace sdm {
 
 using ::android::OK;
-static sp<PictureAdjustment> sInstance;
 
 PictureAdjustment::PictureAdjustment(std::shared_ptr<SDMController> controller)
     : controller_(std::move(controller)) {
     if (!isReady()) {
         LOG(FATAL) << "PictureAdjustment backend not ready, exiting.";
     }
-
-    sInstance = this;
 
     memset(&mDefaultPictureAdjustment, 0, sizeof(HSIC));
 }
@@ -89,9 +86,7 @@ HSIC PictureAdjustment::getPictureAdjustmentInternal() {
 }
 
 void PictureAdjustment::updateDefaultPictureAdjustment() {
-    if (sInstance != nullptr) {
-        sInstance->mDefaultPictureAdjustment = sInstance->getPictureAdjustmentInternal();
-    }
+    mDefaultPictureAdjustment = getPictureAdjustmentInternal();
 }
 
 // Methods from ::vendor::lineage::livedisplay::V2_0::IPictureAdjustment follow.

@@ -27,7 +27,6 @@
 #include <hidl/ServiceManagement.h>
 
 #include "Constants.h"
-#include "PictureAdjustment.h"
 
 namespace vendor {
 namespace lineage {
@@ -179,9 +178,15 @@ Return<bool> DisplayModes::setDisplayMode(int32_t modeID, bool makeDefault) {
         return false;
     }
 
-    PictureAdjustment::updateDefaultPictureAdjustment();
+    if (on_display_mode_set_) {
+        on_display_mode_set_();
+    }
 
     return true;
+}
+
+void DisplayModes::registerDisplayModeSetCallback(DisplayModeSetCallback callback) {
+    on_display_mode_set_ = callback;
 }
 
 }  // namespace sdm
