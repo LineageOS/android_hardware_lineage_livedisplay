@@ -56,13 +56,6 @@ status_t RegisterAsServices() {
     std::shared_ptr<SDMController> controller = std::make_shared<SDMController>();
 
     sp<PictureAdjustment> pa = new PictureAdjustment(controller);
-    sp<DisplayModes> dm = new DisplayModes(controller);
-
-    if (!dm->isSupported() && !pa->isSupported()) {
-        // Backend isn't ready yet, so restart and try again
-        return android::NO_INIT;
-    }
-
     status = pa->registerAsService();
     if (status != OK) {
         LOG(ERROR) << "Could not register service for LiveDisplay HAL PictureAdjustment Iface ("
@@ -70,11 +63,14 @@ status_t RegisterAsServices() {
         return status;
     }
 
-    status = dm->registerAsService();
-    if (status != OK) {
-        LOG(ERROR) << "Could not register service for LiveDisplay HAL DisplayModes Iface ("
-                   << status << ")";
-        return status;
+    if (DisplayModes::isSupported()) {
+        sp<DisplayModes> dm = new DisplayModes(controller);
+        status = dm->registerAsService();
+        if (status != OK) {
+            LOG(ERROR) << "Could not register service for LiveDisplay HAL DisplayModes Iface ("
+                       << status << ")";
+            return status;
+        }
     }
 
     return OK;

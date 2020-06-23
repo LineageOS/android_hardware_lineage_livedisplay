@@ -37,12 +37,16 @@ static sp<PictureAdjustment> sInstance;
 
 PictureAdjustment::PictureAdjustment(std::shared_ptr<SDMController> controller)
     : controller_(std::move(controller)) {
+    if (!isReady()) {
+        LOG(FATAL) << "PictureAdjustment backend not ready, exiting.";
+    }
+
     sInstance = this;
 
     memset(&mDefaultPictureAdjustment, 0, sizeof(HSIC));
 }
 
-bool PictureAdjustment::isSupported() {
+bool PictureAdjustment::isReady() {
     static int supported = -1;
 
     if (supported >= 0) {

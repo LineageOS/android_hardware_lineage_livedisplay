@@ -28,14 +28,14 @@ namespace livedisplay {
 namespace V2_0 {
 namespace sdm {
 
+using ::android::hardware::hidl_string;
 using ::android::hardware::Return;
 using ::android::hardware::Void;
 
 class DisplayModes : public IDisplayModes {
   public:
     explicit DisplayModes(std::shared_ptr<SDMController> controller);
-
-    bool isSupported();
+    static bool isSupported(const hidl_string& name = "default");
 
     // Methods from ::vendor::lineage::livedisplay::V2_0::IDisplayModes follow.
     Return<void> getDisplayModes(getDisplayModes_cb _hidl_cb) override;
@@ -46,6 +46,7 @@ class DisplayModes : public IDisplayModes {
   private:
     std::shared_ptr<SDMController> controller_;
 
+    bool isReady();
     std::vector<DisplayMode> getDisplayModesInternal();
     DisplayMode getDisplayModeById(int32_t id);
     DisplayMode getCurrentDisplayModeInternal();

@@ -36,8 +36,6 @@ class PictureAdjustment : public IPictureAdjustment {
   public:
     explicit PictureAdjustment(std::shared_ptr<SDMController> controller);
 
-    bool isSupported();
-
     // Methods from ::vendor::lineage::livedisplay::V2_0::IPictureAdjustment follow.
     Return<void> getHueRange(getHueRange_cb _hidl_cb) override;
     Return<void> getSaturationRange(getSaturationRange_cb _hidl_cb) override;
@@ -55,6 +53,7 @@ class PictureAdjustment : public IPictureAdjustment {
     std::shared_ptr<SDMController> controller_;
     HSIC mDefaultPictureAdjustment;
 
+    bool isReady();
     HSIC getPictureAdjustmentInternal();
 
     DISALLOW_IMPLICIT_CONSTRUCTORS(PictureAdjustment);
