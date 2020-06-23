@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2019 The LineageOS Project
+ * Copyright (C) 2019-2020 The LineageOS Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -33,6 +33,8 @@ struct sdm_disp_mode {
     int32_t type;
     int32_t len;
     char* name;
+    sdm_disp_mode() : id(-1), type(0), len(128) { name = new char[128](); }
+    ~sdm_disp_mode() { delete[] name; }
 };
 
 struct hsic_data {

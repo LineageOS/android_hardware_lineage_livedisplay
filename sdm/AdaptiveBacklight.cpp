@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2019 The LineageOS Project
+ * Copyright (C) 2019-2020 The LineageOS Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -50,18 +50,16 @@ Return<bool> AdaptiveBacklight::setEnabled(bool enabled) {
         return true;
     }
 
-    char* buf = new char[DPPS_BUF_SIZE];
+    auto buf = std::make_unique<char[]>(DPPS_BUF_SIZE);
 
-    sprintf(buf, "%s", enabled ? FOSS_ON : FOSS_OFF);
-    if (Utils::sendDPPSCommand(buf, DPPS_BUF_SIZE) == 0) {
-        if (strncmp(buf, "Success", 7) == 0) {
+    sprintf(buf.get(), "%s", enabled ? FOSS_ON : FOSS_OFF);
+    if (Utils::sendDPPSCommand(buf.get(), DPPS_BUF_SIZE) == 0) {
+        if (strncmp(buf.get(), "Success", 7) == 0) {
             mEnabled = enabled;
-            delete[] buf;
             return true;
         }
     }
 
-    delete[] buf;
     return false;
 }
 

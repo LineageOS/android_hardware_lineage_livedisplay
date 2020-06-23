@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2019 The LineageOS Project
+ * Copyright (C) 2019-2020 The LineageOS Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,13 +14,18 @@
  * limitations under the License.
  */
 
+#ifdef LIVES_IN_SYSTEM
+#define LOG_TAG "lineage.livedisplay@2.0-impl-sdm"
+#else
+#define LOG_TAG "vendor.lineage.livedisplay@2.0-impl-sdm"
+#endif
+
 #include "DisplayModes.h"
 
-#include <dlfcn.h>
+#include <android-base/logging.h>
 
 #include "Constants.h"
 #include "PictureAdjustment.h"
-#include "Types.h"
 
 namespace vendor {
 namespace lineage {
@@ -28,102 +33,63 @@ namespace livedisplay {
 namespace V2_0 {
 namespace sdm {
 
-DisplayModes::DisplayModes(void* libHandle, uint64_t cookie) {
-    mLibHandle = libHandle;
-    mCookie = cookie;
-    disp_api_get_feature_version =
-            reinterpret_cast<int32_t (*)(uint64_t, uint32_t, void*, uint32_t*)>(
-                    dlsym(mLibHandle, "disp_api_get_feature_version"));
-    disp_api_get_num_display_modes =
-            reinterpret_cast<int32_t (*)(uint64_t, uint32_t, int32_t, int32_t*, uint32_t*)>(
-                    dlsym(mLibHandle, "disp_api_get_num_display_modes"));
-    disp_api_get_display_modes =
-            reinterpret_cast<int32_t (*)(uint64_t, uint32_t, int32_t, void*, int32_t, uint32_t*)>(
-                    dlsym(mLibHandle, "disp_api_get_display_modes"));
-    disp_api_get_active_display_mode =
-            reinterpret_cast<int32_t (*)(uint64_t, uint32_t, int32_t*, uint32_t*, uint32_t*)>(
-                    dlsym(mLibHandle, "disp_api_get_active_display_mode"));
-    disp_api_set_active_display_mode =
-            reinterpret_cast<int32_t (*)(uint64_t, uint32_t, int32_t, uint32_t)>(
-                    dlsym(mLibHandle, "disp_api_set_active_display_mode"));
-    disp_api_get_default_display_mode =
-            reinterpret_cast<int32_t (*)(uint64_t, uint32_t, int32_t*, uint32_t*)>(
-                    dlsym(mLibHandle, "disp_api_get_default_display_mode"));
-    disp_api_set_default_display_mode =
-            reinterpret_cast<int32_t (*)(uint64_t, uint32_t, int32_t, uint32_t)>(
-                    dlsym(mLibHandle, "disp_api_set_default_display_mode"));
+using ::android::OK;
+
+DisplayModes::DisplayModes(std::shared_ptr<SDMController> controller)
+    : controller_(std::move(controller)) {
+    if (!isSupported()) {
+        // Terminate the program if unsupported
+        LOG(FATAL) << "Failed to initialize DisplayModes";
+    }
 
 #ifdef LIVES_IN_SYSTEM
-    if (isSupported()) {
-        DisplayMode mode = getDefaultDisplayModeInternal();
-        if (mode.id >= 0) {
-            setDisplayMode(mode.id, false);
-        }
+    DisplayMode mode = getDefaultDisplayModeInternal();
+    if (mode.id >= 0) {
+        setDisplayMode(mode.id, false);
     }
 #endif
 }
 
 bool DisplayModes::isSupported() {
-    sdm_feature_version version{};
-    int32_t count = 0;
-    uint32_t flags = 0;
     static int supported = -1;
 
     if (supported >= 0) {
-        goto out;
+        return supported;
     }
 
-    if (disp_api_get_feature_version == nullptr ||
-        disp_api_get_feature_version(mCookie, DISPLAY_MODES_FEATURE, &version, &flags) != 0) {
+    sdm_feature_version version{};
+    if (controller_->getFeatureVersion(DISPLAY_MODES_FEATURE, &version) != OK) {
         supported = 0;
-        goto out;
+        return false;
     }
 
     if (version.x <= 0 && version.y <= 0 && version.z <= 0) {
         supported = 0;
-        goto out;
+        return false;
     }
 
-    if (disp_api_get_num_display_modes == nullptr ||
-        disp_api_get_num_display_modes(mCookie, 0, 0, &count, &flags) != 0) {
-        supported = 0;
-        goto out;
+    int32_t count = 0;
+    if (controller_->getNumDisplayModes(&count) != OK) {
+        count = 0;
     }
-
     supported = (count > 0);
-out:
+
     return supported;
 }
 
 std::vector<DisplayMode> DisplayModes::getDisplayModesInternal() {
     std::vector<DisplayMode> modes;
     int32_t count = 0;
-    uint32_t flags = 0;
 
-    if (disp_api_get_num_display_modes == nullptr ||
-        disp_api_get_num_display_modes(mCookie, 0, 0, &count, &flags) != 0) {
+    if (controller_->getNumDisplayModes(&count) != OK || count == 0) {
         return modes;
     }
 
-    if (disp_api_get_display_modes != nullptr) {
-        sdm_disp_mode* tmp = new sdm_disp_mode[count]();
-        for (int i = 0; i < count; i++) {
-            tmp[i].id = -1;
-            tmp[i].name = new char[128]();
-            tmp[i].len = 128;
+    std::vector<sdm_disp_mode> tmp_modes(count);
+    if (controller_->getDisplayModes(tmp_modes.data(), count) == OK) {
+        for (auto&& mode : tmp_modes) {
+            modes.push_back({mode.id, mode.name});
         }
-
-        if (disp_api_get_display_modes(mCookie, 0, 0, tmp, count, &flags) == 0) {
-            for (int i = 0; i < count; i++) {
-                modes.push_back(DisplayMode{tmp[i].id, tmp[i].name});
-            }
-        }
-
-        for (int i = 0; i < count; i++) {
-            delete[] tmp[i].name;
-        }
-
-        delete[] tmp;
     }
 
     return modes;
@@ -143,12 +109,9 @@ DisplayMode DisplayModes::getDisplayModeById(int32_t id) {
 
 DisplayMode DisplayModes::getCurrentDisplayModeInternal() {
     int32_t id = 0;
-    uint32_t mask = 0, flags = 0;
 
-    if (disp_api_get_active_display_mode != nullptr) {
-        if (disp_api_get_active_display_mode(mCookie, 0, &id, &mask, &flags) == 0 && id >= 0) {
-            return getDisplayModeById(id);
-        }
+    if (controller_->getActiveDisplayMode(&id) == OK && id >= 0) {
+        return getDisplayModeById(id);
     }
 
     return DisplayMode{-1, ""};
@@ -156,12 +119,9 @@ DisplayMode DisplayModes::getCurrentDisplayModeInternal() {
 
 DisplayMode DisplayModes::getDefaultDisplayModeInternal() {
     int32_t id = 0;
-    uint32_t flags = 0;
 
-    if (disp_api_get_default_display_mode != nullptr) {
-        if (disp_api_get_default_display_mode(mCookie, 0, &id, &flags) == 0 && id >= 0) {
-            return getDisplayModeById(id);
-        }
+    if (controller_->getDefaultDisplayMode(&id) == OK && id >= 0) {
+        return getDisplayModeById(id);
     }
 
     return DisplayMode{-1, ""};
@@ -195,13 +155,11 @@ Return<bool> DisplayModes::setDisplayMode(int32_t modeID, bool makeDefault) {
         return false;
     }
 
-    if (disp_api_set_active_display_mode == nullptr ||
-        disp_api_set_active_display_mode(mCookie, 0, modeID, 0)) {
+    if (controller_->setActiveDisplayMode(modeID) != OK) {
         return false;
     }
 
-    if (makeDefault && (disp_api_set_default_display_mode == nullptr ||
-                        disp_api_set_default_display_mode(mCookie, 0, modeID, 0))) {
+    if (makeDefault && controller_->setDefaultDisplayMode(modeID) != OK) {
         return false;
     }
 

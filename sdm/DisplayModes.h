@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2019 The LineageOS Project
+ * Copyright (C) 2019-2020 The LineageOS Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,7 +17,10 @@
 #ifndef VENDOR_LINEAGE_LIVEDISPLAY_V2_0_DISPLAYMODES_H
 #define VENDOR_LINEAGE_LIVEDISPLAY_V2_0_DISPLAYMODES_H
 
+#include <android-base/macros.h>
 #include <vendor/lineage/livedisplay/2.0/IDisplayModes.h>
+
+#include "SDMController.h"
 
 namespace vendor {
 namespace lineage {
@@ -30,9 +33,7 @@ using ::android::hardware::Void;
 
 class DisplayModes : public IDisplayModes {
   public:
-    DisplayModes(void* libHandle, uint64_t cookie);
-
-    bool isSupported();
+    explicit DisplayModes(std::shared_ptr<SDMController> controller);
 
     // Methods from ::vendor::lineage::livedisplay::V2_0::IDisplayModes follow.
     Return<void> getDisplayModes(getDisplayModes_cb _hidl_cb) override;
@@ -41,21 +42,15 @@ class DisplayModes : public IDisplayModes {
     Return<bool> setDisplayMode(int32_t modeID, bool makeDefault) override;
 
   private:
-    void* mLibHandle;
-    uint64_t mCookie;
+    std::shared_ptr<SDMController> controller_;
 
-    int32_t (*disp_api_get_feature_version)(uint64_t, uint32_t, void*, uint32_t*);
-    int32_t (*disp_api_get_num_display_modes)(uint64_t, uint32_t, int32_t, int32_t*, uint32_t*);
-    int32_t (*disp_api_get_display_modes)(uint64_t, uint32_t, int32_t, void*, int32_t, uint32_t*);
-    int32_t (*disp_api_get_active_display_mode)(uint64_t, uint32_t, int32_t*, uint32_t*, uint32_t*);
-    int32_t (*disp_api_set_active_display_mode)(uint64_t, uint32_t, int32_t, uint32_t);
-    int32_t (*disp_api_get_default_display_mode)(uint64_t, uint32_t, int32_t*, uint32_t*);
-    int32_t (*disp_api_set_default_display_mode)(uint64_t, uint32_t, int32_t, uint32_t);
-
+    bool isSupported();
     std::vector<DisplayMode> getDisplayModesInternal();
     DisplayMode getDisplayModeById(int32_t id);
     DisplayMode getCurrentDisplayModeInternal();
     DisplayMode getDefaultDisplayModeInternal();
+
+    DISALLOW_IMPLICIT_CONSTRUCTORS(DisplayModes);
 };
 
 }  // namespace sdm
