@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2019 The LineageOS Project
+ * Copyright (C) 2019-2020 The LineageOS Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,7 +17,10 @@
 #ifndef VENDOR_LINEAGE_LIVEDISPLAY_V2_0_PICTUREADJUSTMENT_H
 #define VENDOR_LINEAGE_LIVEDISPLAY_V2_0_PICTUREADJUSTMENT_H
 
+#include <android-base/macros.h>
 #include <vendor/lineage/livedisplay/2.0/IPictureAdjustment.h>
+
+#include "SDMController.h"
 
 namespace vendor {
 namespace lineage {
@@ -31,7 +34,7 @@ using ::android::hardware::Void;
 
 class PictureAdjustment : public IPictureAdjustment {
   public:
-    PictureAdjustment(void* libHandle, uint64_t cookie);
+    explicit PictureAdjustment(std::shared_ptr<SDMController> controller);
 
     bool isSupported();
 
@@ -49,17 +52,12 @@ class PictureAdjustment : public IPictureAdjustment {
     static void updateDefaultPictureAdjustment();
 
   private:
-    void* mLibHandle;
-    uint64_t mCookie;
-
-    int32_t (*disp_api_get_feature_version)(uint64_t, uint32_t, void*, uint32_t*);
-    int32_t (*disp_api_get_global_pa_range)(uint64_t, uint32_t, void*);
-    int32_t (*disp_api_get_global_pa_config)(uint64_t, uint32_t, uint32_t*, void*);
-    int32_t (*disp_api_set_global_pa_config)(uint64_t, uint32_t, uint32_t, void*);
+    std::shared_ptr<SDMController> controller_;
+    HSIC mDefaultPictureAdjustment;
 
     HSIC getPictureAdjustmentInternal();
 
-    HSIC mDefaultPictureAdjustment;
+    DISALLOW_IMPLICIT_CONSTRUCTORS(PictureAdjustment);
 };
 
 }  // namespace sdm
