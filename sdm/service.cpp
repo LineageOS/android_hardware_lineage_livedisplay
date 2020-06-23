@@ -71,6 +71,9 @@ status_t RegisterAsServices() {
                        << status << ")";
             return status;
         }
+        // Update default PA on setDisplayMode
+        dm->registerDisplayModeSetCallback(
+                std::bind(&PictureAdjustment::updateDefaultPictureAdjustment, pa));
     }
 
     return OK;
