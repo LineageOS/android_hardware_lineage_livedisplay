@@ -23,6 +23,8 @@
 #include "DisplayModes.h"
 
 #include <android-base/logging.h>
+#include <android/hidl/manager/1.0/IServiceManager.h>
+#include <hidl/ServiceManagement.h>
 
 #include "Constants.h"
 #include "PictureAdjustment.h"
@@ -48,6 +50,21 @@ DisplayModes::DisplayModes(std::shared_ptr<SDMController> controller)
         setDisplayMode(mode.id, false);
     }
 #endif
+}
+
+bool DisplayModes::isEnabledFromManifest(const hidl_string& name) {
+    using ::android::hidl::manager::V1_0::IServiceManager;
+    auto sm = ::android::hardware::defaultServiceManager();
+    /*
+     * We MUST NOT use DisplayModes::isSupported to check the availability here,
+     * but check the existence in manifest instead. Because in certain cases the
+     * QDCM backend might fail to initialize thus isSupported would return false,
+     * even though the device does support the feature and the interface is
+     * declared in manifest. Under the circumstance, the HAL will abort and
+     * hopefully recover from the failure when started again.
+     */
+    auto transport = sm->getTransport(descriptor, name);
+    return transport != IServiceManager::Transport::EMPTY;
 }
 
 bool DisplayModes::isSupported() {

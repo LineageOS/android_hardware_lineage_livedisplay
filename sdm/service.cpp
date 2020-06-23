@@ -63,12 +63,14 @@ status_t RegisterAsServices() {
         return status;
     }
 
-    sp<DisplayModes> dm = new DisplayModes(controller);
-    status = dm->registerAsService();
-    if (status != OK) {
-        LOG(ERROR) << "Could not register service for LiveDisplay HAL DisplayModes Iface ("
-                   << status << ")";
-        return status;
+    if (DisplayModes::isEnabledFromManifest()) {
+        sp<DisplayModes> dm = new DisplayModes(controller);
+        status = dm->registerAsService();
+        if (status != OK) {
+            LOG(ERROR) << "Could not register service for LiveDisplay HAL DisplayModes Iface ("
+                       << status << ")";
+            return status;
+        }
     }
 
     return OK;
