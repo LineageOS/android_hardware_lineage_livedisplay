@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2019 The LineageOS Project
+ * Copyright (C) 2019-2020 The LineageOS Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,8 +14,6 @@
  * limitations under the License.
  */
 
-#include <dlfcn.h>
-
 #ifdef LIVES_IN_SYSTEM
 #define LOG_TAG "lineage.livedisplay@2.0-service-sdm"
 #else
@@ -29,44 +27,54 @@
 #include "AdaptiveBacklight.h"
 #include "DisplayModes.h"
 #include "PictureAdjustment.h"
+#include "SDMController.h"
 
-constexpr const char* SDM_DISP_LIBS[]{
-#ifdef LIVES_IN_SYSTEM
-        "libsdm-disp-apis.qti.so",
-        "libsdm-disp-apis.so",
-#else
-        "libsdm-disp-vndapis.so",
-#endif
-};
+using ::android::OK;
+using ::android::sp;
+using ::android::status_t;
+using ::android::hardware::configureRpcThreadpool;
+using ::android::hardware::joinRpcThreadpool;
 
-using android::OK;
-using android::sp;
-using android::status_t;
-using android::hardware::configureRpcThreadpool;
-using android::hardware::joinRpcThreadpool;
-
-using ::vendor::lineage::livedisplay::V2_0::IAdaptiveBacklight;
-using ::vendor::lineage::livedisplay::V2_0::IDisplayModes;
-using ::vendor::lineage::livedisplay::V2_0::IPictureAdjustment;
 using ::vendor::lineage::livedisplay::V2_0::sdm::AdaptiveBacklight;
 using ::vendor::lineage::livedisplay::V2_0::sdm::DisplayModes;
 using ::vendor::lineage::livedisplay::V2_0::sdm::PictureAdjustment;
+using ::vendor::lineage::livedisplay::V2_0::sdm::SDMController;
 
-int main() {
-    // Vendor backend
-    void* libHandle = nullptr;
-    const char* libName = nullptr;
-    int32_t (*disp_api_init)(uint64_t*, uint32_t) = nullptr;
-    int32_t (*disp_api_deinit)(uint64_t, uint32_t) = nullptr;
-    uint64_t cookie = 0;
-
-    // HIDL frontend
-    sp<AdaptiveBacklight> ab;
-    sp<DisplayModes> dm;
-    sp<PictureAdjustment> pa;
-
+status_t RegisterAsServices() {
     status_t status = OK;
 
+    sp<AdaptiveBacklight> ab = new AdaptiveBacklight();
+    if (ab->isSupported()) {
+        status = ab->registerAsService();
+        if (status != OK) {
+            LOG(ERROR) << "Could not register service for LiveDisplay HAL AdaptiveBacklight Iface ("
+                       << status << ")";
+            return status;
+        }
+    }
+
+    std::shared_ptr<SDMController> controller = std::make_shared<SDMController>();
+
+    sp<PictureAdjustment> pa = new PictureAdjustment(controller);
+    status = pa->registerAsService();
+    if (status != OK) {
+        LOG(ERROR) << "Could not register service for LiveDisplay HAL PictureAdjustment Iface ("
+                   << status << ")";
+        return status;
+    }
+
+    sp<DisplayModes> dm = new DisplayModes(controller);
+    status = dm->registerAsService();
+    if (status != OK) {
+        LOG(ERROR) << "Could not register service for LiveDisplay HAL DisplayModes Iface ("
+                   << status << ")";
+        return status;
+    }
+
+    return OK;
+}
+
+int main() {
 #ifdef LIVES_IN_SYSTEM
     android::ProcessState::initWithDriver("/dev/binder");
 #else
@@ -75,107 +83,13 @@ int main() {
 
     LOG(INFO) << "LiveDisplay HAL service is starting.";
 
-    for (auto&& lib : SDM_DISP_LIBS) {
-        libHandle = dlopen(lib, RTLD_NOW);
-        libName = lib;
-        if (libHandle != nullptr) {
-            LOG(INFO) << "Loaded: " << libName;
-            break;
-        }
-        LOG(ERROR) << "Can not load " << libName << " (" << dlerror() << ")";
-    }
-
-    if (libHandle == nullptr) {
-        LOG(ERROR) << "Failed to load SDM display lib, exiting.";
-        goto shutdown;
-    }
-
-    disp_api_init =
-            reinterpret_cast<int32_t (*)(uint64_t*, uint32_t)>(dlsym(libHandle, "disp_api_init"));
-    if (disp_api_init == nullptr) {
-        LOG(ERROR) << "Can not get disp_api_init from " << libName << " (" << dlerror() << ")";
-        goto shutdown;
-    }
-
-    disp_api_deinit =
-            reinterpret_cast<int32_t (*)(uint64_t, uint32_t)>(dlsym(libHandle, "disp_api_deinit"));
-    if (disp_api_deinit == nullptr) {
-        LOG(ERROR) << "Can not get disp_api_deinit from " << libName << " (" << dlerror() << ")";
-        goto shutdown;
-    }
-
-    status = disp_api_init(&cookie, 0);
-    if (status != OK) {
-        LOG(ERROR) << "Can not initialize " << libName << " (" << status << ")";
-        goto shutdown;
-    }
-
-    ab = new AdaptiveBacklight();
-    if (ab == nullptr) {
-        LOG(ERROR) << "Can not create an instance of LiveDisplay HAL AdaptiveBacklight Iface, "
-                      "exiting.";
-        goto shutdown;
-    }
-
-    dm = new DisplayModes(libHandle, cookie);
-    if (dm == nullptr) {
-        LOG(ERROR) << "Can not create an instance of LiveDisplay HAL DisplayModes Iface, exiting.";
-        goto shutdown;
-    }
-
-    pa = new PictureAdjustment(libHandle, cookie);
-    if (pa == nullptr) {
-        LOG(ERROR) << "Can not create an instance of LiveDisplay HAL PictureAdjustment Iface, "
-                      "exiting.";
-        goto shutdown;
-    }
-
-    if (!dm->isSupported() && !pa->isSupported()) {
-        // Backend isn't ready yet, so restart and try again
-        goto shutdown;
-    }
-
     configureRpcThreadpool(1, true /*callerWillJoin*/);
 
-    if (ab->isSupported()) {
-        status = ab->registerAsService();
-        if (status != OK) {
-            LOG(ERROR) << "Could not register service for LiveDisplay HAL AdaptiveBacklight Iface ("
-                       << status << ")";
-            goto shutdown;
-        }
-    }
-
-    if (dm->isSupported()) {
-        status = dm->registerAsService();
-        if (status != OK) {
-            LOG(ERROR) << "Could not register service for LiveDisplay HAL DisplayModes Iface ("
-                       << status << ")";
-            goto shutdown;
-        }
-    }
-
-    if (pa->isSupported()) {
-        status = pa->registerAsService();
-        if (status != OK) {
-            LOG(ERROR) << "Could not register service for LiveDisplay HAL PictureAdjustment Iface ("
-                       << status << ")";
-            goto shutdown;
-        }
-    }
-
-    LOG(INFO) << "LiveDisplay HAL service is ready.";
-    joinRpcThreadpool();
-    // Should not pass this line
-
-shutdown:
-    // Cleanup what we started
-    if (disp_api_deinit != nullptr) {
-        disp_api_deinit(cookie, 0);
-    }
-
-    if (libHandle != nullptr) {
-        dlclose(libHandle);
+    if (RegisterAsServices() == OK) {
+        LOG(INFO) << "LiveDisplay HAL service is ready.";
+        joinRpcThreadpool();
+    } else {
+        LOG(ERROR) << "Could not register service for LiveDisplay HAL";
     }
 
     // In normal operation, we don't expect the thread pool to shutdown
