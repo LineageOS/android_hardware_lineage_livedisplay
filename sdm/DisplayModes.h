@@ -37,6 +37,9 @@ class DisplayModes : public IDisplayModes {
     explicit DisplayModes(std::shared_ptr<SDMController> controller);
     static bool isSupported(const hidl_string& name = "default");
 
+    using DisplayModeSetCallback = std::function<void()>;
+    void registerDisplayModeSetCallback(DisplayModeSetCallback callback);
+
     // Methods from ::vendor::lineage::livedisplay::V2_0::IDisplayModes follow.
     Return<void> getDisplayModes(getDisplayModes_cb _hidl_cb) override;
     Return<void> getCurrentDisplayMode(getCurrentDisplayMode_cb _hidl_cb) override;
@@ -45,6 +48,7 @@ class DisplayModes : public IDisplayModes {
 
   private:
     std::shared_ptr<SDMController> controller_;
+    DisplayModeSetCallback on_display_mode_set_;
 
     bool isReady();
     std::vector<DisplayMode> getDisplayModesInternal();
