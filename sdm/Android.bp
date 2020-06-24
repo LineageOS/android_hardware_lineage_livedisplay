@@ -12,16 +12,50 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+filegroup {
+    name: "vendor.lineage.livedisplay@2.0-sdm-ab",
+    srcs: [
+        "AdaptiveBacklight.cpp",
+    ],
+}
+
+filegroup {
+    name: "vendor.lineage.livedisplay@2.0-sdm-dm",
+    srcs: [
+        "DisplayModes.cpp",
+    ],
+}
+
+filegroup {
+    name: "vendor.lineage.livedisplay@2.0-sdm-pa",
+    srcs: [
+        "PictureAdjustment.cpp",
+    ],
+}
+
+filegroup {
+    name: "vendor.lineage.livedisplay@2.0-sdm-utils",
+    srcs: [
+        "SDMController.cpp",
+        "Utils.cpp",
+    ],
+}
+
+cc_library_headers {
+    name: "vendor.lineage.livedisplay@2.0-sdm-headers",
+    vendor_available: true,
+    export_include_dirs: ["include"],
+}
+
 cc_defaults {
     name: "livedisplay_sdm_defaults",
     defaults: ["hidl_defaults"],
     relative_install_path: "hw",
     srcs: [
-        "AdaptiveBacklight.cpp",
-        "DisplayModes.cpp",
-        "PictureAdjustment.cpp",
-        "SDMController.cpp",
-        "Utils.cpp",
+        ":vendor.lineage.livedisplay@2.0-sdm-ab",
+        ":vendor.lineage.livedisplay@2.0-sdm-dm",
+        ":vendor.lineage.livedisplay@2.0-sdm-pa",
+        ":vendor.lineage.livedisplay@2.0-sdm-utils",
         "service.cpp",
     ],
     shared_libs: [
@@ -33,6 +67,9 @@ cc_defaults {
         "libhidltransport",
         "libutils",
         "vendor.lineage.livedisplay@2.0",
+    ],
+    header_libs: [
+        "vendor.lineage.livedisplay@2.0-sdm-headers",
     ],
 }
 

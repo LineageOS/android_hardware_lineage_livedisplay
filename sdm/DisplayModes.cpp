@@ -20,13 +20,13 @@
 #define LOG_TAG "vendor.lineage.livedisplay@2.0-impl-sdm"
 #endif
 
-#include "DisplayModes.h"
+#include "livedisplay/sdm/DisplayModes.h"
 
 #include <android-base/logging.h>
 #include <android/hidl/manager/1.0/IServiceManager.h>
 #include <hidl/ServiceManagement.h>
 
-#include "Utils.h"
+#include "livedisplay/sdm/Utils.h"
 
 namespace vendor {
 namespace lineage {
