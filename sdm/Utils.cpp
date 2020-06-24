@@ -17,19 +17,6 @@
 
 #include "Utils.h"
 
-#include <cutils/sockets.h>
-#include <errno.h>
-#include <fcntl.h>
-#include <poll.h>
-#include <signal.h>
-#include <stdio.h>
-#include <sys/stat.h>
-#include <unistd.h>
-
-#include <string>
-
-#include "Types.h"
-
 namespace vendor {
 namespace lineage {
 namespace livedisplay {
@@ -37,39 +24,8 @@ namespace V2_0 {
 namespace sdm {
 namespace utils {
 
-int SendDPPSCommand(char* buf, size_t len) {
-    int rc = 0;
-    int sock = socket_local_client("pps", ANDROID_SOCKET_NAMESPACE_RESERVED, SOCK_STREAM);
-    if (sock < 0) {
-        return sock;
-    }
-
-    if (write(sock, buf, strlen(buf) + 1) > 0) {
-        memset(buf, 0, len);
-        ssize_t ret;
-        while ((ret = read(sock, buf, len)) > 0) {
-            if ((size_t)ret == len) {
-                break;
-            }
-            len -= ret;
-            buf += ret;
-
-            struct pollfd p = {.fd = sock, .events = POLLIN, .revents = 0};
-
-            ret = poll(&p, 1, 20);
-            if ((ret <= 0) || !(p.revents & POLLIN)) {
-                break;
-            }
-        }
-    } else {
-        rc = -EIO;
-    }
-
-    close(sock);
-    return rc;
-}
-
-status_t CheckFeatureVersion(const std::shared_ptr<SDMController>& controller, int feature) {
+status_t CheckFeatureVersion(const std::shared_ptr<SDMController>& controller,
+                             FeatureVerSw feature) {
     SdmFeatureVersion version{};
     status_t status = controller->getFeatureVersion(feature, &version);
     if (status != android::OK) {
