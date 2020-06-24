@@ -40,8 +40,6 @@ PictureAdjustment::PictureAdjustment(std::shared_ptr<SDMController> controller)
         // Terminate the program if unsupported
         LOG(FATAL) << "Failed to initialize DisplayModes";
     }
-
-    memset(&default_pa_, 0, sizeof(HSIC));
 }
 
 bool PictureAdjustment::isSupported() {
