@@ -20,11 +20,11 @@
 #define LOG_TAG "vendor.lineage.livedisplay@2.0-impl-sdm"
 #endif
 
-#include "PictureAdjustment.h"
+#include "livedisplay/sdm/PictureAdjustment.h"
 
 #include <android-base/logging.h>
 
-#include "Utils.h"
+#include "livedisplay/sdm/Utils.h"
 
 namespace vendor {
 namespace lineage {

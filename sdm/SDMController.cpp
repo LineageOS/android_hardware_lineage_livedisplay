@@ -20,7 +20,7 @@
 #define LOG_TAG "vendor.lineage.livedisplay@2.0-impl-sdm"
 #endif
 
-#include "SDMController.h"
+#include "livedisplay/sdm/SDMController.h"
 
 #include <android-base/logging.h>
 #include <dlfcn.h>
