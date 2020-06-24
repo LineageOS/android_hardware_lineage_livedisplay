@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-#include "Utils.h"
+#include "livedisplay/sdm/Utils.h"
 
 namespace vendor {
 namespace lineage {
