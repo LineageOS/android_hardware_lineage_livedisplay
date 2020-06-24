@@ -49,7 +49,7 @@ Return<bool> AdaptiveBacklight::setEnabled(bool enabled) {
     auto buf = std::make_unique<char[]>(DPPS_BUF_SIZE);
 
     sprintf(buf.get(), "%s", enabled ? FOSS_ON : FOSS_OFF);
-    if (Utils::sendDPPSCommand(buf.get(), DPPS_BUF_SIZE) == 0) {
+    if (utils::SendDPPSCommand(buf.get(), DPPS_BUF_SIZE) == 0) {
         if (strncmp(buf.get(), "Success", 7) == 0) {
             enabled_ = enabled;
             return true;
