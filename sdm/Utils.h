@@ -15,10 +15,7 @@
  * limitations under the License.
  */
 
-#ifndef VENDOR_LINEAGE_LIVEDISPLAY_V2_0_SDM_UTILS_H
-#define VENDOR_LINEAGE_LIVEDISPLAY_V2_0_SDM_UTILS_H
-
-#include <stdlib.h>
+#pragma once
 
 #include "SDMController.h"
 
@@ -49,5 +46,3 @@ status_t CheckFeatureVersion(const std::shared_ptr<SDMController>& controller,
 }  // namespace livedisplay
 }  // namespace lineage
 }  // namespace vendor
-
-#endif  // VENDOR_LINEAGE_LIVEDISPLAY_V2_0_SDM_UTILS_H
