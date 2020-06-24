@@ -43,8 +43,8 @@ using ::vendor::lineage::livedisplay::V2_0::sdm::SDMController;
 status_t RegisterAsServices() {
     status_t status = OK;
 
-    sp<AdaptiveBacklight> ab = new AdaptiveBacklight();
-    if (ab->isSupported()) {
+    if (AdaptiveBacklight::isSupported()) {
+        sp<AdaptiveBacklight> ab = new AdaptiveBacklight();
         status = ab->registerAsService();
         if (status != OK) {
             LOG(ERROR) << "Could not register service for LiveDisplay HAL AdaptiveBacklight Iface ("

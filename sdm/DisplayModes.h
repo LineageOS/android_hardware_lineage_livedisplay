@@ -14,8 +14,7 @@
  * limitations under the License.
  */
 
-#ifndef VENDOR_LINEAGE_LIVEDISPLAY_V2_0_DISPLAYMODES_H
-#define VENDOR_LINEAGE_LIVEDISPLAY_V2_0_DISPLAYMODES_H
+#pragma once
 
 #include <android-base/macros.h>
 #include <vendor/lineage/livedisplay/2.0/IDisplayModes.h>
@@ -29,7 +28,6 @@ namespace V2_0 {
 namespace sdm {
 
 using ::android::hardware::Return;
-using ::android::hardware::Void;
 
 class DisplayModes : public IDisplayModes {
   public:
@@ -63,5 +61,3 @@ class DisplayModes : public IDisplayModes {
 }  // namespace livedisplay
 }  // namespace lineage
 }  // namespace vendor
-
-#endif  // VENDOR_LINEAGE_LIVEDISPLAY_V2_0_DISPLAYMODES_H
