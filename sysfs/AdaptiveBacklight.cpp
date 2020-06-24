@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2019 The LineageOS Project
+ * Copyright (C) 2019-2020 The LineageOS Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -42,12 +42,12 @@ bool AdaptiveBacklight::isSupported() {
     std::fstream cabc(FILE_CABC, cabc.in | cabc.out);
 
     if (acl.good()) {
-        mFile = FILE_ACL;
+        file_ = FILE_ACL;
     } else if (cabc.good()) {
-        mFile = FILE_CABC;
+        file_ = FILE_CABC;
     }
 
-    return !mFile.empty();
+    return !file_.empty();
 }
 
 // Methods from ::vendor::lineage::livedisplay::V2_0::IAdaptiveBacklight follow.
@@ -55,7 +55,7 @@ Return<bool> AdaptiveBacklight::isEnabled() {
     std::string tmp;
     int32_t contents = 0;
 
-    if (ReadFileToString(mFile, &tmp)) {
+    if (ReadFileToString(file_, &tmp)) {
         contents = std::stoi(Trim(tmp));
     }
 
@@ -63,7 +63,7 @@ Return<bool> AdaptiveBacklight::isEnabled() {
 }
 
 Return<bool> AdaptiveBacklight::setEnabled(bool enabled) {
-    return WriteStringToFile(enabled ? "1" : "0", mFile, true);
+    return WriteStringToFile(enabled ? "1" : "0", file_, true);
 }
 
 }  // namespace sysfs

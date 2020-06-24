@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2019 The LineageOS Project
+ * Copyright (C) 2019-2020 The LineageOS Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -36,14 +36,14 @@ bool SunlightEnhancement::isSupported() {
     std::fstream sre(FILE_SRE, sre.in | sre.out);
 
     if (hbm.good()) {
-        mFile = FILE_HBM;
-        mEnabledMode = 1;
+        file_ = FILE_HBM;
+        enabled_mode_ = 1;
     } else if (sre.good()) {
-        mFile = FILE_SRE;
-        mEnabledMode = 2;
+        file_ = FILE_SRE;
+        enabled_mode_ = 2;
     }
 
-    return !mFile.empty();
+    return !file_.empty();
 }
 
 // Methods from ::vendor::lineage::livedisplay::V2_0::ISunlightEnhancement follow.
@@ -51,7 +51,7 @@ Return<bool> SunlightEnhancement::isEnabled() {
     std::string tmp;
     int32_t contents = 0;
 
-    if (ReadFileToString(mFile, &tmp)) {
+    if (ReadFileToString(file_, &tmp)) {
         contents = std::stoi(Trim(tmp));
     }
 
@@ -59,7 +59,7 @@ Return<bool> SunlightEnhancement::isEnabled() {
 }
 
 Return<bool> SunlightEnhancement::setEnabled(bool enabled) {
-    return WriteStringToFile(enabled ? std::to_string(mEnabledMode) : "0", mFile, true);
+    return WriteStringToFile(enabled ? std::to_string(enabled_mode_) : "0", file_, true);
 }
 
 }  // namespace sysfs
