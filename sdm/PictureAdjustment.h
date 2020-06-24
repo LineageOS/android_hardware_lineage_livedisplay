@@ -51,7 +51,7 @@ class PictureAdjustment : public IPictureAdjustment {
 
   private:
     std::shared_ptr<SDMController> controller_;
-    HSIC mDefaultPictureAdjustment;
+    HSIC default_pa_;
 
     bool isReady();
     HSIC getPictureAdjustmentInternal();

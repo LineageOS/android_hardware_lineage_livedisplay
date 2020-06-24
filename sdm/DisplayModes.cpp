@@ -72,7 +72,7 @@ bool DisplayModes::isReady() {
         return supported;
     }
 
-    sdm_feature_version version{};
+    SdmFeatureVersion version{};
     if (controller_->getFeatureVersion(DISPLAY_MODES_FEATURE, &version) != OK) {
         supported = 0;
         return false;
@@ -100,7 +100,7 @@ std::vector<DisplayMode> DisplayModes::getDisplayModesInternal() {
         return modes;
     }
 
-    std::vector<sdm_disp_mode> tmp_modes(count);
+    std::vector<SdmDispMode> tmp_modes(count);
     if (controller_->getDisplayModes(tmp_modes.data(), count) == OK) {
         for (auto&& mode : tmp_modes) {
             modes.push_back({mode.id, mode.name});
@@ -158,23 +158,23 @@ Return<void> DisplayModes::getDefaultDisplayMode(getDefaultDisplayMode_cb _hidl_
     return Void();
 }
 
-Return<bool> DisplayModes::setDisplayMode(int32_t modeID, bool makeDefault) {
-    DisplayMode currentMode = getCurrentDisplayModeInternal();
+Return<bool> DisplayModes::setDisplayMode(int32_t mode_id, bool make_default) {
+    DisplayMode current_mode = getCurrentDisplayModeInternal();
 
-    if (currentMode.id >= 0 && currentMode.id == modeID) {
+    if (current_mode.id >= 0 && current_mode.id == mode_id) {
         return true;
     }
 
-    DisplayMode mode = getDisplayModeById(modeID);
+    DisplayMode mode = getDisplayModeById(mode_id);
     if (mode.id < 0) {
         return false;
     }
 
-    if (controller_->setActiveDisplayMode(modeID) != OK) {
+    if (controller_->setActiveDisplayMode(mode_id) != OK) {
         return false;
     }
 
-    if (makeDefault && controller_->setDefaultDisplayMode(modeID) != OK) {
+    if (make_default && controller_->setDefaultDisplayMode(mode_id) != OK) {
         return false;
     }
 
