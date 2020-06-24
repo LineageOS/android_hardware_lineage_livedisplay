@@ -44,7 +44,7 @@ class DisplayModes : public IDisplayModes {
     Return<void> getDisplayModes(getDisplayModes_cb _hidl_cb) override;
     Return<void> getCurrentDisplayMode(getCurrentDisplayMode_cb _hidl_cb) override;
     Return<void> getDefaultDisplayMode(getDefaultDisplayMode_cb _hidl_cb) override;
-    Return<bool> setDisplayMode(int32_t modeID, bool makeDefault) override;
+    Return<bool> setDisplayMode(int32_t mode_id, bool make_default) override;
 
   private:
     std::shared_ptr<SDMController> controller_;

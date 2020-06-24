@@ -33,7 +33,7 @@ namespace sdm {
 using ::android::base::GetBoolProperty;
 
 AdaptiveBacklight::AdaptiveBacklight() {
-    mEnabled = false;
+    enabled_ = false;
 }
 
 bool AdaptiveBacklight::isSupported() {
@@ -42,11 +42,11 @@ bool AdaptiveBacklight::isSupported() {
 
 // Methods from ::vendor::lineage::livedisplay::V2_0::IAdaptiveBacklight follow.
 Return<bool> AdaptiveBacklight::isEnabled() {
-    return mEnabled;
+    return enabled_;
 }
 
 Return<bool> AdaptiveBacklight::setEnabled(bool enabled) {
-    if (mEnabled == enabled) {
+    if (enabled_ == enabled) {
         return true;
     }
 
@@ -55,7 +55,7 @@ Return<bool> AdaptiveBacklight::setEnabled(bool enabled) {
     sprintf(buf.get(), "%s", enabled ? FOSS_ON : FOSS_OFF);
     if (Utils::sendDPPSCommand(buf.get(), DPPS_BUF_SIZE) == 0) {
         if (strncmp(buf.get(), "Success", 7) == 0) {
-            mEnabled = enabled;
+            enabled_ = enabled;
             return true;
         }
     }
