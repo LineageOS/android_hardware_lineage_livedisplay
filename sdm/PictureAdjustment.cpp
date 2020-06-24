@@ -39,8 +39,6 @@ PictureAdjustment::PictureAdjustment(std::shared_ptr<SDMController> controller)
     if (!isReady()) {
         LOG(FATAL) << "PictureAdjustment backend not ready, exiting.";
     }
-
-    memset(&default_pa_, 0, sizeof(HSIC));
 }
 
 bool PictureAdjustment::isReady() {
