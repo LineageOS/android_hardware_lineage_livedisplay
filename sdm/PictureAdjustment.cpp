@@ -41,7 +41,7 @@ PictureAdjustment::PictureAdjustment(std::shared_ptr<SDMController> controller)
         LOG(FATAL) << "Failed to initialize DisplayModes";
     }
 
-    memset(&mDefaultPictureAdjustment, 0, sizeof(HSIC));
+    memset(&default_pa_, 0, sizeof(HSIC));
 }
 
 bool PictureAdjustment::isSupported() {
@@ -51,7 +51,7 @@ bool PictureAdjustment::isSupported() {
         return supported;
     }
 
-    sdm_feature_version version{};
+    SdmFeatureVersion version{};
     if (controller_->getFeatureVersion(PICTURE_ADJUSTMENT_FEATURE, &version) != OK) {
         supported = 0;
         return false;
@@ -62,7 +62,7 @@ bool PictureAdjustment::isSupported() {
         return false;
     }
 
-    hsic_ranges r{};
+    HsicRanges r{};
     if (controller_->getGlobalPaRange(&r) != OK) {
         supported = 0;
         return false;
@@ -76,24 +76,24 @@ bool PictureAdjustment::isSupported() {
 }
 
 HSIC PictureAdjustment::getPictureAdjustmentInternal() {
-    hsic_config config{};
+    HsicConfig config{};
 
     if (controller_->getGlobalPaConfig(&config) == OK) {
         return HSIC{static_cast<float>(config.data.hue), config.data.saturation,
-                    config.data.intensity, config.data.contrast, config.data.saturationThreshold};
+                    config.data.intensity, config.data.contrast, config.data.saturation_threshold};
     }
 
     return HSIC{};
 }
 
 void PictureAdjustment::updateDefaultPictureAdjustment() {
-    mDefaultPictureAdjustment = getPictureAdjustmentInternal();
+    default_pa_ = getPictureAdjustmentInternal();
 }
 
 // Methods from ::vendor::lineage::livedisplay::V2_0::IPictureAdjustment follow.
 Return<void> PictureAdjustment::getHueRange(getHueRange_cb _hidl_cb) {
     FloatRange range{};
-    hsic_ranges r{};
+    HsicRanges r{};
 
     if (controller_->getGlobalPaRange(&r) == OK) {
         range.max = r.hue.max;
@@ -107,7 +107,7 @@ Return<void> PictureAdjustment::getHueRange(getHueRange_cb _hidl_cb) {
 
 Return<void> PictureAdjustment::getSaturationRange(getSaturationRange_cb _hidl_cb) {
     FloatRange range{};
-    hsic_ranges r{};
+    HsicRanges r{};
 
     if (controller_->getGlobalPaRange(&r) == OK) {
         range.max = r.saturation.max;
@@ -121,7 +121,7 @@ Return<void> PictureAdjustment::getSaturationRange(getSaturationRange_cb _hidl_c
 
 Return<void> PictureAdjustment::getIntensityRange(getIntensityRange_cb _hidl_cb) {
     FloatRange range{};
-    hsic_ranges r{};
+    HsicRanges r{};
 
     if (controller_->getGlobalPaRange(&r) == OK) {
         range.max = r.intensity.max;
@@ -135,7 +135,7 @@ Return<void> PictureAdjustment::getIntensityRange(getIntensityRange_cb _hidl_cb)
 
 Return<void> PictureAdjustment::getContrastRange(getContrastRange_cb _hidl_cb) {
     FloatRange range{};
-    hsic_ranges r{};
+    HsicRanges r{};
 
     if (controller_->getGlobalPaRange(&r) == OK) {
         range.max = r.contrast.max;
@@ -150,12 +150,12 @@ Return<void> PictureAdjustment::getContrastRange(getContrastRange_cb _hidl_cb) {
 Return<void> PictureAdjustment::getSaturationThresholdRange(
         getSaturationThresholdRange_cb _hidl_cb) {
     FloatRange range{};
-    hsic_ranges r{};
+    HsicRanges r{};
 
     if (controller_->getGlobalPaRange(&r) == OK) {
-        range.max = r.saturationThreshold.max;
-        range.min = r.saturationThreshold.min;
-        range.step = r.saturationThreshold.step;
+        range.max = r.saturation_threshold.max;
+        range.min = r.saturation_threshold.min;
+        range.step = r.saturation_threshold.step;
     }
 
     _hidl_cb(range);
@@ -169,15 +169,15 @@ Return<void> PictureAdjustment::getPictureAdjustment(getPictureAdjustment_cb _hi
 
 Return<void> PictureAdjustment::getDefaultPictureAdjustment(
         getDefaultPictureAdjustment_cb _hidl_cb) {
-    _hidl_cb(mDefaultPictureAdjustment);
+    _hidl_cb(default_pa_);
     return Void();
 }
 
 Return<bool> PictureAdjustment::setPictureAdjustment(
         const ::vendor::lineage::livedisplay::V2_0::HSIC& hsic) {
-    hsic_config config = {0,
-                          {static_cast<int32_t>(hsic.hue), hsic.saturation, hsic.intensity,
-                           hsic.contrast, hsic.saturationThreshold}};
+    HsicConfig config = {0,
+                         {static_cast<int32_t>(hsic.hue), hsic.saturation, hsic.intensity,
+                          hsic.contrast, hsic.saturationThreshold}};
 
     return controller_->setGlobalPaConfig(&config) == OK;
 }

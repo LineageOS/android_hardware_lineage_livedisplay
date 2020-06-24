@@ -141,7 +141,7 @@ status_t SDMController::getNumDisplayModes(int32_t* mode_cnt) {
     CONTROLLER_CHECK(get_num_display_modes, hctx_, kDisplayId, 0, mode_cnt, &flags);
 }
 
-status_t SDMController::getDisplayModes(sdm_disp_mode* modes, int32_t mode_cnt) {
+status_t SDMController::getDisplayModes(SdmDispMode* modes, int32_t mode_cnt) {
     uint32_t flags = 0;
     CONTROLLER_CHECK(get_display_modes, hctx_, kDisplayId, 0, modes, mode_cnt, &flags);
 }
@@ -164,20 +164,20 @@ status_t SDMController::getDefaultDisplayMode(int32_t* mode_id) {
     CONTROLLER_CHECK(get_default_display_mode, hctx_, kDisplayId, mode_id, &flags);
 }
 
-status_t SDMController::getGlobalPaRange(hsic_ranges* range) {
+status_t SDMController::getGlobalPaRange(HsicRanges* range) {
     CONTROLLER_CHECK(get_global_pa_range, hctx_, kDisplayId, range);
 }
 
-status_t SDMController::getGlobalPaConfig(hsic_config* cfg) {
+status_t SDMController::getGlobalPaConfig(HsicConfig* cfg) {
     uint32_t enable = 0;
     CONTROLLER_CHECK(get_global_pa_config, hctx_, kDisplayId, &enable, cfg);
 }
 
-status_t SDMController::setGlobalPaConfig(hsic_config* cfg) {
+status_t SDMController::setGlobalPaConfig(HsicConfig* cfg) {
     CONTROLLER_CHECK(set_global_pa_config, hctx_, kDisplayId, 1 /* enable */, cfg);
 }
 
-status_t SDMController::getFeatureVersion(uint32_t feature_id, sdm_feature_version* ver) {
+status_t SDMController::getFeatureVersion(uint32_t feature_id, SdmFeatureVersion* ver) {
     uint32_t flags = 0;
     CONTROLLER_CHECK(get_feature_version, hctx_, feature_id, ver, &flags);
 }
