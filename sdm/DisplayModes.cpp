@@ -35,6 +35,7 @@ namespace V2_0 {
 namespace sdm {
 
 using ::android::OK;
+using ::android::hardware::Void;
 
 DisplayModes::DisplayModes(std::shared_ptr<SDMController> controller)
     : controller_(std::move(controller)) {
@@ -107,7 +108,7 @@ std::vector<DisplayMode> DisplayModes::getDisplayModesInternal() {
 DisplayMode DisplayModes::getDisplayModeById(int32_t id) {
     std::vector<DisplayMode> modes = getDisplayModesInternal();
 
-    for (const DisplayMode& mode : modes) {
+    for (auto&& mode : modes) {
         if (mode.id == id) {
             return mode;
         }

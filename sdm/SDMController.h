@@ -19,10 +19,7 @@
 #include <android-base/macros.h>
 #include <utils/Errors.h>
 
-#include <functional>
-#include <memory>
-
-#include "Types.h"
+#include <algorithm>
 
 namespace vendor {
 namespace lineage {
@@ -31,6 +28,73 @@ namespace V2_0 {
 namespace sdm {
 
 using ::android::status_t;
+
+struct SdmFeatureVersion {
+    uint8_t x, y;
+    uint16_t z;
+};
+
+struct SdmDispMode {
+    int32_t id;
+    int32_t type;
+    int32_t len;
+    char* name;
+    SdmDispMode() : id(-1), type(0), len(128), name(new char[128]()) {}
+    ~SdmDispMode() { delete[] name; }
+    SdmDispMode(const SdmDispMode& other)
+        : id(other.id), type(other.type), len(other.len), name(new char[128]()) {
+        size_t sz = std::min(strlen(other.name), size_t{127});
+        std::copy_n(other.name, sz, name);
+        name[sz] = '\0';
+    }
+    SdmDispMode(SdmDispMode&& other) noexcept
+        : id(std::exchange(other.id, -1)),
+          type(std::exchange(other.type, 0)),
+          len(std::exchange(other.len, 0)),
+          name(std::exchange(other.name, nullptr)) {}
+    SdmDispMode& operator=(const SdmDispMode& other) { return *this = SdmDispMode(other); }
+    SdmDispMode& operator=(SdmDispMode&& other) noexcept {
+        std::swap(id, other.id);
+        std::swap(type, other.type);
+        std::swap(len, other.len);
+        std::swap(name, other.name);
+        return *this;
+    }
+};
+
+struct HsicData {
+    int32_t hue;
+    float saturation;
+    float intensity;
+    float contrast;
+    float saturation_threshold;
+};
+
+struct HsicConfig {
+    uint32_t unused;
+    HsicData data;
+};
+
+struct HsicIntRange {
+    int32_t max;
+    int32_t min;
+    uint32_t step;
+};
+
+struct HsicFloatRange {
+    float max;
+    float min;
+    float step;
+};
+
+struct HsicRanges {
+    uint32_t unused;
+    struct HsicIntRange hue;
+    struct HsicFloatRange saturation;
+    struct HsicFloatRange intensity;
+    struct HsicFloatRange contrast;
+    struct HsicFloatRange saturation_threshold;
+};
 
 class SDMController {
   public:

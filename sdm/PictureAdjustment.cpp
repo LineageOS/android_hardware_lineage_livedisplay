@@ -33,6 +33,7 @@ namespace V2_0 {
 namespace sdm {
 
 using ::android::OK;
+using ::android::hardware::Void;
 
 PictureAdjustment::PictureAdjustment(std::shared_ptr<SDMController> controller)
     : controller_(std::move(controller)) {
