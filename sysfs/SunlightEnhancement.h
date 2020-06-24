@@ -28,9 +28,6 @@ namespace sysfs {
 using ::android::hardware::Return;
 using ::android::hardware::Void;
 
-#define FILE_HBM "/sys/class/graphics/fb0/hbm"
-#define FILE_SRE "/sys/class/graphics/fb0/sre"
-
 class SunlightEnhancement : public ISunlightEnhancement {
   public:
     bool isSupported();

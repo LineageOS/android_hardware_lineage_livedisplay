@@ -27,6 +27,12 @@ using android::base::ReadFileToString;
 using android::base::Trim;
 using android::base::WriteStringToFile;
 
+namespace {
+constexpr const char* kFileAcl = "/sys/class/graphics/fb0/acl";
+constexpr const char* kFileCabc = "/sys/class/graphics/fb0/cabc";
+constexpr const char* kFossProperty = "ro.vendor.display.foss";
+}  // anonymous namespace
+
 namespace vendor {
 namespace lineage {
 namespace livedisplay {
@@ -34,17 +40,17 @@ namespace V2_0 {
 namespace sysfs {
 
 bool AdaptiveBacklight::isSupported() {
-    if (GetBoolProperty(FOSS_PROPERTY, false)) {
+    if (GetBoolProperty(kFossProperty, false)) {
         return false;
     }
 
-    std::fstream acl(FILE_ACL, acl.in | acl.out);
-    std::fstream cabc(FILE_CABC, cabc.in | cabc.out);
+    std::fstream acl(kFileAcl, acl.in | acl.out);
+    std::fstream cabc(kFileCabc, cabc.in | cabc.out);
 
     if (acl.good()) {
-        file_ = FILE_ACL;
+        file_ = kFileAcl;
     } else if (cabc.good()) {
-        file_ = FILE_CABC;
+        file_ = kFileCabc;
     }
 
     return !file_.empty();
