@@ -17,12 +17,50 @@
 #include "AdaptiveBacklight.h"
 
 #include <android-base/properties.h>
+#include <cutils/sockets.h>
+#include <poll.h>
 #include <stdio.h>
 #include <string.h>
 
-#include "Constants.h"
-#include "Types.h"
-#include "Utils.h"
+namespace {
+constexpr size_t kDppsBufSize = 64;
+
+constexpr const char* kFossProperty = "ro.vendor.display.foss";
+constexpr const char* kFossOn = "foss:on";
+constexpr const char* kFossOff = "foss:off";
+
+int SendDPPSCommand(char* buf, size_t len) {
+    int rc = 0;
+    int sock = socket_local_client("pps", ANDROID_SOCKET_NAMESPACE_RESERVED, SOCK_STREAM);
+    if (sock < 0) {
+        return sock;
+    }
+
+    if (write(sock, buf, strlen(buf) + 1) > 0) {
+        memset(buf, 0, len);
+        ssize_t ret;
+        while ((ret = read(sock, buf, len)) > 0) {
+            if ((size_t)ret == len) {
+                break;
+            }
+            len -= ret;
+            buf += ret;
+
+            struct pollfd p = {.fd = sock, .events = POLLIN, .revents = 0};
+
+            ret = poll(&p, 1, 20);
+            if ((ret <= 0) || !(p.revents & POLLIN)) {
+                break;
+            }
+        }
+    } else {
+        rc = -EIO;
+    }
+
+    close(sock);
+    return rc;
+}
+}  // anonymous namespace
 
 namespace vendor {
 namespace lineage {
@@ -33,7 +71,7 @@ namespace sdm {
 using ::android::base::GetBoolProperty;
 
 bool AdaptiveBacklight::isSupported() {
-    return GetBoolProperty(FOSS_PROPERTY, false);
+    return GetBoolProperty(kFossProperty, false);
 }
 
 // Methods from ::vendor::lineage::livedisplay::V2_0::IAdaptiveBacklight follow.
@@ -46,10 +84,10 @@ Return<bool> AdaptiveBacklight::setEnabled(bool enabled) {
         return true;
     }
 
-    auto buf = std::make_unique<char[]>(DPPS_BUF_SIZE);
+    auto buf = std::make_unique<char[]>(kDppsBufSize);
 
-    sprintf(buf.get(), "%s", enabled ? FOSS_ON : FOSS_OFF);
-    if (utils::SendDPPSCommand(buf.get(), DPPS_BUF_SIZE) == 0) {
+    sprintf(buf.get(), "%s", enabled ? kFossOn : kFossOff);
+    if (SendDPPSCommand(buf.get(), kDppsBufSize) == 0) {
         if (strncmp(buf.get(), "Success", 7) == 0) {
             enabled_ = enabled;
             return true;
