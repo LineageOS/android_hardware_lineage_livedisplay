@@ -20,8 +20,6 @@
 #include <android-base/unique_fd.h>
 #include <cutils/sockets.h>
 #include <poll.h>
-#include <stdio.h>
-#include <string.h>
 
 namespace {
 constexpr size_t kDppsBufSize = 10;
