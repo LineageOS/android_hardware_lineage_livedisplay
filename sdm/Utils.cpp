@@ -28,6 +28,8 @@
 
 #include <string>
 
+#include "Types.h"
+
 namespace vendor {
 namespace lineage {
 namespace livedisplay {
@@ -65,6 +67,20 @@ int SendDPPSCommand(char* buf, size_t len) {
 
     close(sock);
     return rc;
+}
+
+status_t CheckFeatureVersion(const std::shared_ptr<SDMController>& controller, int feature) {
+    SdmFeatureVersion version{};
+    status_t status = controller->getFeatureVersion(feature, &version);
+    if (status != android::OK) {
+        return status;
+    }
+
+    if (version.x <= 0 && version.y <= 0 && version.z <= 0) {
+        return android::BAD_VALUE;
+    }
+
+    return android::OK;
 }
 
 }  // namespace utils

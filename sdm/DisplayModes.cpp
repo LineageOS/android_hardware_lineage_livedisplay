@@ -27,6 +27,7 @@
 #include <hidl/ServiceManagement.h>
 
 #include "Constants.h"
+#include "Utils.h"
 
 namespace vendor {
 namespace lineage {
@@ -73,13 +74,7 @@ bool DisplayModes::isSupported() {
         return supported;
     }
 
-    SdmFeatureVersion version{};
-    if (controller_->getFeatureVersion(DISPLAY_MODES_FEATURE, &version) != OK) {
-        supported = 0;
-        return false;
-    }
-
-    if (version.x <= 0 && version.y <= 0 && version.z <= 0) {
+    if (utils::CheckFeatureVersion(controller_, DISPLAY_MODES_FEATURE) != OK) {
         supported = 0;
         return false;
     }
