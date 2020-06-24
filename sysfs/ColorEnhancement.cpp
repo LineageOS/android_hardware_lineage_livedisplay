@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2019 The LineageOS Project
+ * Copyright (C) 2019-2020 The LineageOS Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,6 +21,10 @@
 
 #include <fstream>
 
+namespace {
+constexpr const char* kFileCe = "/sys/class/graphics/fb0/color_enhance";
+};  // anonymous namespace
+
 using android::base::ReadFileToString;
 using android::base::Trim;
 using android::base::WriteStringToFile;
@@ -32,7 +36,7 @@ namespace V2_0 {
 namespace sysfs {
 
 bool ColorEnhancement::isSupported() {
-    std::fstream ce(FILE_CE, ce.in | ce.out);
+    std::fstream ce(kFileCe, ce.in | ce.out);
 
     return ce.good();
 }
@@ -42,7 +46,7 @@ Return<bool> ColorEnhancement::isEnabled() {
     std::string tmp;
     int32_t contents = 0;
 
-    if (ReadFileToString(FILE_CE, &tmp)) {
+    if (ReadFileToString(kFileCe, &tmp)) {
         contents = std::stoi(Trim(tmp));
     }
 
@@ -50,7 +54,7 @@ Return<bool> ColorEnhancement::isEnabled() {
 }
 
 Return<bool> ColorEnhancement::setEnabled(bool enabled) {
-    return WriteStringToFile(enabled ? "1" : "0", FILE_CE, true);
+    return WriteStringToFile(enabled ? "1" : "0", kFileCe, true);
 }
 
 }  // namespace sysfs
