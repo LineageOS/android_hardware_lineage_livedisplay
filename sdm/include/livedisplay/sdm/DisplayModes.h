@@ -35,7 +35,7 @@ class DisplayModes : public IDisplayModes {
     static bool isEnabledFromManifest(const char* name = "default");
 
     using on_set_cb = std::function<void()>;
-    void registerCb(on_set_cb cb);
+    virtual void registerCb(on_set_cb cb);
 
     // Methods from ::vendor::lineage::livedisplay::V2_0::IDisplayModes follow.
     Return<void> getDisplayModes(getDisplayModes_cb _hidl_cb) override;
@@ -43,16 +43,17 @@ class DisplayModes : public IDisplayModes {
     Return<void> getDefaultDisplayMode(getDefaultDisplayMode_cb _hidl_cb) override;
     Return<bool> setDisplayMode(int32_t mode_id, bool make_default) override;
 
-  private:
+  protected:
     std::shared_ptr<SDMController> controller_;
     on_set_cb onSetDisplayMode;
 
-    bool isSupported();
-    std::vector<DisplayMode> getDisplayModesInternal();
-    DisplayMode getDisplayModeById(int32_t id);
-    DisplayMode getCurrentDisplayModeInternal();
-    DisplayMode getDefaultDisplayModeInternal();
+    virtual bool isSupported();
+    virtual std::vector<DisplayMode> getDisplayModesInternal();
+    virtual DisplayMode getDisplayModeById(int32_t id);
+    virtual DisplayMode getCurrentDisplayModeInternal();
+    virtual DisplayMode getDefaultDisplayModeInternal();
 
+  private:
     DISALLOW_IMPLICIT_CONSTRUCTORS(DisplayModes);
 };
 
