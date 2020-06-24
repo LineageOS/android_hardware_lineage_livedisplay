@@ -22,8 +22,6 @@
 #include <functional>
 #include <memory>
 
-#include "Types.h"
-
 namespace vendor {
 namespace lineage {
 namespace livedisplay {
@@ -31,6 +29,54 @@ namespace V2_0 {
 namespace sdm {
 
 using ::android::status_t;
+
+struct SdmFeatureVersion {
+    uint8_t x, y;
+    uint16_t z;
+};
+
+struct SdmDispMode {
+    int32_t id;
+    int32_t type;
+    int32_t len;
+    char* name;
+    SdmDispMode() : id(-1), type(0), len(128) { name = new char[128](); }
+    ~SdmDispMode() { delete[] name; }
+};
+
+struct HsicData {
+    int32_t hue;
+    float saturation;
+    float intensity;
+    float contrast;
+    float saturation_threshold;
+};
+
+struct HsicConfig {
+    uint32_t unused;
+    HsicData data;
+};
+
+struct HsicIntRange {
+    int32_t max;
+    int32_t min;
+    uint32_t step;
+};
+
+struct HsicFloatRange {
+    float max;
+    float min;
+    float step;
+};
+
+struct HsicRanges {
+    uint32_t unused;
+    struct HsicIntRange hue;
+    struct HsicFloatRange saturation;
+    struct HsicFloatRange intensity;
+    struct HsicFloatRange contrast;
+    struct HsicFloatRange saturation_threshold;
+};
 
 class SDMController {
   public:
