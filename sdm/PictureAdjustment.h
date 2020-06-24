@@ -14,8 +14,7 @@
  * limitations under the License.
  */
 
-#ifndef VENDOR_LINEAGE_LIVEDISPLAY_V2_0_PICTUREADJUSTMENT_H
-#define VENDOR_LINEAGE_LIVEDISPLAY_V2_0_PICTUREADJUSTMENT_H
+#pragma once
 
 #include <android-base/macros.h>
 #include <vendor/lineage/livedisplay/2.0/IPictureAdjustment.h>
@@ -28,9 +27,7 @@ namespace livedisplay {
 namespace V2_0 {
 namespace sdm {
 
-using ::android::sp;
 using ::android::hardware::Return;
-using ::android::hardware::Void;
 
 class PictureAdjustment : public IPictureAdjustment {
   public:
@@ -64,5 +61,3 @@ class PictureAdjustment : public IPictureAdjustment {
 }  // namespace livedisplay
 }  // namespace lineage
 }  // namespace vendor
-
-#endif  // VENDOR_LINEAGE_LIVEDISPLAY_V2_0_PICTUREADJUSTMENT_H
