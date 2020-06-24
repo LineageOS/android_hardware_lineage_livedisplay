@@ -38,7 +38,7 @@ class AdaptiveBacklight : public IAdaptiveBacklight {
     Return<bool> setEnabled(bool enabled) override;
 
   private:
-    bool mEnabled;
+    bool enabled_;
 };
 
 }  // namespace sdm

@@ -38,15 +38,15 @@ class SDMController {
     ~SDMController();
 
     status_t getNumDisplayModes(int32_t* mode_cnt);
-    status_t getDisplayModes(sdm_disp_mode* modes, int32_t mode_cnt);
+    status_t getDisplayModes(SdmDispMode* modes, int32_t mode_cnt);
     status_t getActiveDisplayMode(int32_t* mode_id);
     status_t setActiveDisplayMode(int32_t mode_id);
     status_t setDefaultDisplayMode(int32_t mode_id);
     status_t getDefaultDisplayMode(int32_t* mode_id);
-    status_t getGlobalPaRange(hsic_ranges* range);
-    status_t getGlobalPaConfig(hsic_config* cfg);
-    status_t setGlobalPaConfig(hsic_config* cfg);
-    status_t getFeatureVersion(uint32_t feature_id, sdm_feature_version* ver);
+    status_t getGlobalPaRange(HsicRanges* range);
+    status_t getGlobalPaConfig(HsicConfig* cfg);
+    status_t setGlobalPaConfig(HsicConfig* cfg);
+    status_t getFeatureVersion(uint32_t feature_id, SdmFeatureVersion* ver);
 
   private:
     status_t init();
@@ -56,17 +56,17 @@ class SDMController {
     typedef int32_t (*disp_api_deinit)(uint64_t, uint32_t);
     typedef int32_t (*disp_api_get_num_display_modes)(uint64_t, uint32_t, int32_t, int32_t*,
                                                       uint32_t*);
-    typedef int32_t (*disp_api_get_display_modes)(uint64_t, uint32_t, int32_t, sdm_disp_mode*,
+    typedef int32_t (*disp_api_get_display_modes)(uint64_t, uint32_t, int32_t, SdmDispMode*,
                                                   int32_t, uint32_t*);
     typedef int32_t (*disp_api_get_active_display_mode)(uint64_t, uint32_t, int32_t*, uint32_t*,
                                                         uint32_t*);
     typedef int32_t (*disp_api_set_active_display_mode)(uint64_t, uint32_t, int32_t, uint32_t);
     typedef int32_t (*disp_api_set_default_display_mode)(uint64_t, uint32_t, int32_t, uint32_t);
     typedef int32_t (*disp_api_get_default_display_mode)(uint64_t, uint32_t, int32_t*, uint32_t*);
-    typedef int32_t (*disp_api_get_global_pa_range)(uint64_t, uint32_t, hsic_ranges*);
-    typedef int32_t (*disp_api_get_global_pa_config)(uint64_t, uint32_t, uint32_t*, hsic_config*);
-    typedef int32_t (*disp_api_set_global_pa_config)(uint64_t, uint32_t, uint32_t, hsic_config*);
-    typedef int32_t (*disp_api_get_feature_version)(uint64_t, uint32_t, sdm_feature_version*,
+    typedef int32_t (*disp_api_get_global_pa_range)(uint64_t, uint32_t, HsicRanges*);
+    typedef int32_t (*disp_api_get_global_pa_config)(uint64_t, uint32_t, uint32_t*, HsicConfig*);
+    typedef int32_t (*disp_api_set_global_pa_config)(uint64_t, uint32_t, uint32_t, HsicConfig*);
+    typedef int32_t (*disp_api_get_feature_version)(uint64_t, uint32_t, SdmFeatureVersion*,
                                                     uint32_t*);
 
     std::unique_ptr<void, std::function<void(void*)>> handle_;

@@ -23,52 +23,52 @@ namespace livedisplay {
 namespace V2_0 {
 namespace sdm {
 
-struct sdm_feature_version {
+struct SdmFeatureVersion {
     uint8_t x, y;
     uint16_t z;
 };
 
-struct sdm_disp_mode {
+struct SdmDispMode {
     int32_t id;
     int32_t type;
     int32_t len;
     char* name;
-    sdm_disp_mode() : id(-1), type(0), len(128) { name = new char[128](); }
-    ~sdm_disp_mode() { delete[] name; }
+    SdmDispMode() : id(-1), type(0), len(128) { name = new char[128](); }
+    ~SdmDispMode() { delete[] name; }
 };
 
-struct hsic_data {
+struct HsicData {
     int32_t hue;
     float saturation;
     float intensity;
     float contrast;
-    float saturationThreshold;
+    float saturation_threshold;
 };
 
-struct hsic_config {
+struct HsicConfig {
     uint32_t unused;
-    hsic_data data;
+    HsicData data;
 };
 
-struct hsic_int_range {
+struct HsicIntRange {
     int32_t max;
     int32_t min;
     uint32_t step;
 };
 
-struct hsic_float_range {
+struct HsicFloatRange {
     float max;
     float min;
     float step;
 };
 
-struct hsic_ranges {
+struct HsicRanges {
     uint32_t unused;
-    struct hsic_int_range hue;
-    struct hsic_float_range saturation;
-    struct hsic_float_range intensity;
-    struct hsic_float_range contrast;
-    struct hsic_float_range saturationThreshold;
+    struct HsicIntRange hue;
+    struct HsicFloatRange saturation;
+    struct HsicFloatRange intensity;
+    struct HsicFloatRange contrast;
+    struct HsicFloatRange saturation_threshold;
 };
 
 }  // namespace sdm
