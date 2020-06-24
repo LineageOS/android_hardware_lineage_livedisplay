@@ -1,6 +1,6 @@
 /*
  * Copyright (C) 2016 The CyanogenMod Project
- *               2017-2019 The LineageOS Project
+ *               2017-2020 The LineageOS Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -33,8 +33,9 @@ namespace lineage {
 namespace livedisplay {
 namespace V2_0 {
 namespace sdm {
+namespace utils {
 
-int Utils::sendDPPSCommand(char* buf, size_t len) {
+int SendDPPSCommand(char* buf, size_t len) {
     int rc = 0;
     int sock = socket_local_client("pps", ANDROID_SOCKET_NAMESPACE_RESERVED, SOCK_STREAM);
     if (sock < 0) {
@@ -66,6 +67,7 @@ int Utils::sendDPPSCommand(char* buf, size_t len) {
     return rc;
 }
 
+}  // namespace utils
 }  // namespace sdm
 }  // namespace V2_0
 }  // namespace livedisplay

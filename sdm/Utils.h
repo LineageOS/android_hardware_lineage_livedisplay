@@ -1,6 +1,6 @@
 /*
  * Copyright (C) 2016 The CyanogenMod Project
- *               2017-2019 The LineageOS Project
+ *               2017-2020 The LineageOS Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -25,12 +25,11 @@ namespace lineage {
 namespace livedisplay {
 namespace V2_0 {
 namespace sdm {
+namespace utils {
 
-class Utils {
-  public:
-    static int sendDPPSCommand(char* buf, size_t len);
-};
+int SendDPPSCommand(char* buf, size_t len);
 
+}  // namespace utils
 }  // namespace sdm
 }  // namespace V2_0
 }  // namespace livedisplay
