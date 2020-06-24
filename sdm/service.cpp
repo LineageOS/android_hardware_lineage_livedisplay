@@ -23,11 +23,10 @@
 #include <android-base/logging.h>
 #include <binder/ProcessState.h>
 #include <hidl/HidlTransportSupport.h>
-
-#include "AdaptiveBacklight.h"
-#include "DisplayModes.h"
-#include "PictureAdjustment.h"
-#include "SDMController.h"
+#include <livedisplay/sdm/AdaptiveBacklight.h>
+#include <livedisplay/sdm/DisplayModes.h>
+#include <livedisplay/sdm/PictureAdjustment.h>
+#include <livedisplay/sdm/SDMController.h>
 
 using ::android::OK;
 using ::android::sp;
