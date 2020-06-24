@@ -28,11 +28,6 @@ namespace sysfs {
 using ::android::hardware::Return;
 using ::android::hardware::Void;
 
-#define FOSS_PROPERTY "ro.vendor.display.foss"
-
-#define FILE_ACL "/sys/class/graphics/fb0/acl"
-#define FILE_CABC "/sys/class/graphics/fb0/cabc"
-
 class AdaptiveBacklight : public IAdaptiveBacklight {
   public:
     bool isSupported();
