@@ -32,10 +32,6 @@ namespace sdm {
 
 using ::android::base::GetBoolProperty;
 
-AdaptiveBacklight::AdaptiveBacklight() {
-    enabled_ = false;
-}
-
 bool AdaptiveBacklight::isSupported() {
     return GetBoolProperty(FOSS_PROPERTY, false);
 }
