@@ -20,6 +20,8 @@
 
 #include <stdlib.h>
 
+#include "SDMController.h"
+
 namespace vendor {
 namespace lineage {
 namespace livedisplay {
@@ -28,6 +30,7 @@ namespace sdm {
 namespace utils {
 
 int SendDPPSCommand(char* buf, size_t len);
+status_t CheckFeatureVersion(const std::shared_ptr<SDMController>& controller, int feature);
 
 }  // namespace utils
 }  // namespace sdm
