@@ -29,8 +29,19 @@ namespace V2_0 {
 namespace sdm {
 namespace utils {
 
-int SendDPPSCommand(char* buf, size_t len);
-status_t CheckFeatureVersion(const std::shared_ptr<SDMController>& controller, int feature);
+enum FeatureVerSw {
+    FEATURE_VER_SW_API = 0,
+    FEATURE_VER_SW_PA_API,
+    FEATURE_VER_SW_MEMCOLOR_API,
+    FEATURE_VER_SW_COLORBAL_API,
+    FEATURE_VER_SW_SAVEMODES_API,
+    FEATURE_VER_SW_ADAPT_BACKLIGHT_API,
+    FEATURE_VER_SW_SVI_API,
+    FEATURE_VER_SW_DISP_INFO_API
+};
+
+status_t CheckFeatureVersion(const std::shared_ptr<SDMController>& controller,
+                             FeatureVerSw feature);
 
 }  // namespace utils
 }  // namespace sdm
