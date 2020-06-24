@@ -21,6 +21,11 @@
 
 #include <fstream>
 
+namespace {
+constexpr const char* kFileHbm = "/sys/class/graphics/fb0/hbm";
+constexpr const char* kFileSre = "/sys/class/graphics/fb0/sre";
+};  // anonymous namespace
+
 using android::base::ReadFileToString;
 using android::base::Trim;
 using android::base::WriteStringToFile;
@@ -32,14 +37,14 @@ namespace V2_0 {
 namespace sysfs {
 
 bool SunlightEnhancement::isSupported() {
-    std::fstream hbm(FILE_HBM, hbm.in | hbm.out);
-    std::fstream sre(FILE_SRE, sre.in | sre.out);
+    std::fstream hbm(kFileHbm, hbm.in | hbm.out);
+    std::fstream sre(kFileSre, sre.in | sre.out);
 
     if (hbm.good()) {
-        file_ = FILE_HBM;
+        file_ = kFileHbm;
         enabled_mode_ = 1;
     } else if (sre.good()) {
-        file_ = FILE_SRE;
+        file_ = kFileSre;
         enabled_mode_ = 2;
     }
 
