@@ -17,48 +17,56 @@
 #include "AdaptiveBacklight.h"
 
 #include <android-base/properties.h>
+#include <android-base/unique_fd.h>
 #include <cutils/sockets.h>
 #include <poll.h>
 #include <stdio.h>
 #include <string.h>
 
 namespace {
-constexpr size_t kDppsBufSize = 64;
+constexpr size_t kDppsBufSize = 10;
 
-constexpr const char* kFossProperty = "ro.vendor.display.foss";
-constexpr const char* kFossOn = "foss:on";
+constexpr const char* kDaemonSocket = "pps";
 constexpr const char* kFossOff = "foss:off";
+constexpr const char* kFossOn = "foss:on";
+constexpr const char* kFossProperty = "ro.vendor.display.foss";
+constexpr const char* kSuccess = "Success";
 
-int SendDPPSCommand(char* buf, size_t len) {
-    int rc = 0;
-    int sock = socket_local_client("pps", ANDROID_SOCKET_NAMESPACE_RESERVED, SOCK_STREAM);
+android::status_t SendDppsCommand(const char* cmd) {
+    android::base::unique_fd sock(
+            socket_local_client(kDaemonSocket, ANDROID_SOCKET_NAMESPACE_RESERVED, SOCK_STREAM));
     if (sock < 0) {
-        return sock;
+        return android::NO_INIT;
     }
 
-    if (write(sock, buf, strlen(buf) + 1) > 0) {
-        memset(buf, 0, len);
-        ssize_t ret;
-        while ((ret = read(sock, buf, len)) > 0) {
-            if ((size_t)ret == len) {
-                break;
-            }
-            len -= ret;
-            buf += ret;
+    if (TEMP_FAILURE_RETRY(write(sock, cmd, strlen(cmd))) <= 0) {
+        return android::FAILED_TRANSACTION;
+    }
 
-            struct pollfd p = {.fd = sock, .events = POLLIN, .revents = 0};
-
-            ret = poll(&p, 1, 20);
-            if ((ret <= 0) || !(p.revents & POLLIN)) {
-                break;
-            }
+    std::string result(kDppsBufSize, 0);
+    size_t len = result.length();
+    char* buf = &result[0];
+    ssize_t ret;
+    while ((ret = TEMP_FAILURE_RETRY(read(sock, buf, len))) > 0) {
+        if (ret == len) {
+            break;
         }
-    } else {
-        rc = -EIO;
+        len -= ret;
+        buf += ret;
+
+        struct pollfd p = {.fd = sock, .events = POLLIN, .revents = 0};
+
+        ret = poll(&p, 1, 20);
+        if ((ret <= 0) || !(p.revents & POLLIN)) {
+            break;
+        }
     }
 
-    close(sock);
-    return rc;
+    if (result.compare(0, strlen(kSuccess), kSuccess) == 0) {
+        return android::OK;
+    }
+
+    return android::BAD_VALUE;
 }
 }  // anonymous namespace
 
@@ -84,14 +92,9 @@ Return<bool> AdaptiveBacklight::setEnabled(bool enabled) {
         return true;
     }
 
-    auto buf = std::make_unique<char[]>(kDppsBufSize);
-
-    sprintf(buf.get(), "%s", enabled ? kFossOn : kFossOff);
-    if (SendDPPSCommand(buf.get(), kDppsBufSize) == 0) {
-        if (strncmp(buf.get(), "Success", 7) == 0) {
-            enabled_ = enabled;
-            return true;
-        }
+    if (SendDppsCommand(enabled ? kFossOn : kFossOff) == android::OK) {
+        enabled_ = enabled;
+        return true;
     }
 
     return false;
