@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2019 The LineageOS Project
+ * Copyright (C) 2019-2020 The LineageOS Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,6 +21,10 @@
 
 #include <fstream>
 
+namespace {
+constexpr const char* kFileRgb = "/sys/class/graphics/fb0/rgb";
+};  // anonymous namespace
+
 using android::base::ReadFileToString;
 using android::base::Split;
 using android::base::Trim;
@@ -33,7 +37,7 @@ namespace V2_0 {
 namespace sysfs {
 
 bool DisplayColorCalibration::isSupported() {
-    std::fstream rgb(FILE_RGB, rgb.in | rgb.out);
+    std::fstream rgb(kFileRgb, rgb.in | rgb.out);
 
     return rgb.good();
 }
@@ -51,7 +55,7 @@ Return<void> DisplayColorCalibration::getCalibration(getCalibration_cb _hidl_cb)
     std::vector<int32_t> rgb;
     std::string tmp;
 
-    if (ReadFileToString(FILE_RGB, &tmp)) {
+    if (ReadFileToString(kFileRgb, &tmp)) {
         std::vector<std::string> colors = Split(Trim(tmp), " ");
         for (const std::string& color : colors) {
             rgb.push_back(std::stoi(color));
@@ -69,7 +73,7 @@ Return<bool> DisplayColorCalibration::setCalibration(const hidl_vec<int32_t>& rg
         contents += std::to_string(color) + " ";
     }
 
-    return WriteStringToFile(Trim(contents), FILE_RGB, true);
+    return WriteStringToFile(Trim(contents), kFileRgb, true);
 }
 
 }  // namespace sysfs
