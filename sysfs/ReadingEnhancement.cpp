@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2019 The LineageOS Project
+ * Copyright (C) 2019-2020 The LineageOS Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,6 +21,10 @@
 
 #include <fstream>
 
+namespace {
+constexpr const char* kFileRe = "/sys/class/graphics/fb0/reading_mode";
+};  // anonymous namespace
+
 using android::base::ReadFileToString;
 using android::base::Trim;
 using android::base::WriteStringToFile;
@@ -32,7 +36,7 @@ namespace V2_0 {
 namespace sysfs {
 
 bool ReadingEnhancement::isSupported() {
-    std::fstream re(FILE_RE, re.in | re.out);
+    std::fstream re(kFileRe, re.in | re.out);
 
     return re.good();
 }
@@ -42,7 +46,7 @@ Return<bool> ReadingEnhancement::isEnabled() {
     std::string tmp;
     int32_t contents = 0;
 
-    if (ReadFileToString(FILE_RE, &tmp)) {
+    if (ReadFileToString(kFileRe, &tmp)) {
         contents = std::stoi(Trim(tmp));
     }
 
@@ -50,7 +54,7 @@ Return<bool> ReadingEnhancement::isEnabled() {
 }
 
 Return<bool> ReadingEnhancement::setEnabled(bool enabled) {
-    return WriteStringToFile(enabled ? "1" : "0", FILE_RE, true);
+    return WriteStringToFile(enabled ? "1" : "0", kFileRe, true);
 }
 
 }  // namespace sysfs
