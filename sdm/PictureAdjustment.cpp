@@ -25,6 +25,7 @@
 #include <android-base/logging.h>
 
 #include "Constants.h"
+#include "Utils.h"
 
 namespace vendor {
 namespace lineage {
@@ -48,13 +49,7 @@ bool PictureAdjustment::isReady() {
         return supported;
     }
 
-    SdmFeatureVersion version{};
-    if (controller_->getFeatureVersion(PICTURE_ADJUSTMENT_FEATURE, &version) != OK) {
-        supported = 0;
-        return false;
-    }
-
-    if (version.x <= 0 && version.y <= 0 && version.z <= 0) {
+    if (utils::CheckFeatureVersion(controller_, PICTURE_ADJUSTMENT_FEATURE) != OK) {
         supported = 0;
         return false;
     }
