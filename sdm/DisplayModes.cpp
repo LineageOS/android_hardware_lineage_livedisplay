@@ -26,7 +26,6 @@
 #include <android/hidl/manager/1.0/IServiceManager.h>
 #include <hidl/ServiceManagement.h>
 
-#include "Constants.h"
 #include "Utils.h"
 
 namespace vendor {
@@ -74,7 +73,7 @@ bool DisplayModes::isSupported() {
         return supported;
     }
 
-    if (utils::CheckFeatureVersion(controller_, DISPLAY_MODES_FEATURE) != OK) {
+    if (utils::CheckFeatureVersion(controller_, utils::FEATURE_VER_SW_SAVEMODES_API) != OK) {
         supported = 0;
         return false;
     }

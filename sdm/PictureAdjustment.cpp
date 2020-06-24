@@ -24,7 +24,6 @@
 
 #include <android-base/logging.h>
 
-#include "Constants.h"
 #include "Utils.h"
 
 namespace vendor {
@@ -50,7 +49,7 @@ bool PictureAdjustment::isSupported() {
         return supported;
     }
 
-    if (utils::CheckFeatureVersion(controller_, PICTURE_ADJUSTMENT_FEATURE) != OK) {
+    if (utils::CheckFeatureVersion(controller_, utils::FEATURE_VER_SW_PA_API) != OK) {
         supported = 0;
         return false;
     }
