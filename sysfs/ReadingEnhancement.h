@@ -28,7 +28,7 @@ using ::android::hardware::Return;
 
 class ReadingEnhancement : public IReadingEnhancement {
   public:
-    bool isSupported();
+    static bool isSupported();
 
     // Methods from ::vendor::lineage::livedisplay::V2_0::IReadingEnhancement follow.
     Return<bool> isEnabled() override;

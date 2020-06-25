@@ -28,7 +28,7 @@ using ::android::hardware::Return;
 
 class ColorEnhancement : public IColorEnhancement {
   public:
-    bool isSupported();
+    static bool isSupported();
 
     // Methods from ::vendor::lineage::livedisplay::V2_0::IColorEnhancement follow.
     Return<bool> isEnabled() override;
