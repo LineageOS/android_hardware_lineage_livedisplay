@@ -23,9 +23,9 @@ namespace {
 constexpr const char* kFileCe = "/sys/class/graphics/fb0/color_enhance";
 };  // anonymous namespace
 
-using android::base::ReadFileToString;
-using android::base::Trim;
-using android::base::WriteStringToFile;
+using ::android::base::ReadFileToString;
+using ::android::base::Trim;
+using ::android::base::WriteStringToFile;
 
 namespace vendor {
 namespace lineage {
@@ -50,7 +50,7 @@ Return<bool> ColorEnhancement::isEnabled() {
 }
 
 Return<bool> ColorEnhancement::setEnabled(bool enabled) {
-    return WriteStringToFile(enabled ? "1" : "0", kFileCe, true);
+    return WriteStringToFile(std::to_string(enabled), kFileCe, true);
 }
 
 }  // namespace sysfs
