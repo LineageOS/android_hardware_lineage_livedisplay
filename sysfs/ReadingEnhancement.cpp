@@ -19,8 +19,6 @@
 #include <android-base/file.h>
 #include <android-base/strings.h>
 
-#include <fstream>
-
 namespace {
 constexpr const char* kFileRe = "/sys/class/graphics/fb0/reading_mode";
 };  // anonymous namespace
@@ -36,9 +34,7 @@ namespace V2_0 {
 namespace sysfs {
 
 bool ReadingEnhancement::isSupported() {
-    std::fstream re(kFileRe, re.in | re.out);
-
-    return re.good();
+    return !access(kFileRe, R_OK | W_OK);
 }
 
 // Methods from ::vendor::lineage::livedisplay::V2_0::IReadingEnhancement follow.
