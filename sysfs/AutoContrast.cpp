@@ -23,9 +23,9 @@ namespace {
 constexpr const char* kFileAco = "/sys/class/graphics/fb0/aco";
 }  // anonymous namespace
 
-using android::base::ReadFileToString;
-using android::base::Trim;
-using android::base::WriteStringToFile;
+using ::android::base::ReadFileToString;
+using ::android::base::Trim;
+using ::android::base::WriteStringToFile;
 
 namespace vendor {
 namespace lineage {
@@ -50,7 +50,7 @@ Return<bool> AutoContrast::isEnabled() {
 }
 
 Return<bool> AutoContrast::setEnabled(bool enabled) {
-    return WriteStringToFile(enabled ? "1" : "0", kFileAco, true);
+    return WriteStringToFile(std::to_string(enabled), kFileAco, true);
 }
 
 }  // namespace sysfs
