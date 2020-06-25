@@ -20,8 +20,6 @@
 #include <android-base/properties.h>
 #include <android-base/strings.h>
 
-#include <fstream>
-
 using android::base::GetBoolProperty;
 using android::base::ReadFileToString;
 using android::base::Trim;
@@ -44,16 +42,15 @@ bool AdaptiveBacklight::isSupported() {
         return false;
     }
 
-    std::fstream acl(kFileAcl, acl.in | acl.out);
-    std::fstream cabc(kFileCabc, cabc.in | cabc.out);
-
-    if (acl.good()) {
+    if (!access(kFileAcl, R_OK | W_OK)) {
         file_ = kFileAcl;
-    } else if (cabc.good()) {
+    } else if (!access(kFileCabc, R_OK | W_OK)) {
         file_ = kFileCabc;
+    } else {
+        return false;
     }
 
-    return !file_.empty();
+    return true;
 }
 
 // Methods from ::vendor::lineage::livedisplay::V2_0::IAdaptiveBacklight follow.

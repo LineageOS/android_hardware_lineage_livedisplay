@@ -19,8 +19,6 @@
 #include <android-base/file.h>
 #include <android-base/strings.h>
 
-#include <fstream>
-
 namespace {
 constexpr const char* kFileAco = "/sys/class/graphics/fb0/aco";
 }  // anonymous namespace
@@ -36,9 +34,7 @@ namespace V2_0 {
 namespace sysfs {
 
 bool AutoContrast::isSupported() {
-    std::fstream aco(kFileAco, aco.in | aco.out);
-
-    return aco.good();
+    return !access(kFileAco, R_OK | W_OK);
 }
 
 // Methods from ::vendor::lineage::livedisplay::V2_0::IAutoContrast follow.
