@@ -22,13 +22,12 @@
 
 #include <android-base/logging.h>
 #include <hidl/HidlTransportSupport.h>
-
-#include "AdaptiveBacklight.h"
-#include "AutoContrast.h"
-#include "ColorEnhancement.h"
-#include "DisplayColorCalibration.h"
-#include "ReadingEnhancement.h"
-#include "SunlightEnhancement.h"
+#include <livedisplay/sysfs/AdaptiveBacklight.h>
+#include <livedisplay/sysfs/AutoContrast.h>
+#include <livedisplay/sysfs/ColorEnhancement.h>
+#include <livedisplay/sysfs/DisplayColorCalibration.h>
+#include <livedisplay/sysfs/ReadingEnhancement.h>
+#include <livedisplay/sysfs/SunlightEnhancement.h>
 
 using ::android::OK;
 using ::android::sp;

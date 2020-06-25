@@ -20,7 +20,7 @@
 #define LOG_TAG "vendor.lineage.livedisplay@2.0-impl-sysfs"
 #endif
 
-#include "DisplayColorCalibration.h"
+#include "livedisplay/sysfs/DisplayColorCalibration.h"
 
 #include <android-base/file.h>
 #include <android-base/logging.h>
