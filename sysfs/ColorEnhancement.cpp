@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-#include "ColorEnhancement.h"
+#include "livedisplay/sysfs/ColorEnhancement.h"
 
 #include <android-base/file.h>
 #include <android-base/strings.h>
