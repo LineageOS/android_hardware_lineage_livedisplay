@@ -14,8 +14,7 @@
  * limitations under the License.
  */
 
-#ifndef VENDOR_LINEAGE_LIVEDISPLAY_V2_0_SUNLIGHTENHANCEMENT_H
-#define VENDOR_LINEAGE_LIVEDISPLAY_V2_0_SUNLIGHTENHANCEMENT_H
+#pragma once
 
 #include <vendor/lineage/livedisplay/2.0/ISunlightEnhancement.h>
 
@@ -26,7 +25,6 @@ namespace V2_0 {
 namespace sysfs {
 
 using ::android::hardware::Return;
-using ::android::hardware::Void;
 
 class SunlightEnhancement : public ISunlightEnhancement {
   public:
@@ -37,7 +35,7 @@ class SunlightEnhancement : public ISunlightEnhancement {
     Return<bool> setEnabled(bool enabled) override;
 
   private:
-    std::string file_;
+    const char* file_;
     int32_t enabled_mode_;
 };
 
@@ -46,5 +44,3 @@ class SunlightEnhancement : public ISunlightEnhancement {
 }  // namespace livedisplay
 }  // namespace lineage
 }  // namespace vendor
-
-#endif  // VENDOR_LINEAGE_LIVEDISPLAY_V2_0_SUNLIGHTENHANCEMENT_H
