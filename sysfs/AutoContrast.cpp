@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-#include "AutoContrast.h"
+#include "livedisplay/sysfs/AutoContrast.h"
 
 #include <android-base/file.h>
 #include <android-base/strings.h>
