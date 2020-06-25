@@ -24,9 +24,9 @@ constexpr const char* kFileHbm = "/sys/class/graphics/fb0/hbm";
 constexpr const char* kFileSre = "/sys/class/graphics/fb0/sre";
 };  // anonymous namespace
 
-using android::base::ReadFileToString;
-using android::base::Trim;
-using android::base::WriteStringToFile;
+using ::android::base::ReadFileToString;
+using ::android::base::Trim;
+using ::android::base::WriteStringToFile;
 
 namespace vendor {
 namespace lineage {

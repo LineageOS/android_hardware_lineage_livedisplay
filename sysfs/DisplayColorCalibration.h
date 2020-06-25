@@ -14,8 +14,7 @@
  * limitations under the License.
  */
 
-#ifndef VENDOR_LINEAGE_LIVEDISPLAY_V2_0_DISPLAYCOLORCALIBRATION_H
-#define VENDOR_LINEAGE_LIVEDISPLAY_V2_0_DISPLAYCOLORCALIBRATION_H
+#pragma once
 
 #include <vendor/lineage/livedisplay/2.0/IDisplayColorCalibration.h>
 
@@ -27,7 +26,6 @@ namespace sysfs {
 
 using ::android::hardware::hidl_vec;
 using ::android::hardware::Return;
-using ::android::hardware::Void;
 
 class DisplayColorCalibration : public IDisplayColorCalibration {
   public:
@@ -45,5 +43,3 @@ class DisplayColorCalibration : public IDisplayColorCalibration {
 }  // namespace livedisplay
 }  // namespace lineage
 }  // namespace vendor
-
-#endif  // VENDOR_LINEAGE_LIVEDISPLAY_V2_0_DISPLAYCOLORCALIBRATION_H
