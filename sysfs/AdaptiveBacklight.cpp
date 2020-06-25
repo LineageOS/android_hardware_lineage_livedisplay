@@ -20,10 +20,10 @@
 #include <android-base/properties.h>
 #include <android-base/strings.h>
 
-using android::base::GetBoolProperty;
-using android::base::ReadFileToString;
-using android::base::Trim;
-using android::base::WriteStringToFile;
+using ::android::base::GetBoolProperty;
+using ::android::base::ReadFileToString;
+using ::android::base::Trim;
+using ::android::base::WriteStringToFile;
 
 namespace {
 constexpr const char* kFileAcl = "/sys/class/graphics/fb0/acl";
@@ -66,7 +66,7 @@ Return<bool> AdaptiveBacklight::isEnabled() {
 }
 
 Return<bool> AdaptiveBacklight::setEnabled(bool enabled) {
-    return WriteStringToFile(enabled ? "1" : "0", file_, true);
+    return WriteStringToFile(std::to_string(enabled), file_, true);
 }
 
 }  // namespace sysfs

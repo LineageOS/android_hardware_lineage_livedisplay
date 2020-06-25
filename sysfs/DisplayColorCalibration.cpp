@@ -17,16 +17,19 @@
 #include "DisplayColorCalibration.h"
 
 #include <android-base/file.h>
+#include <android-base/stringprintf.h>
 #include <android-base/strings.h>
 
 namespace {
 constexpr const char* kFileRgb = "/sys/class/graphics/fb0/rgb";
 };  // anonymous namespace
 
-using android::base::ReadFileToString;
-using android::base::Split;
-using android::base::Trim;
-using android::base::WriteStringToFile;
+using ::android::base::ReadFileToString;
+using ::android::base::Split;
+using ::android::base::StringPrintf;
+using ::android::base::Trim;
+using ::android::base::WriteStringToFile;
+using ::android::hardware::Void;
 
 namespace vendor {
 namespace lineage {
@@ -52,8 +55,7 @@ Return<void> DisplayColorCalibration::getCalibration(getCalibration_cb _hidl_cb)
     std::string tmp;
 
     if (ReadFileToString(kFileRgb, &tmp)) {
-        std::vector<std::string> colors = Split(Trim(tmp), " ");
-        for (const std::string& color : colors) {
+        for (auto&& color : Split(Trim(tmp), " ")) {
             rgb.push_back(std::stoi(color));
         }
     }
@@ -63,13 +65,8 @@ Return<void> DisplayColorCalibration::getCalibration(getCalibration_cb _hidl_cb)
 }
 
 Return<bool> DisplayColorCalibration::setCalibration(const hidl_vec<int32_t>& rgb) {
-    std::string contents;
-
-    for (const int32_t& color : rgb) {
-        contents += std::to_string(color) + " ";
-    }
-
-    return WriteStringToFile(Trim(contents), kFileRgb, true);
+    assert(rgb.size() == 3);
+    return WriteStringToFile(StringPrintf("%d %d %d", rgb[0], rgb[1], rgb[2]), kFileRgb, true);
 }
 
 }  // namespace sysfs
