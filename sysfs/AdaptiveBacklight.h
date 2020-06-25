@@ -14,8 +14,7 @@
  * limitations under the License.
  */
 
-#ifndef VENDOR_LINEAGE_LIVEDISPLAY_V2_0_ADAPTIVEBACKLIGHT_H
-#define VENDOR_LINEAGE_LIVEDISPLAY_V2_0_ADAPTIVEBACKLIGHT_H
+#pragma once
 
 #include <vendor/lineage/livedisplay/2.0/IAdaptiveBacklight.h>
 
@@ -26,7 +25,6 @@ namespace V2_0 {
 namespace sysfs {
 
 using ::android::hardware::Return;
-using ::android::hardware::Void;
 
 class AdaptiveBacklight : public IAdaptiveBacklight {
   public:
@@ -37,7 +35,7 @@ class AdaptiveBacklight : public IAdaptiveBacklight {
     Return<bool> setEnabled(bool enabled) override;
 
   private:
-    std::string file_;
+    const char* file_;
 };
 
 }  // namespace sysfs
@@ -45,5 +43,3 @@ class AdaptiveBacklight : public IAdaptiveBacklight {
 }  // namespace livedisplay
 }  // namespace lineage
 }  // namespace vendor
-
-#endif  // VENDOR_LINEAGE_LIVEDISPLAY_V2_0_ADAPTIVEBACKLIGHT_H
