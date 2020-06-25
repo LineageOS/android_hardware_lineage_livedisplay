@@ -34,7 +34,7 @@ namespace livedisplay {
 namespace V2_0 {
 namespace sysfs {
 
-bool SunlightEnhancement::isSupported() {
+SunlightEnhancement::SunlightEnhancement() {
     if (!access(kFileHbm, R_OK | W_OK)) {
         file_ = kFileHbm;
         enabled_mode_ = 1;
@@ -42,10 +42,12 @@ bool SunlightEnhancement::isSupported() {
         file_ = kFileSre;
         enabled_mode_ = 2;
     } else {
-        return false;
+        file_ = nullptr;
     }
+}
 
-    return true;
+bool SunlightEnhancement::isSupported() {
+    return file_ != nullptr;
 }
 
 // Methods from ::vendor::lineage::livedisplay::V2_0::ISunlightEnhancement follow.
