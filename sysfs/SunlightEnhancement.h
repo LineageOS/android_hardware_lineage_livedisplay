@@ -28,6 +28,7 @@ using ::android::hardware::Return;
 
 class SunlightEnhancement : public ISunlightEnhancement {
   public:
+    SunlightEnhancement();
     bool isSupported();
 
     // Methods from ::vendor::lineage::livedisplay::V2_0::ISunlightEnhancement follow.

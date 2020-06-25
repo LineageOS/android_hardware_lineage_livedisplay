@@ -56,8 +56,8 @@ status_t RegisterAsServices() {
         }
     }
 
-    sp<AutoContrast> ac = new AutoContrast();
-    if (ac->isSupported()) {
+    if (AutoContrast::isSupported()) {
+        sp<AutoContrast> ac = new AutoContrast();
         status = ac->registerAsService();
         if (status != OK) {
             LOG(ERROR) << "Could not register service for LiveDisplay HAL AutoContrast Iface ("
@@ -66,8 +66,8 @@ status_t RegisterAsServices() {
         }
     }
 
-    sp<ColorEnhancement> ce = new ColorEnhancement();
-    if (ce->isSupported()) {
+    if (ColorEnhancement::isSupported()) {
+        sp<ColorEnhancement> ce = new ColorEnhancement();
         status = ce->registerAsService();
         if (status != OK) {
             LOG(ERROR) << "Could not register service for LiveDisplay HAL ColorEnhancement Iface ("
@@ -76,8 +76,8 @@ status_t RegisterAsServices() {
         }
     }
 
-    sp<DisplayColorCalibration> dcc = new DisplayColorCalibration();
-    if (dcc->isSupported()) {
+    if (DisplayColorCalibration::isSupported()) {
+        sp<DisplayColorCalibration> dcc = new DisplayColorCalibration();
         status = dcc->registerAsService();
         if (status != OK) {
             LOG(ERROR) << "Could not register service for LiveDisplay HAL DisplayColorCalibration"
@@ -86,8 +86,8 @@ status_t RegisterAsServices() {
         }
     }
 
-    sp<ReadingEnhancement> re = new ReadingEnhancement();
-    if (re->isSupported()) {
+    if (ReadingEnhancement::isSupported()) {
+        sp<ReadingEnhancement> re = new ReadingEnhancement();
         status = re->registerAsService();
         if (status != OK) {
             LOG(ERROR) << "Could not register service for LiveDisplay HAL ReadingEnhancement Iface"

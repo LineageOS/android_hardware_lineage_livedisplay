@@ -37,19 +37,20 @@ namespace livedisplay {
 namespace V2_0 {
 namespace sysfs {
 
-bool AdaptiveBacklight::isSupported() {
-    if (GetBoolProperty(kFossProperty, false)) {
-        return false;
-    }
-
+AdaptiveBacklight::AdaptiveBacklight() {
     if (!access(kFileAcl, R_OK | W_OK)) {
         file_ = kFileAcl;
     } else if (!access(kFileCabc, R_OK | W_OK)) {
         file_ = kFileCabc;
     } else {
+        file_ = nullptr;
+    }
+}
+
+bool AdaptiveBacklight::isSupported() {
+    if (GetBoolProperty(kFossProperty, false) || file_ == nullptr) {
         return false;
     }
-
     return true;
 }
 
