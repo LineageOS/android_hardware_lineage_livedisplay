@@ -19,8 +19,6 @@
 #include <android-base/file.h>
 #include <android-base/strings.h>
 
-#include <fstream>
-
 namespace {
 constexpr const char* kFileHbm = "/sys/class/graphics/fb0/hbm";
 constexpr const char* kFileSre = "/sys/class/graphics/fb0/sre";
@@ -37,18 +35,17 @@ namespace V2_0 {
 namespace sysfs {
 
 bool SunlightEnhancement::isSupported() {
-    std::fstream hbm(kFileHbm, hbm.in | hbm.out);
-    std::fstream sre(kFileSre, sre.in | sre.out);
-
-    if (hbm.good()) {
+    if (!access(kFileHbm, R_OK | W_OK)) {
         file_ = kFileHbm;
         enabled_mode_ = 1;
-    } else if (sre.good()) {
+    } else if (!access(kFileSre, R_OK | W_OK)) {
         file_ = kFileSre;
         enabled_mode_ = 2;
+    } else {
+        return false;
     }
 
-    return !file_.empty();
+    return true;
 }
 
 // Methods from ::vendor::lineage::livedisplay::V2_0::ISunlightEnhancement follow.
