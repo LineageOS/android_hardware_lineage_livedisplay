@@ -23,9 +23,9 @@ namespace {
 constexpr const char* kFileRe = "/sys/class/graphics/fb0/reading_mode";
 };  // anonymous namespace
 
-using android::base::ReadFileToString;
-using android::base::Trim;
-using android::base::WriteStringToFile;
+using ::android::base::ReadFileToString;
+using ::android::base::Trim;
+using ::android::base::WriteStringToFile;
 
 namespace vendor {
 namespace lineage {
@@ -50,7 +50,7 @@ Return<bool> ReadingEnhancement::isEnabled() {
 }
 
 Return<bool> ReadingEnhancement::setEnabled(bool enabled) {
-    return WriteStringToFile(enabled ? "1" : "0", kFileRe, true);
+    return WriteStringToFile(std::to_string(enabled), kFileRe, true);
 }
 
 }  // namespace sysfs
