@@ -38,7 +38,7 @@ struct SdmFeatureVersion {
 struct SdmDispMode {
     int32_t id;
     int32_t type;
-    int32_t len;
+    uint32_t len;
     char* name;
     SdmDispMode() : id(-1), type(0), len(128) { name = new char[128](); }
     ~SdmDispMode() { delete[] name; }
