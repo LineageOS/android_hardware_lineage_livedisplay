@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-#include "DisplayColorCalibration.h"
+#include "livedisplay/sysfs/DisplayColorCalibration.h"
 
 #include <android-base/file.h>
 #include <android-base/stringprintf.h>
