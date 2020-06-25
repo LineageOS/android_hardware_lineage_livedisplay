@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-#include "ReadingEnhancement.h"
+#include "livedisplay/sysfs/ReadingEnhancement.h"
 
 #include <android-base/file.h>
 #include <android-base/strings.h>
