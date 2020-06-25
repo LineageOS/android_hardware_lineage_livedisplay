@@ -28,7 +28,7 @@ using ::android::hardware::Return;
 
 class AutoContrast : public IAutoContrast {
   public:
-    bool isSupported();
+    static bool isSupported();
 
     // Methods from ::vendor::lineage::livedisplay::V2_0::IAutoContrast follow.
     Return<bool> isEnabled() override;
