@@ -29,7 +29,7 @@ using ::android::hardware::Return;
 
 class DisplayColorCalibration : public IDisplayColorCalibration {
   public:
-    bool isSupported();
+    static bool isSupported();
 
     // Methods from ::vendor::lineage::livedisplay::V2_0::IDisplayColorCalibration follow.
     Return<int32_t> getMaxValue() override;
