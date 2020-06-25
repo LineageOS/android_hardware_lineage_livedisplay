@@ -1,4 +1,4 @@
-// Copyright (C) 2019 The LineageOS Project
+// Copyright (C) 2019-2020 The LineageOS Project
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,17 +12,65 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+filegroup {
+    name: "vendor.lineage.livedisplay@2.0-sysfs-ab",
+    srcs: [
+        "AdaptiveBacklight.cpp",
+    ],
+}
+
+filegroup {
+    name: "vendor.lineage.livedisplay@2.0-sysfs-aco",
+    srcs: [
+        "AutoContrast.cpp",
+    ],
+}
+
+filegroup {
+    name: "vendor.lineage.livedisplay@2.0-sysfs-ce",
+    srcs: [
+        "ColorEnhancement.cpp",
+    ],
+}
+
+filegroup {
+    name: "vendor.lineage.livedisplay@2.0-sysfs-dcc",
+    srcs: [
+        "DisplayColorCalibration.cpp",
+    ],
+}
+
+filegroup {
+    name: "vendor.lineage.livedisplay@2.0-sysfs-re",
+    srcs: [
+        "ReadingEnhancement.cpp",
+    ],
+}
+
+filegroup {
+    name: "vendor.lineage.livedisplay@2.0-sysfs-sre",
+    srcs: [
+        "SunlightEnhancement.cpp",
+    ],
+}
+
+cc_library_headers {
+    name: "vendor.lineage.livedisplay@2.0-sysfs-headers",
+    vendor_available: true,
+    export_include_dirs: ["include"],
+}
+
 cc_defaults {
     name: "livedisplay_sysfs_defaults",
     defaults: ["hidl_defaults"],
     relative_install_path: "hw",
     srcs: [
-        "AdaptiveBacklight.cpp",
-        "AutoContrast.cpp",
-        "ColorEnhancement.cpp",
-        "DisplayColorCalibration.cpp",
-        "ReadingEnhancement.cpp",
-        "SunlightEnhancement.cpp",
+        ":vendor.lineage.livedisplay@2.0-sysfs-ab",
+        ":vendor.lineage.livedisplay@2.0-sysfs-aco",
+        ":vendor.lineage.livedisplay@2.0-sysfs-ce",
+        ":vendor.lineage.livedisplay@2.0-sysfs-dcc",
+        ":vendor.lineage.livedisplay@2.0-sysfs-re",
+        ":vendor.lineage.livedisplay@2.0-sysfs-sre",
         "service.cpp",
     ],
     shared_libs: [
@@ -33,6 +81,9 @@ cc_defaults {
         "libhidltransport",
         "libutils",
         "vendor.lineage.livedisplay@2.0",
+    ],
+    header_libs: [
+        "vendor.lineage.livedisplay@2.0-sysfs-headers",
     ],
 }
 
