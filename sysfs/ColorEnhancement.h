@@ -14,8 +14,7 @@
  * limitations under the License.
  */
 
-#ifndef VENDOR_LINEAGE_LIVEDISPLAY_V2_0_COLORENHANCEMENT_H
-#define VENDOR_LINEAGE_LIVEDISPLAY_V2_0_COLORENHANCEMENT_H
+#pragma once
 
 #include <vendor/lineage/livedisplay/2.0/IColorEnhancement.h>
 
@@ -26,7 +25,6 @@ namespace V2_0 {
 namespace sysfs {
 
 using ::android::hardware::Return;
-using ::android::hardware::Void;
 
 class ColorEnhancement : public IColorEnhancement {
   public:
@@ -42,5 +40,3 @@ class ColorEnhancement : public IColorEnhancement {
 }  // namespace livedisplay
 }  // namespace lineage
 }  // namespace vendor
-
-#endif  // VENDOR_LINEAGE_LIVEDISPLAY_V2_0_COLORENHANCEMENT_H
