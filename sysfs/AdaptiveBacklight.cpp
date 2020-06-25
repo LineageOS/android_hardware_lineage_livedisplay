@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-#include "AdaptiveBacklight.h"
+#include "livedisplay/sysfs/AdaptiveBacklight.h"
 
 #include <android-base/file.h>
 #include <android-base/properties.h>
