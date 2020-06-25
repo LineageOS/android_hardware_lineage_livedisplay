@@ -19,8 +19,6 @@
 #include <android-base/file.h>
 #include <android-base/strings.h>
 
-#include <fstream>
-
 namespace {
 constexpr const char* kFileRgb = "/sys/class/graphics/fb0/rgb";
 };  // anonymous namespace
@@ -37,9 +35,7 @@ namespace V2_0 {
 namespace sysfs {
 
 bool DisplayColorCalibration::isSupported() {
-    std::fstream rgb(kFileRgb, rgb.in | rgb.out);
-
-    return rgb.good();
+    return !access(kFileRgb, R_OK | W_OK);
 }
 
 // Methods from ::vendor::lineage::livedisplay::V2_0::IDisplayColorCalibration follow.
