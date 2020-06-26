@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "2893a9f1_37aa4d63",
+        "filename": "sdm/AdaptiveBacklight.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 10258
+      },
+      "writtenOn": "2020-06-26T06:21:02Z",
+      "side": 1,
+      "message": "done, relocated to a follow-up one",
+      "parentUuid": "230396bb_c267292a",
+      "range": {
+        "startLine": 34,
+        "startChar": 4,
+        "endLine": 34,
+        "endChar": 10
+      },
+      "revId": "280ad20e8651a9973aebbc32bdaee32a7547e843",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "625e1919_4b7651d3",
         "filename": "sdm/PictureAdjustment.cpp",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "280ad20e8651a9973aebbc32bdaee32a7547e843",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f4de0a8_27f376bd",
+        "filename": "sdm/PictureAdjustment.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 10258
+      },
+      "writtenOn": "2020-06-26T06:21:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "625e1919_4b7651d3",
+      "range": {
+        "startLine": 68,
+        "startChar": 4,
+        "endLine": 74,
+        "endChar": 5
+      },
+      "revId": "280ad20e8651a9973aebbc32bdaee32a7547e843",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
     }
   ]
 }
