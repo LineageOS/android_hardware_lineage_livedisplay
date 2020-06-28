@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cca28542_60c109c9",
+        "filename": "sdm/DisplayModes.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 2936
+      },
+      "writtenOn": "2020-06-28T17:53:04Z",
+      "side": 1,
+      "message": "nit: Are types camel cased? (onSetCb)",
+      "range": {
+        "startLine": 39,
+        "startChar": 10,
+        "endLine": 39,
+        "endChar": 19
+      },
+      "revId": "7f047a2a97bbf1a7b59ee321092c61324f9f34ec",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
+    }
+  ]
+}
