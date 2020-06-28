@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "619ceccd_d9994920",
+        "filename": "sdm/DisplayModes.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 2936
+      },
+      "writtenOn": "2020-06-28T17:51:19Z",
+      "side": 1,
+      "message": "std::string instead?",
+      "range": {
+        "startLine": 37,
+        "startChar": 38,
+        "endLine": 37,
+        "endChar": 49
+      },
+      "revId": "4be80ceedafe3e08744ad6d25d4c777ba10686df",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
+    }
+  ]
+}
