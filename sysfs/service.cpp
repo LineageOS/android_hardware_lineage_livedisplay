@@ -23,10 +23,8 @@
 #include <android-base/logging.h>
 #include <hidl/HidlTransportSupport.h>
 #include <livedisplay/sysfs/AdaptiveBacklight.h>
-#include <livedisplay/sysfs/AutoContrast.h>
-#include <livedisplay/sysfs/ColorEnhancement.h>
 #include <livedisplay/sysfs/DisplayColorCalibration.h>
-#include <livedisplay/sysfs/ReadingEnhancement.h>
+#include <livedisplay/sysfs/SimpleMode.h>
 #include <livedisplay/sysfs/SunlightEnhancement.h>
 
 using ::android::OK;
