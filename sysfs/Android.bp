@@ -20,30 +20,9 @@ filegroup {
 }
 
 filegroup {
-    name: "vendor.lineage.livedisplay@2.0-sysfs-aco",
-    srcs: [
-        "AutoContrast.cpp",
-    ],
-}
-
-filegroup {
-    name: "vendor.lineage.livedisplay@2.0-sysfs-ce",
-    srcs: [
-        "ColorEnhancement.cpp",
-    ],
-}
-
-filegroup {
     name: "vendor.lineage.livedisplay@2.0-sysfs-dcc",
     srcs: [
         "DisplayColorCalibration.cpp",
-    ],
-}
-
-filegroup {
-    name: "vendor.lineage.livedisplay@2.0-sysfs-re",
-    srcs: [
-        "ReadingEnhancement.cpp",
     ],
 }
 
@@ -66,10 +45,7 @@ cc_defaults {
     relative_install_path: "hw",
     srcs: [
         ":vendor.lineage.livedisplay@2.0-sysfs-ab",
-        ":vendor.lineage.livedisplay@2.0-sysfs-aco",
-        ":vendor.lineage.livedisplay@2.0-sysfs-ce",
         ":vendor.lineage.livedisplay@2.0-sysfs-dcc",
-        ":vendor.lineage.livedisplay@2.0-sysfs-re",
         ":vendor.lineage.livedisplay@2.0-sysfs-sre",
         "service.cpp",
     ],
