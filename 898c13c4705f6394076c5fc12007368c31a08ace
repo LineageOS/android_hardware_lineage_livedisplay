@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "84278fa7_b3781e68",
+        "filename": "sdm/AdaptiveBacklight.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 11801
+      },
+      "writtenOn": "2020-07-22T14:12:31Z",
+      "side": 1,
+      "message": "Well, I would prefer having consistency, as I mentioned in the sysfs change.",
+      "parentUuid": "8aab7548_56275fb4",
+      "revId": "898c13c4705f6394076c5fc12007368c31a08ace",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "22d2cc13_1f20b1b8",
         "filename": "sdm/DisplayModes.cpp",
         "patchSetId": 5
