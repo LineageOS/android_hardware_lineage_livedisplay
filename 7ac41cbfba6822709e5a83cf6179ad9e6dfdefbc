@@ -160,6 +160,24 @@
     },
     {
       "key": {
+        "uuid": "65d935e0_564488d9",
+        "filename": "sysfs/DisplayColorCalibration.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 10258
+      },
+      "writtenOn": "2020-07-22T14:58:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cee121d1_5392f53b",
+      "revId": "7ac41cbfba6822709e5a83cf6179ad9e6dfdefbc",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "48eccaa6_579314bd",
         "filename": "sysfs/SunlightEnhancement.h",
         "patchSetId": 6
