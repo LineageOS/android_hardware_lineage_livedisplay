@@ -161,6 +161,24 @@
     },
     {
       "key": {
+        "uuid": "ee146907_7bcde4a1",
+        "filename": "sdm/AdaptiveBacklight.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 11801
+      },
+      "writtenOn": "2020-07-22T14:52:59Z",
+      "side": 1,
+      "message": "Well, I\u0027m not a fan of this design because of that. Neither of those is a great way to do it, it feels like a kludge.",
+      "parentUuid": "1fcca687_a5f0f975",
+      "revId": "f0fd3aca70118e6b91c4ba63f720fb5e756f640b",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8fbc6fe2_c9e0dada",
         "filename": "sdm/AdaptiveBacklight.cpp",
         "patchSetId": 5
