@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "3ad847af_945e4f11",
+        "filename": "sysfs/AdaptiveBacklight.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 11801
+      },
+      "writtenOn": "2020-07-22T14:05:19Z",
+      "side": 1,
+      "message": "You could just....leave it as-is, and avoid it being non-intuitive.",
+      "parentUuid": "37e357ff_2dec0410",
+      "revId": "7ac41cbfba6822709e5a83cf6179ad9e6dfdefbc",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dbab2d52_736256da",
         "filename": "sysfs/AdaptiveBacklight.h",
         "patchSetId": 6
@@ -118,6 +136,24 @@
       "side": 1,
       "message": "u came up with a better solution? just pretend to succeed and silently fail when hitting an error? this is essentially an API design failure, it should\u0027ve been implemented to pass a struct containing r, g and b but unfortunately, it\u0027s not.\n\nassert is NOT horrible as you thought, it crashes the program so developers are aware that an error happened and they\u0027ll fix it.",
       "parentUuid": "525b1169_9844bd1c",
+      "revId": "7ac41cbfba6822709e5a83cf6179ad9e6dfdefbc",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cee121d1_5392f53b",
+        "filename": "sysfs/DisplayColorCalibration.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 11801
+      },
+      "writtenOn": "2020-07-22T14:05:19Z",
+      "side": 1,
+      "message": "The function has a return type, which means we can return false when the size of the vector is not 3. Add a log message if you want. Asserts are meant for tests, not normal runtime code. We don\u0027t need to crash the whole hal when the size is not 3. Also, you had the opportunity to comment about the API design choices before the API was merged - you didn\u0027t say anything then.",
+      "parentUuid": "0df0f7b4_2501ea5e",
       "revId": "7ac41cbfba6822709e5a83cf6179ad9e6dfdefbc",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
       "unresolved": true
