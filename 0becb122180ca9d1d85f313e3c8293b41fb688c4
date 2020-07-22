@@ -16,6 +16,24 @@
       "revId": "0becb122180ca9d1d85f313e3c8293b41fb688c4",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7f458fb_6e81c071",
+        "filename": "sdm/Utils.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 11883
+      },
+      "writtenOn": "2020-07-22T13:41:44Z",
+      "side": 1,
+      "message": "Originally only PICTURE_ADJUSTMENT_FEATURE was defined, we expanded the list",
+      "parentUuid": "91cd2ce5_22ab24a3",
+      "revId": "0becb122180ca9d1d85f313e3c8293b41fb688c4",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
     }
   ]
 }
