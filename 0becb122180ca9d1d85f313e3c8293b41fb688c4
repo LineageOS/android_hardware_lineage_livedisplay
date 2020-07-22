@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "91cd2ce5_22ab24a3",
+        "filename": "sdm/Utils.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 11801
+      },
+      "writtenOn": "2020-07-22T13:28:25Z",
+      "side": 1,
+      "message": "Where are all these other constants coming from?",
+      "revId": "0becb122180ca9d1d85f313e3c8293b41fb688c4",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
+    }
+  ]
+}
