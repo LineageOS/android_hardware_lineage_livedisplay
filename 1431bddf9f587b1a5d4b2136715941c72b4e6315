@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "98c328d2_2d765d20",
+        "filename": "sysfs/DisplayColorCalibration.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 11801
+      },
+      "writtenOn": "2020-07-22T15:00:00Z",
+      "side": 1,
+      "message": "Add something about DisplayColorCalibration in the log tag, please",
+      "revId": "1431bddf9f587b1a5d4b2136715941c72b4e6315",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
+    }
+  ]
+}
