@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "040221bf_c35ecd06",
+        "filename": "sdm/include/livedisplay/sdm/DisplayModes.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 11801
+      },
+      "writtenOn": "2020-07-22T13:41:24Z",
+      "side": 1,
+      "message": "Why do these all have to be virutal now?",
+      "revId": "c782cc943719e72680faa7d1b0af3293336571f7",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
+    }
+  ]
+}
