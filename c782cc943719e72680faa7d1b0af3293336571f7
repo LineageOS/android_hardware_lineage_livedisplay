@@ -70,6 +70,24 @@
       "revId": "c782cc943719e72680faa7d1b0af3293336571f7",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71f09808_64b3d7d5",
+        "filename": "sdm/include/livedisplay/sdm/DisplayModes.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 11801
+      },
+      "writtenOn": "2020-07-22T14:50:10Z",
+      "side": 1,
+      "message": "Making these virtual isn\u0027t in the scope of making each of these their own file groups.",
+      "parentUuid": "93cf6cd7_4d0d1b8e",
+      "revId": "c782cc943719e72680faa7d1b0af3293336571f7",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
     }
   ]
 }
