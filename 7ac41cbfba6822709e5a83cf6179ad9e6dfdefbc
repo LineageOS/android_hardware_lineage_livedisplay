@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "37e357ff_2dec0410",
+        "filename": "sysfs/AdaptiveBacklight.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 10258
+      },
+      "writtenOn": "2020-07-22T14:00:31Z",
+      "side": 1,
+      "message": "because it does",
+      "parentUuid": "59d969ce_e184ff17",
+      "revId": "7ac41cbfba6822709e5a83cf6179ad9e6dfdefbc",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dbab2d52_736256da",
         "filename": "sysfs/AdaptiveBacklight.h",
         "patchSetId": 6
@@ -30,6 +48,24 @@
       "writtenOn": "2020-07-22T13:50:13Z",
       "side": 1,
       "message": "Uhh...why?",
+      "revId": "7ac41cbfba6822709e5a83cf6179ad9e6dfdefbc",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c15beb1d_ddc70307",
+        "filename": "sysfs/AdaptiveBacklight.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 10258
+      },
+      "writtenOn": "2020-07-22T14:00:31Z",
+      "side": 1,
+      "message": "std::string copies the memory, a pointer doesn\u0027t",
+      "parentUuid": "dbab2d52_736256da",
       "revId": "7ac41cbfba6822709e5a83cf6179ad9e6dfdefbc",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
       "unresolved": true
@@ -64,6 +100,24 @@
       "writtenOn": "2020-07-22T13:50:13Z",
       "side": 1,
       "message": "Asserts are absolutely horrible to have in normal runtime code.",
+      "revId": "7ac41cbfba6822709e5a83cf6179ad9e6dfdefbc",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0df0f7b4_2501ea5e",
+        "filename": "sysfs/DisplayColorCalibration.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 10258
+      },
+      "writtenOn": "2020-07-22T14:00:31Z",
+      "side": 1,
+      "message": "u came up with a better solution? just pretend to succeed and silently fail when hitting an error? this is essentially an API design failure, it should\u0027ve been implemented to pass a struct containing r, g and b but unfortunately, it\u0027s not.\n\nassert is NOT horrible as you thought, it crashes the program so developers are aware that an error happened and they\u0027ll fix it.",
+      "parentUuid": "525b1169_9844bd1c",
       "revId": "7ac41cbfba6822709e5a83cf6179ad9e6dfdefbc",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
       "unresolved": true
