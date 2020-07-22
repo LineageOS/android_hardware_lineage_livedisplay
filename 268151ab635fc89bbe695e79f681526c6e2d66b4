@@ -34,6 +34,24 @@
       "revId": "268151ab635fc89bbe695e79f681526c6e2d66b4",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3dc78ecf_4ce5e804",
+        "filename": "sysfs/AdaptiveBacklight.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 11801
+      },
+      "writtenOn": "2020-07-22T14:01:03Z",
+      "side": 1,
+      "message": "How does using file_.empty() here create two new objects? You\u0027re making a change unrelated to changing to using the POSIX API for checking file access, and you\u0027re unwilling to explain it.",
+      "parentUuid": "f2ed09e7_e7eaabf5",
+      "revId": "268151ab635fc89bbe695e79f681526c6e2d66b4",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
     }
   ]
 }
