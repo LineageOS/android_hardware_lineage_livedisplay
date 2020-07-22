@@ -143,6 +143,24 @@
     },
     {
       "key": {
+        "uuid": "1fcca687_a5f0f975",
+        "filename": "sdm/AdaptiveBacklight.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 10258
+      },
+      "writtenOn": "2020-07-22T14:45:02Z",
+      "side": 1,
+      "message": "with `char buf[kDppsBufSize]` you gotta have another `char* p_buf \u003d buf` in order to perform `buf +\u003d ret` below, so it\u0027s same amount of code.",
+      "parentUuid": "979a5032_8730b74d",
+      "revId": "f0fd3aca70118e6b91c4ba63f720fb5e756f640b",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8fbc6fe2_c9e0dada",
         "filename": "sdm/AdaptiveBacklight.cpp",
         "patchSetId": 5
