@@ -52,6 +52,24 @@
       "revId": "0becb122180ca9d1d85f313e3c8293b41fb688c4",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3749169_57f13feb",
+        "filename": "sdm/Utils.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 10258
+      },
+      "writtenOn": "2020-07-22T14:32:06Z",
+      "side": 1,
+      "message": "ofc this one works as well, but isn\u0027t it ugly?\n\nenum FeatureVerSw {\n    FEATURE_VER_SW_PA_API \u003d 1,\n    FEATURE_VER_SW_SAVEMODES_API \u003d 4,\n};",
+      "parentUuid": "9d8f60d0_71dd1e25",
+      "revId": "0becb122180ca9d1d85f313e3c8293b41fb688c4",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
     }
   ]
 }
