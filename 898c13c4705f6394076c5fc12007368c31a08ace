@@ -33,6 +33,24 @@
       "revId": "898c13c4705f6394076c5fc12007368c31a08ace",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c3b13ad_a1bf2b14",
+        "filename": "sdm/DisplayModes.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 11883
+      },
+      "writtenOn": "2020-07-22T13:38:38Z",
+      "side": 1,
+      "message": "C++-ism I\u0027d say",
+      "parentUuid": "22d2cc13_1f20b1b8",
+      "revId": "898c13c4705f6394076c5fc12007368c31a08ace",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
     }
   ]
 }
