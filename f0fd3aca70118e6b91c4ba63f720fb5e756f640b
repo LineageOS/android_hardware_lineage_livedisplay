@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "221a65d0_2ec64933",
+        "filename": "sdm/AdaptiveBacklight.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 11883
+      },
+      "writtenOn": "2020-07-22T13:44:24Z",
+      "side": 1,
+      "message": "It retries calls that can return EINTR ( write )",
+      "parentUuid": "d57c0f08_48039185",
+      "revId": "f0fd3aca70118e6b91c4ba63f720fb5e756f640b",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6f817371_8c52685e",
         "filename": "sdm/AdaptiveBacklight.cpp",
         "patchSetId": 5
@@ -47,6 +65,24 @@
       "writtenOn": "2020-07-22T13:32:18Z",
       "side": 1,
       "message": "Uh, why make a std::string if you\u0027re just going to use it as a char* instead? You\u0027re just doing strcmp down there anyways...a C string makes more sense",
+      "revId": "f0fd3aca70118e6b91c4ba63f720fb5e756f640b",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4f61050_695b978e",
+        "filename": "sdm/AdaptiveBacklight.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 11883
+      },
+      "writtenOn": "2020-07-22T13:44:24Z",
+      "side": 1,
+      "message": "while ((ret \u003d TEMP_FAILURE_RETRY(read(sock, \u0026result[0], len))) \u003e 0) {\nThen? it just avoid the variable but does the same since write only support char",
+      "parentUuid": "6f817371_8c52685e",
       "revId": "f0fd3aca70118e6b91c4ba63f720fb5e756f640b",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
       "unresolved": true
