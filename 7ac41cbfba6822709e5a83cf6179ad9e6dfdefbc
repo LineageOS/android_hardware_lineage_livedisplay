@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "59d969ce_e184ff17",
+        "filename": "sysfs/AdaptiveBacklight.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 11801
+      },
+      "writtenOn": "2020-07-22T13:50:13Z",
+      "side": 1,
+      "message": "This is very non-intuitive. Why would std::to_string on a bool return a string containing an integer?",
+      "revId": "7ac41cbfba6822709e5a83cf6179ad9e6dfdefbc",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dbab2d52_736256da",
+        "filename": "sysfs/AdaptiveBacklight.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 11801
+      },
+      "writtenOn": "2020-07-22T13:50:13Z",
+      "side": 1,
+      "message": "Uhh...why?",
+      "revId": "7ac41cbfba6822709e5a83cf6179ad9e6dfdefbc",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b53320ba_6fe3b585",
+        "filename": "sysfs/DisplayColorCalibration.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 11801
+      },
+      "writtenOn": "2020-07-22T13:50:13Z",
+      "side": 1,
+      "message": "Again, what\u0027s the point of masking the type?",
+      "revId": "7ac41cbfba6822709e5a83cf6179ad9e6dfdefbc",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "525b1169_9844bd1c",
+        "filename": "sysfs/DisplayColorCalibration.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 11801
+      },
+      "writtenOn": "2020-07-22T13:50:13Z",
+      "side": 1,
+      "message": "Asserts are absolutely horrible to have in normal runtime code.",
+      "revId": "7ac41cbfba6822709e5a83cf6179ad9e6dfdefbc",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48eccaa6_579314bd",
+        "filename": "sysfs/SunlightEnhancement.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 11801
+      },
+      "writtenOn": "2020-07-22T13:50:13Z",
+      "side": 1,
+      "message": "Again, why?",
+      "revId": "7ac41cbfba6822709e5a83cf6179ad9e6dfdefbc",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
+    }
+  ]
+}
