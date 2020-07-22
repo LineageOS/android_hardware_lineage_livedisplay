@@ -16,6 +16,24 @@
       "revId": "268151ab635fc89bbe695e79f681526c6e2d66b4",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2ed09e7_e7eaabf5",
+        "filename": "sysfs/AdaptiveBacklight.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 10258
+      },
+      "writtenOn": "2020-07-22T13:50:55Z",
+      "side": 1,
+      "message": "any reason allocating memory for two more objects when it can be avoided?",
+      "parentUuid": "53ad1dc6_91cf3388",
+      "revId": "268151ab635fc89bbe695e79f681526c6e2d66b4",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
     }
   ]
 }
