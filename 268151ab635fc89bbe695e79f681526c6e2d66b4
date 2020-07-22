@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "53ad1dc6_91cf3388",
+        "filename": "sysfs/AdaptiveBacklight.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 11801
+      },
+      "writtenOn": "2020-07-22T13:43:33Z",
+      "side": 1,
+      "message": "Any reason we can\u0027t use file_.empty() here?",
+      "revId": "268151ab635fc89bbe695e79f681526c6e2d66b4",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
+    }
+  ]
+}
