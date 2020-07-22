@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8aab7548_56275fb4",
+        "filename": "sdm/AdaptiveBacklight.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 10258
+      },
+      "writtenOn": "2020-07-22T13:42:12Z",
+      "side": 1,
+      "message": "this is not the only one. non-static are needed for those who need to determine the actual node at runtime.",
+      "parentUuid": "ff36de44_c4519931",
+      "revId": "898c13c4705f6394076c5fc12007368c31a08ace",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "22d2cc13_1f20b1b8",
         "filename": "sdm/DisplayModes.cpp",
         "patchSetId": 5
@@ -48,6 +66,24 @@
       "side": 1,
       "message": "C++-ism I\u0027d say",
       "parentUuid": "22d2cc13_1f20b1b8",
+      "revId": "898c13c4705f6394076c5fc12007368c31a08ace",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d73dd9f_34736a04",
+        "filename": "sdm/DisplayModes.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 10258
+      },
+      "writtenOn": "2020-07-22T13:42:12Z",
+      "side": 1,
+      "message": "https://isocpp.org/blog/2012/11/universal-references-in-c11-scott-meyers",
+      "parentUuid": "4c3b13ad_a1bf2b14",
       "revId": "898c13c4705f6394076c5fc12007368c31a08ace",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
       "unresolved": true
