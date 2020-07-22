@@ -52,6 +52,24 @@
       "revId": "268151ab635fc89bbe695e79f681526c6e2d66b4",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5a68995_fbe2d52d",
+        "filename": "sysfs/AdaptiveBacklight.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 10258
+      },
+      "writtenOn": "2020-07-22T14:18:20Z",
+      "side": 1,
+      "message": "oops I misunderstood you, file_ is not supposed to be assigned elsewhere, it\u0027s more clear to early stop once the pattern matching failed. btw it\u0027s less error-prone, say, I occasionally set file_ from another method, but the pattern matching failed, now that file_ is non-empty so true is returned, but it should return false.",
+      "parentUuid": "3dc78ecf_4ce5e804",
+      "revId": "268151ab635fc89bbe695e79f681526c6e2d66b4",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
     }
   ]
 }
