@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a054deca_71636ff3",
+        "filename": "sdm/AdaptiveBacklight.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 11801
+      },
+      "writtenOn": "2020-07-22T13:32:18Z",
+      "side": 1,
+      "message": "Why is the buf size decreased?",
+      "revId": "f0fd3aca70118e6b91c4ba63f720fb5e756f640b",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d57c0f08_48039185",
+        "filename": "sdm/AdaptiveBacklight.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 11801
+      },
+      "writtenOn": "2020-07-22T13:32:18Z",
+      "side": 1,
+      "message": "What exactly is TEMP_FAILURE_RETRY?",
+      "revId": "f0fd3aca70118e6b91c4ba63f720fb5e756f640b",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f817371_8c52685e",
+        "filename": "sdm/AdaptiveBacklight.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 11801
+      },
+      "writtenOn": "2020-07-22T13:32:18Z",
+      "side": 1,
+      "message": "Uh, why make a std::string if you\u0027re just going to use it as a char* instead? You\u0027re just doing strcmp down there anyways...a C string makes more sense",
+      "revId": "f0fd3aca70118e6b91c4ba63f720fb5e756f640b",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c40f8d8_bd2395f2",
+        "filename": "sdm/AdaptiveBacklight.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 11801
+      },
+      "writtenOn": "2020-07-22T13:32:18Z",
+      "side": 1,
+      "message": "Newline after this?",
+      "revId": "f0fd3aca70118e6b91c4ba63f720fb5e756f640b",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
+    }
+  ]
+}
