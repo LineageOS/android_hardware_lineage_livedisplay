@@ -43,12 +43,10 @@ DisplayModes::DisplayModes(std::shared_ptr<SDMController> controller)
         LOG(FATAL) << "DisplayModes backend not ready, exiting.";
     }
 
-#ifdef LIVES_IN_SYSTEM
     DisplayMode mode = getDefaultDisplayModeInternal();
     if (mode.id >= 0) {
         setDisplayMode(mode.id, false);
     }
-#endif
 }
 
 bool DisplayModes::isSupported(const hidl_string& name) {
