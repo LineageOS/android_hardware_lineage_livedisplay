@@ -82,11 +82,6 @@ int main() {
         goto shutdown;
     }
 
-    if (!dm->isSupported() && !pa->isSupported()) {
-        // Backend isn't ready yet, so restart and try again
-        goto shutdown;
-    }
-
     configureRpcThreadpool(1, true /*callerWillJoin*/);
 
     if (dm->isSupported()) {
