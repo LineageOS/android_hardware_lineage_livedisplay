@@ -27,7 +27,7 @@ constexpr size_t kDppsBufSize = 10;
 constexpr const char* kDaemonSocket = "pps";
 constexpr const char* kFossOff = "foss:off";
 constexpr const char* kFossOn = "foss:on";
-constexpr const char* kFossProperty = "ro.vendor.display.foss";
+constexpr const char* kFossProperty = "ro.vendor.display.foss.backlight";
 constexpr const char* kSuccess = "Success";
 
 android::status_t SendDppsCommand(const char* cmd) {
