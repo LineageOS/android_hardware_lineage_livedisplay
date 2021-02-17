@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2019-2020 The LineageOS Project
+ * Copyright (C) 2019-2021 The LineageOS Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,6 +20,7 @@
 #include <android-base/unique_fd.h>
 #include <cutils/sockets.h>
 #include <poll.h>
+#include "livedisplay/sdm/Utils.h"
 
 namespace {
 constexpr size_t kDppsBufSize = 10;
@@ -27,7 +28,7 @@ constexpr size_t kDppsBufSize = 10;
 constexpr const char* kDaemonSocket = "pps";
 constexpr const char* kFossOff = "foss:off";
 constexpr const char* kFossOn = "foss:on";
-constexpr const char* kFossProperty = "ro.vendor.display.foss.backlight";
+constexpr const char* kFossProperty = "ro.vendor.display.foss";
 constexpr const char* kSuccess = "Success";
 
 android::status_t SendDppsCommand(const char* cmd) {
@@ -77,7 +78,7 @@ namespace sdm {
 using ::android::base::GetBoolProperty;
 
 bool AdaptiveBacklight::isSupported() {
-    return GetBoolProperty(kFossProperty, false);
+    return utils::IsEnabledInManifest(descriptor) && GetBoolProperty(kFossProperty, false);
 }
 
 // Methods from ::vendor::lineage::livedisplay::V2_0::IAdaptiveBacklight follow.

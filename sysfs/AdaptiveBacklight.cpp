@@ -28,7 +28,7 @@ using ::android::base::WriteStringToFile;
 namespace {
 constexpr const char* kFileAcl = "/sys/class/graphics/fb0/acl";
 constexpr const char* kFileCabc = "/sys/class/graphics/fb0/cabc";
-constexpr const char* kFossProperty = "ro.vendor.display.foss.backlight";
+constexpr const char* kFossProperty = "ro.vendor.display.foss";
 }  // anonymous namespace
 
 namespace vendor {

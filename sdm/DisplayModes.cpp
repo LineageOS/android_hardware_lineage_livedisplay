@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2019-2020 The LineageOS Project
+ * Copyright (C) 2019-2021 The LineageOS Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,8 +23,6 @@
 #include "livedisplay/sdm/DisplayModes.h"
 
 #include <android-base/logging.h>
-#include <android/hidl/manager/1.0/IServiceManager.h>
-#include <hidl/ServiceManagement.h>
 
 #include "livedisplay/sdm/Utils.h"
 
@@ -49,9 +47,7 @@ DisplayModes::DisplayModes(std::shared_ptr<SDMController> controller)
     }
 }
 
-bool DisplayModes::isSupported(const hidl_string& name) {
-    using ::android::hidl::manager::V1_0::IServiceManager;
-    auto sm = ::android::hardware::defaultServiceManager();
+bool DisplayModes::isSupported() {
     /*
      * We MUST NOT use DisplayModes::isReady to check the availability here,
      * but check the existence in manifest instead. Because in certain cases
@@ -60,8 +56,7 @@ bool DisplayModes::isSupported(const hidl_string& name) {
      * declared in manifest. Under the circumstance, the HAL will abort and
      * hopefully recover from the failure when started again.
      */
-    auto transport = sm->getTransport(descriptor, name);
-    return transport != IServiceManager::Transport::EMPTY;
+    return utils::IsEnabledInManifest(descriptor);
 }
 
 bool DisplayModes::isReady() {

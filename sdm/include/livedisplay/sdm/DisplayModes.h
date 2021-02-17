@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2019-2020 The LineageOS Project
+ * Copyright (C) 2019-2021 The LineageOS Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -27,13 +27,12 @@ namespace livedisplay {
 namespace V2_0 {
 namespace sdm {
 
-using ::android::hardware::hidl_string;
 using ::android::hardware::Return;
 
 class DisplayModes : public IDisplayModes {
   public:
     explicit DisplayModes(std::shared_ptr<SDMController> controller);
-    static bool isSupported(const hidl_string& name = "default");
+    static bool isSupported();
 
     using DisplayModeSetCallback = std::function<void()>;
     virtual void registerDisplayModeSetCallback(DisplayModeSetCallback callback);

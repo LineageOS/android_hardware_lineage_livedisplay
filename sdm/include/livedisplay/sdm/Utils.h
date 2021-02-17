@@ -1,6 +1,6 @@
 /*
  * Copyright (C) 2016 The CyanogenMod Project
- *               2017-2020 The LineageOS Project
+ *               2017-2021 The LineageOS Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,6 +17,7 @@
 
 #pragma once
 
+#include <hidl/HidlSupport.h>
 #include "SDMController.h"
 
 namespace vendor {
@@ -25,6 +26,8 @@ namespace livedisplay {
 namespace V2_0 {
 namespace sdm {
 namespace utils {
+
+using ::android::hardware::hidl_string;
 
 enum FeatureVerSw {
     FEATURE_VER_SW_API = 0,
@@ -39,6 +42,7 @@ enum FeatureVerSw {
 
 status_t CheckFeatureVersion(const std::shared_ptr<SDMController>& controller,
                              FeatureVerSw feature);
+bool IsEnabledInManifest(const hidl_string& fq_name, const hidl_string& name = "default");
 
 }  // namespace utils
 }  // namespace sdm

@@ -1,6 +1,6 @@
 /*
  * Copyright (C) 2016 The CyanogenMod Project
- *               2017-2020 The LineageOS Project
+ *               2017-2021 The LineageOS Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,6 +16,8 @@
  */
 
 #include "livedisplay/sdm/Utils.h"
+#include <android/hidl/manager/1.0/IServiceManager.h>
+#include <hidl/ServiceManagement.h>
 
 namespace vendor {
 namespace lineage {
@@ -37,6 +39,13 @@ status_t CheckFeatureVersion(const std::shared_ptr<SDMController>& controller,
     }
 
     return android::OK;
+}
+
+bool IsEnabledInManifest(const hidl_string& fq_name, const hidl_string& name) {
+    using ::android::hidl::manager::V1_0::IServiceManager;
+    auto sm = ::android::hardware::defaultServiceManager();
+    auto transport = sm->getTransport(fq_name, name);
+    return transport != IServiceManager::Transport::EMPTY;
 }
 
 }  // namespace utils
