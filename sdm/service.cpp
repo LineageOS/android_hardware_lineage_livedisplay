@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2019-2020 The LineageOS Project
+ * Copyright (C) 2019-2021 The LineageOS Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,7 +23,6 @@
 #include <android-base/logging.h>
 #include <binder/ProcessState.h>
 #include <hidl/HidlTransportSupport.h>
-#include <livedisplay/sdm/AdaptiveBacklight.h>
 #include <livedisplay/sdm/DisplayModes.h>
 #include <livedisplay/sdm/PictureAdjustment.h>
 #include <livedisplay/sdm/SDMController.h>
@@ -34,24 +33,12 @@ using ::android::status_t;
 using ::android::hardware::configureRpcThreadpool;
 using ::android::hardware::joinRpcThreadpool;
 
-using ::vendor::lineage::livedisplay::V2_0::sdm::AdaptiveBacklight;
 using ::vendor::lineage::livedisplay::V2_0::sdm::DisplayModes;
 using ::vendor::lineage::livedisplay::V2_0::sdm::PictureAdjustment;
 using ::vendor::lineage::livedisplay::V2_0::sdm::SDMController;
 
 status_t RegisterAsServices() {
     status_t status = OK;
-
-    if (AdaptiveBacklight::isSupported()) {
-        sp<AdaptiveBacklight> ab = new AdaptiveBacklight();
-        status = ab->registerAsService();
-        if (status != OK) {
-            LOG(ERROR) << "Could not register service for LiveDisplay HAL AdaptiveBacklight Iface ("
-                       << status << ")";
-            return status;
-        }
-    }
-
     std::shared_ptr<SDMController> controller = std::make_shared<SDMController>();
 
     sp<PictureAdjustment> pa = new PictureAdjustment(controller);
