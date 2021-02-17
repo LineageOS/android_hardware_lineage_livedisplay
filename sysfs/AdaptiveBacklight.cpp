@@ -18,6 +18,8 @@
 
 #include <android-base/file.h>
 #include <android-base/strings.h>
+#include <android/hidl/manager/1.0/IServiceManager.h>
+#include <hidl/ServiceManagement.h>
 
 using ::android::base::ReadFileToString;
 using ::android::base::Trim;
@@ -44,8 +46,11 @@ AdaptiveBacklight::AdaptiveBacklight() {
     }
 }
 
-bool AdaptiveBacklight::isSupported() {
-    return file_ != nullptr;
+bool AdaptiveBacklight::isSupported(const hidl_string& name) {
+    using ::android::hidl::manager::V1_0::IServiceManager;
+    auto sm = ::android::hardware::defaultServiceManager();
+    auto transport = sm->getTransport(descriptor, name);
+    return transport != IServiceManager::Transport::EMPTY && file_ != nullptr;
 }
 
 // Methods from ::vendor::lineage::livedisplay::V2_0::IAdaptiveBacklight follow.
