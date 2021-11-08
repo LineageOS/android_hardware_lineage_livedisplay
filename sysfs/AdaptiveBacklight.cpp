@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2019-2021 The LineageOS Project
+ * Copyright (C) 2019-2020 The LineageOS Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,8 +17,10 @@
 #include "livedisplay/sysfs/AdaptiveBacklight.h"
 
 #include <android-base/file.h>
+#include <android-base/properties.h>
 #include <android-base/strings.h>
 
+using ::android::base::GetBoolProperty;
 using ::android::base::ReadFileToString;
 using ::android::base::Trim;
 using ::android::base::WriteStringToFile;
@@ -26,6 +28,7 @@ using ::android::base::WriteStringToFile;
 namespace {
 constexpr const char* kFileAcl = "/sys/class/graphics/fb0/acl";
 constexpr const char* kFileCabc = "/sys/class/graphics/fb0/cabc";
+constexpr const char* kFossProperty = "ro.vendor.display.foss.backlight";
 }  // anonymous namespace
 
 namespace vendor {
@@ -45,7 +48,10 @@ AdaptiveBacklight::AdaptiveBacklight() {
 }
 
 bool AdaptiveBacklight::isSupported() {
-    return file_ != nullptr;
+    if (GetBoolProperty(kFossProperty, false) || file_ == nullptr) {
+        return false;
+    }
+    return true;
 }
 
 // Methods from ::vendor::lineage::livedisplay::V2_0::IAdaptiveBacklight follow.
