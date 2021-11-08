@@ -34,6 +34,24 @@
       "parentUuid": "9b2c6d0d_2c42a4b6",
       "revId": "80a94b091bb61db438b09469ad8ec9f77be2bc84",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fec9de7b_97b50942",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 10258
+      },
+      "writtenOn": "2021-11-08T09:54:06Z",
+      "side": 1,
+      "message": "to keep the common impl simple, as stated in the removal commit",
+      "parentUuid": "f427a8b9_920fc317",
+      "revId": "80a94b091bb61db438b09469ad8ec9f77be2bc84",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
