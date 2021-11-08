@@ -16,6 +16,24 @@
       "message": "implement your device-specific hal instead",
       "revId": "80a94b091bb61db438b09469ad8ec9f77be2bc84",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f427a8b9_920fc317",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5911
+      },
+      "writtenOn": "2021-11-08T09:52:50Z",
+      "side": 1,
+      "message": "check discord/oneplus please. we agreed on placing it back in common there - or do you have a specific reason for wanting to split it up?",
+      "parentUuid": "9b2c6d0d_2c42a4b6",
+      "revId": "80a94b091bb61db438b09469ad8ec9f77be2bc84",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
