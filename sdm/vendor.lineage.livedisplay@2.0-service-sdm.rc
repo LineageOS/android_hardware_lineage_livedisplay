@@ -1,4 +1,23 @@
 service vendor.livedisplay-hal-2-0-sdm /vendor/bin/hw/vendor.lineage.livedisplay@2.0-service-sdm
+    interface vendor.lineage.livedisplay@2.0::IAdaptiveBacklight default
+    interface vendor.lineage.livedisplay@2.0::IAutoContrast default
+    interface vendor.lineage.livedisplay@2.0::IColorBalance default
+    interface vendor.lineage.livedisplay@2.0::IColorEnhancement default
+    interface vendor.lineage.livedisplay@2.0::IDisplayColorCalibration default
+    interface vendor.lineage.livedisplay@2.0::IDisplayModes default
+    interface vendor.lineage.livedisplay@2.0::IReadingEnhancement default
+    interface vendor.lineage.livedisplay@2.0::IPictureAdjustment default
+    interface vendor.lineage.livedisplay@2.0::ISunlightEnhancement default
+    interface vendor.lineage.livedisplay@2.1::IAdaptiveBacklight default
+    interface vendor.lineage.livedisplay@2.1::IAntiFlicker default
+    interface vendor.lineage.livedisplay@2.1::IAutoContrast default
+    interface vendor.lineage.livedisplay@2.1::IColorBalance default
+    interface vendor.lineage.livedisplay@2.1::IColorEnhancement default
+    interface vendor.lineage.livedisplay@2.1::IDisplayColorCalibration default
+    interface vendor.lineage.livedisplay@2.1::IDisplayModes default
+    interface vendor.lineage.livedisplay@2.1::IReadingEnhancement default
+    interface vendor.lineage.livedisplay@2.1::IPictureAdjustment default
+    interface vendor.lineage.livedisplay@2.1::ISunlightEnhancement default
     class late_start
     user system
     group system
