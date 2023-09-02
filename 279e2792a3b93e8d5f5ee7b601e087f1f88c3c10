@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ac07d6a3_bcbd1a1f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 14048
+      },
+      "writtenOn": "2023-09-02T16:43:33Z",
+      "side": 1,
+      "message": "The services should only declare the interfaces they can provide. This change needs to cut back to only that.",
+      "revId": "279e2792a3b93e8d5f5ee7b601e087f1f88c3c10",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
